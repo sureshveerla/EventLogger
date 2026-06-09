@@ -1,4 +1,5 @@
 #include "nmsMainWindow.h"
+#include <any>
 
 nmsMainWindow::nmsMainWindow(QString strCFGFilePath, QObject *pcParent)
     : QObject(pcParent),m_pcDB(NULL),m_pcKavachHandler(NULL),m_pcReceivedData(NULL),
@@ -1870,7 +1871,7 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     else if(ucMsgTyp == 0x18)
     {
         m_bStnHlthSts = true;
-        SendViaNMSGSM(datagram);
+        ForwardViaGSM(datagram);
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessOnBoardHealthPkt(datagram);
 
@@ -1886,6 +1887,7 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     }
     else if(ucMsgTyp == 0x19)
     {
+        ForwardViaGSM(datagram);
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessStationFaultPkt(datagram);
         //SendAckNMStoKavach(senderIP, senderPort);
@@ -1903,6 +1905,7 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     }
     else if(ucMsgTyp == 0x20)
     {
+        ForwardViaGSM(datagram);
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessLocoRSSIMessagePkt(datagram);
         //SendAckNMStoKavach(senderIP, senderPort);
@@ -2628,52 +2631,26 @@ void nmsMainWindow::ForwardToNMS(QByteArray datagram)
                  << "size:" << sent;
 }
 
-bool nmsMainWindow::SendViaNMSGSM(const QByteArray &datagram)
+void nmsMainWindow::ForwardViaGSM(const QByteArray &datagram)
 {
-    if (!m_pcKMS) return false;
+    QString  strNMSGsmIP   = "192.25.195.1";  // RUT956 SIM IP
+    quint16  usNMSGsmPort  = 5005;
+    QString  strLARAIP     = "10.204.31.90";      // ← LARA-R6801 usb0 IP
 
-    // ── Step 1: Ensure GPRS is active ────────────────────────
-    if (!m_pcKMS->EnsureGPRSActive())
-    {
-        qWarning() << "[NMS GSM] GPRS not available";
-        return false;
-    }
+    QUdpSocket gsmSocket;
 
-    // ── Step 2: Create UDP socket on modem ───────────────────
-    QString resp = m_pcKMS->SendATCommand("AT+USOCR=17", 5000);
-    QRegularExpression reSocket("\\+USOCR:\\s*(\\d+)");
-    auto socketMatch = reSocket.match(resp);
-    if (!socketMatch.hasMatch())
-    {
-        qWarning() << "[NMS GSM] USOCR failed:" << resp;
-        return false;
-    }
-    int socketHandle = socketMatch.captured(1).toInt();
-    qDebug() << "[NMS GSM] Socket handle:" << socketHandle;
+    // Bind to LARA-R6801 interface — forces packet out via SIM, not LAN
+    gsmSocket.bind(QHostAddress(strLARAIP), 0);
 
-    // ── Step 3: Send via AT+USOST ─────────────────────────────
-    // Format: AT+USOST=<socket>,"<ip>",<port>,<len>,"<hex>"
-    QString hexData = QString::fromLatin1(datagram.toHex()).toUpper();
-    QString sendCmd = QString("AT+USOST=%1,\"%2\",%3,%4,\"%5\"")
-                          .arg(socketHandle)
-                          .arg(m_strNMSIP)
-                          .arg(m_usNMSPort)
-                          .arg(datagram.size())
-                          .arg(hexData);
+    qint64 sent = gsmSocket.writeDatagram(
+        datagram,
+        QHostAddress(strNMSGsmIP),
+        usNMSGsmPort);
 
-    QString sendResp = m_pcKMS->SendATCommand(sendCmd, 8000);
-    qDebug() << "[NMS GSM] USOST resp:" << sendResp;
-
-    // ── Step 4: Close socket ──────────────────────────────────
-    m_pcKMS->SendATCommand(
-        QString("AT+USOCL=%1").arg(socketHandle), 3000);
-
-    // +USOST: <socket>,<bytes_sent> indicates success
-    bool success = sendResp.contains("+USOST:");
-    if (!success)
-        qWarning() << "[NMS GSM] USOST failed:" << sendResp;
-
-    return success;
+    if (sent == -1)
+        qWarning() << "[EventLogger GSM] Send FAILED:" << gsmSocket.errorString();
+    else
+        qDebug() << "[EventLogger GSM] Sent via LARA SIM ->" << strNMSGsmIP << ":" << usNMSGsmPort << "bytes:" << sent;
 }
 
 void nmsMainWindow::SendAckNMStoKavach(QHostAddress senderIP, quint16 senderPort)

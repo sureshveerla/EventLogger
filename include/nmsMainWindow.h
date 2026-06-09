@@ -264,7 +264,7 @@ private:
 
     void ForwardToNMS(QByteArray datagram);
 
-    void ForwardToNMSViaGSM();
+    void ForwardViaGSM(const QByteArray &datagram);
 
     bool SendViaNMSGSM(const QByteArray &datagram);
 
