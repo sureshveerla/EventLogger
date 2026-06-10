@@ -188,6 +188,16 @@ private:
     QString GetLocoMode(uint8_t ucLocoMode);
     QString GetEmergencyStatus(uint8_t ucEmergSts);
     QString GetFrameTime(uint32_t uiFrmNo);
+    QString GetModeDescription(quint16 usMode);
+    QString GetEventStatusDescription(quint8 ucStatus);
+    QString GetAckStatusDescription(quint8 ucAckStatus);
+    QString GetIncidentDescription(quint16 usIncidentID);
+    QString GetBrakeTypeDescription(quint8 ucBrakeType);
+    QString GetDirectionDescription(quint8 ucDirection);
+    QString GetBrakeEventStatusDescription(quint8 ucStatus);
+    QString GetBrakeAckStatusDescription(quint8 ucAckStatus);
+    QString GetBrakeCauseDescription(quint16 usCauseID);
+
     void EnsureGradientColumns(int count);
 };
 

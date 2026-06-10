@@ -2852,51 +2852,89 @@ void nmsDBQuerys::SlotInsertDBOnBoardBrakeEventMsg(
     QString strSOF =
         QString("0x%1")
             .arg(stOnBoardBrakeEvntMsg.usStartFrame,
-                 4, 16, QChar('0'))
+                 4,16,QChar('0'))
             .toUpper();
 
     QString strType =
         QString("0x%1")
             .arg(stOnBoardBrakeEvntMsg.ucMsgType,
-                 2, 16, QChar('0'))
+                 2,16,QChar('0'))
             .toUpper();
 
     QString strCRC =
         QString("0x%1")
             .arg(stOnBoardBrakeEvntMsg.uiCRC,
-                 8, 16, QChar('0'))
+                 8,16,QChar('0'))
             .toUpper();
 
-    // Onboard Kavach ID
     QString strKavachID =
         QString("%1 %2 %3")
-            .arg(stOnBoardBrakeEvntMsg.ucOnboardKavachID[0],
-                 2,16,QChar('0'))
-            .arg(stOnBoardBrakeEvntMsg.ucOnboardKavachID[1],
-                 2,16,QChar('0'))
-            .arg(stOnBoardBrakeEvntMsg.ucOnboardKavachID[2],
-                 2,16,QChar('0'))
+            .arg(stOnBoardBrakeEvntMsg.ucOnboardKavachID[0],2,16,QChar('0'))
+            .arg(stOnBoardBrakeEvntMsg.ucOnboardKavachID[1],2,16,QChar('0'))
+            .arg(stOnBoardBrakeEvntMsg.ucOnboardKavachID[2],2,16,QChar('0'))
             .toUpper();
 
-    // Date from packet
     QString strDate =
         QString("20%1-%2-%3")
-            .arg(stOnBoardBrakeEvntMsg.ucDate[2],
-                 2,10,QChar('0'))
-            .arg(stOnBoardBrakeEvntMsg.ucDate[1],
-                 2,10,QChar('0'))
-            .arg(stOnBoardBrakeEvntMsg.ucDate[0],
-                 2,10,QChar('0'));
+            .arg(stOnBoardBrakeEvntMsg.ucDate[2],2,10,QChar('0'))
+            .arg(stOnBoardBrakeEvntMsg.ucDate[1],2,10,QChar('0'))
+            .arg(stOnBoardBrakeEvntMsg.ucDate[0],2,10,QChar('0'));
 
-    // Time from packet
     QString strTime =
         QString("%1:%2:%3")
-            .arg(stOnBoardBrakeEvntMsg.ucTime[0],
-                 2,10,QChar('0'))
-            .arg(stOnBoardBrakeEvntMsg.ucTime[1],
-                 2,10,QChar('0'))
-            .arg(stOnBoardBrakeEvntMsg.ucTime[2],
-                 2,10,QChar('0'));
+            .arg(stOnBoardBrakeEvntMsg.ucTime[0],2,10,QChar('0'))
+            .arg(stOnBoardBrakeEvntMsg.ucTime[1],2,10,QChar('0'))
+            .arg(stOnBoardBrakeEvntMsg.ucTime[2],2,10,QChar('0'));
+
+    QString strModeDesc =
+        GetModeDescription(stOnBoardBrakeEvntMsg.usOperatingMode);
+
+    QString strBrakeCause =
+        GetIncidentDescription(stOnBoardBrakeEvntMsg.usBrakeCauseID);
+
+    QString strEventStatus =
+        GetEventStatusDescription(stOnBoardBrakeEvntMsg.ucEventStatus);
+
+    QString strAckStatus =
+        GetAckStatusDescription(stOnBoardBrakeEvntMsg.ucAckStatus);
+
+    QString strBrakeType;
+
+    switch(stOnBoardBrakeEvntMsg.ucBrakeType)
+    {
+    case 0:
+        strBrakeType = "NONE";
+        break;
+
+    case 1:
+        strBrakeType = "FSB";
+        break;
+
+    case 2:
+        strBrakeType = "EB";
+        break;
+
+    default:
+        strBrakeType = "UNKNOWN";
+        break;
+    }
+
+    QString strDirection;
+
+    switch(stOnBoardBrakeEvntMsg.ucDirection)
+    {
+    case 0:
+        strDirection = "FORWARD";
+        break;
+
+    case 1:
+        strDirection = "REVERSE";
+        break;
+
+    default:
+        strDirection = "UNKNOWN";
+        break;
+    }
 
     QString strQuery = QString(
                            "INSERT INTO public.onboardkavachbrakeeventmsg("
@@ -2922,8 +2960,26 @@ void nmsDBQuerys::SlotInsertDBOnBoardBrakeEventMsg(
                            "\"CRC\") "
 
                            "VALUES("
-                           "'%1','%2',%3,%4,'%5',%6,%7,'%8','%9',"
-                           "%10,%11,%12,%13,%14,%15,%16,%17,%18,%19,'%20');")
+                           "'%1',"
+                           "'%2',"
+                           "%3,"
+                           "%4,"
+                           "'%5',"
+                           "%6,"
+                           "%7,"
+                           "'%8',"
+                           "'%9',"
+                           "%10,"
+                           "'%11',"
+                           "%12,"
+                           "%13,"
+                           "'%14',"
+                           "%15,"
+                           "'%16',"
+                           "'%17',"
+                           "'%18',"
+                           "'%19',"
+                           "'%20');")
 
                            .arg(strSOF)
                            .arg(strType)
@@ -2935,35 +2991,295 @@ void nmsDBQuerys::SlotInsertDBOnBoardBrakeEventMsg(
                            .arg(strDate)
                            .arg(strTime)
                            .arg(stOnBoardBrakeEvntMsg.usEventID)
-                           .arg(stOnBoardBrakeEvntMsg.usOperatingMode)
+                           .arg(strModeDesc)
                            .arg(stOnBoardBrakeEvntMsg.usCurrentSpeed)
                            .arg(stOnBoardBrakeEvntMsg.usPermittedSpeed)
-                           .arg(stOnBoardBrakeEvntMsg.ucDirection)
+                           .arg(strDirection)
                            .arg(stOnBoardBrakeEvntMsg.usDistanceToTarget)
-                           .arg(stOnBoardBrakeEvntMsg.ucBrakeType)
-                           .arg(stOnBoardBrakeEvntMsg.ucEventStatus)
-                           .arg(stOnBoardBrakeEvntMsg.usBrakeCauseID)
-                           .arg(stOnBoardBrakeEvntMsg.ucAckStatus)
+                           .arg(strBrakeType)
+                           .arg(strEventStatus)
+                           .arg(strBrakeCause)
+                           .arg(strAckStatus)
                            .arg(strCRC);
 
     bool bQryResult = pcQuery->exec(strQuery);
 
-    if (bQryResult)
+    if(bQryResult)
     {
-        qDebug() << "Brake Event inserted successfully";
+        qDebug() << "Successfully inserted OnBoard Brake Event Message";
     }
     else
     {
-        qDebug() << "Brake Event insert failed";
-        qDebug() << "SQL Error:"
-                 << pcQuery->lastError().text();
-        qDebug() << "Query:" << strQuery;
+        qDebug() << "Failed to insert OnBoard Brake Event Message";
+        qDebug() << "SQL Error :" << pcQuery->lastError().text();
+        qDebug() << "Query :" << strQuery;
     }
 
     delete pcQuery;
-    pcQuery = NULL;
+    pcQuery = nullptr;
+}
+QString nmsDBQuerys::GetModeDescription(quint16 usMode)
+{
+    QStringList modes;
+
+    if (usMode & (1 << 0))  modes << "SB";
+    if (usMode & (1 << 1))  modes << "FS";
+    if (usMode & (1 << 2))  modes << "SR";
+    if (usMode & (1 << 3))  modes << "OS";
+    if (usMode & (1 << 4))  modes << "LS";
+    if (usMode & (1 << 5))  modes << "SH";
+    if (usMode & (1 << 6))  modes << "TR";
+    if (usMode & (1 << 7))  modes << "PT";
+    if (usMode & (1 << 8))  modes << "IS";
+    if (usMode & (1 << 9))  modes << "RV";
+    if (usMode & (1 << 10)) modes << "SF";
+    if (usMode & (1 << 11)) modes << "NL";
+    if (usMode & (1 << 12)) modes << "OV";
+
+    if (modes.isEmpty())
+        return "UNKNOWN";
+
+    return modes.join("|");
+}
+QString nmsDBQuerys::GetEventStatusDescription(quint8 ucStatus)
+{
+    if (ucStatus & 0x01)
+        return "ACTIVE";
+
+    if (ucStatus & 0x02)
+        return "CLEARED";
+
+    return "UNKNOWN";
 }
 
+QString nmsDBQuerys::GetAckStatusDescription(quint8 ucAckStatus)
+{
+    QStringList lstAck;
+
+    if (ucAckStatus & 0x01)
+        lstAck << "ACK_REQUIRED";
+
+    if (ucAckStatus & 0x02)
+        lstAck << "ACK_RECEIVED";
+
+    if (ucAckStatus & 0x04)
+        lstAck << "TIMEOUT";
+
+    if (lstAck.isEmpty())
+        return "NONE";
+
+    return lstAck.join("|");
+}
+QString nmsDBQuerys::GetIncidentDescription(quint16 usIncidentID)
+{
+    switch(usIncidentID)
+    {
+    case 1001: return "SPAD";
+    case 1002: return "Head-on collision detected (Non-communication zone)";
+    case 1003: return "Head-on collision detected (Communication zone)";
+    case 1004: return "Rear-end collision detected (Non-communication zone)";
+    case 1005: return "Rear-end collision detected (Communication zone)";
+    case 1006: return "Train trip enforced by system";
+    case 1007: return "Unusual stoppage detected in block section";
+    case 1008: return "Unusual stoppage released";
+    case 1009: return "Dead-end detected with brake application";
+    case 1010: return "Standstill protection activated";
+    case 1011: return "Rollback protection activated";
+    case 1012: return "Shunting limit exceeded with brake application";
+    case 1013: return "Station General SOS brake enforcement";
+    case 1014: return "SPAD-triggered brake enforcement";
+
+    case 1101: return "Manual SOS cancellation";
+    case 1102: return "SOS due to odometry error";
+    case 1103: return "SOS due to foreign RFID";
+    case 1104: return "SOS due to shunt limit violation";
+    case 1105: return "SOS Self loco (manual)";
+    case 1106: return "SOS Self loco (unusual stoppage)";
+    case 1107: return "SOS Self loco (train parted)";
+    case 1108: return "SOS received from other loco (manual)";
+    case 1109: return "SOS received from other loco (unusual stoppage)";
+    case 1110: return "SOS received from other loco (train parted)";
+    case 1111: return "SOS received from station (broadcast)";
+    case 1112: return "SOS received from station (loco-specific)";
+
+    case 1201: return "Override mode activated";
+    case 1202: return "Reverse mode timeout approaching";
+    case 1203: return "SR mode authorization received";
+    case 1204: return "SR mode due to radio communication failure";
+    case 1205: return "SR mode due to missing RFID tags";
+    case 1206: return "SR mode due to GPS failure";
+
+    case 1301: return "Overspeed warning";
+    case 1302: return "Brake applied due to speed limit exceedance";
+    case 1303: return "FSB application warning";
+    case 1304: return "Emergency Brake application warning";
+
+    case 1401: return "BIU isolated";
+    case 1402: return "EB bypass detected";
+    case 1403: return "System fault";
+    case 1404: return "Standby mode";
+    case 1405: return "Leading and non-leading inputs active";
+
+    case 1501: return "Train configuration selected";
+    case 1502: return "Train length computation in progress";
+    case 1503: return "Train length computation successful";
+    case 1504: return "Train length computation failed";
+
+    case 1601: return "Waiting for traction command";
+    case 1602: return "Fouling mark entry detected";
+    case 1603: return "Acknowledgement required for SR mode";
+    case 1614: return "KAVACH territory entry detected";
+
+    default:
+        return QString("Unknown Incident (%1)").arg(usIncidentID);
+    }
+}
+
+QString nmsDBQuerys::GetBrakeTypeDescription(quint8 ucBrakeType)  //0x1E
+{
+    switch(ucBrakeType)
+    {
+    case 0:
+        return "Normal Brake (NB)";
+
+    case 1:
+        return "Full Service Brake (FSB)";
+
+    case 2:
+        return "Emergency Brake (EB)";
+
+    case 3:
+        return "Light Engine Brake (LEB)";
+
+    case 4:
+        return "Unknown";
+
+    default:
+        return QString("Reserved (%1)").arg(ucBrakeType);
+    }
+}
+
+QString nmsDBQuerys::GetDirectionDescription(quint8 ucDirection)  //0x1E
+{
+    switch(ucDirection)
+    {
+    case 1:
+        return "Forward";
+
+    case 2:
+        return "Reverse";
+
+    case 3:
+        return "Standstill";
+
+    case 4:
+        return "Unknown";
+
+    default:
+        return QString("Reserved (%1)").arg(ucDirection);
+    }
+}
+
+QString nmsDBQuerys::GetBrakeEventStatusDescription(quint8 ucStatus) //0x1E
+{
+    if(ucStatus & 0x01)
+        return "Brake Applied";
+
+    if(ucStatus & 0x02)
+        return "Brake Released";
+
+    return "Unknown";
+}
+
+QString nmsDBQuerys::GetBrakeAckStatusDescription(quint8 ucAckStatus)  //0x1E
+{
+    QStringList lst;
+
+    if(ucAckStatus & 0x01)
+        lst << "LP Ack Required";
+
+    if(ucAckStatus & 0x02)
+        lst << "LP Ack Received";
+
+    if(ucAckStatus & 0x04)
+        lst << "LP Ack Timeout";
+
+    if(lst.isEmpty())
+        return "None";
+
+    return lst.join(" | ");
+}
+
+
+QString nmsDBQuerys::GetBrakeCauseDescription(quint16 usCauseID)   //0x1E
+{
+    switch(usCauseID)
+    {
+    case 1001: return "Standstill Protection in Standby Mode";
+    case 1002: return "System Brake Test - NB/FSB/EB/LEB";
+    case 1003: return "System Brake Test - LEB";
+    case 1004: return "Manual Brake Test";
+    case 1101: return "Absence of Traction Feedback";
+    case 1102: return "Brake System Malfunction";
+
+    case 1201: return "Overspeed - NB Application";
+    case 1202: return "Overspeed - FSB Application";
+    case 1203: return "Overspeed - EB Application";
+
+    case 1301: return "Manual Onboard SOS Generation";
+    case 1302: return "Automatic SOS";
+    case 1303: return "SOS Received From Rear Train";
+    case 1304: return "SOS Received From Stationary KAVACH";
+    case 1305: return "SOS Received At Speed >30 km/h";
+
+    case 1401: return "Reverse Movement in SR Mode";
+    case 1402: return "Reverse Movement in FS Mode";
+    case 1403: return "Reverse Movement in OS Mode";
+    case 1404: return "Reverse Movement in LS Mode";
+    case 1405: return "Unauthorized Direction Change";
+    case 1406: return "Reverse Mode Distance/Timeout Violation";
+    case 1407: return "Forward Movement Violation in Reverse Mode";
+
+    case 1501: return "Rollback Detected (Reverse)";
+    case 1502: return "Rollback Detected (Forward)";
+    case 1503: return "Rollback Protection";
+    case 1504: return "Rollback Protection Reverse";
+
+    case 1601: return "Head-On Collision Detected";
+    case 1602: return "Rear-End Collision Detected";
+
+    case 1701: return "Radio Communication Failure";
+    case 1702: return "Radio Failure Leading to Mode Degradation";
+    case 1703: return "Radio Failure with MA Less Than Braking Distance";
+    case 1704: return "Three Consecutive RFID Tags Missed";
+    case 1705: return "RFID Missing During Exit";
+    case 1706: return "Track Profile Unavailable";
+
+    case 1801: return "Movement Authority Overrun";
+    case 1802: return "Movement Authority Overrun (Missing Tag)";
+    case 1803: return "OSMA Expiry";
+    case 1804: return "Movement Detected in PT Mode";
+    case 1805: return "No LP Acknowledgement";
+    case 1806: return "Direction Unknown";
+    case 1807: return "End Tag Detection";
+
+    case 1901: return "Critical System Fault";
+    case 1902: return "Slip/Slide Detection";
+    case 1903: return "Odometer Error";
+    case 1904: return "TIN Conflict Detected";
+
+    case 2001: return "Reverse Mode Speed Limit Exceeded";
+    case 2002: return "Shunt Mode Speed Limit Exceeded";
+    case 2003: return "Calling-On Speed Limit Exceeded";
+
+    case 2101: return "EM Cock Closed Detection";
+    case 2102: return "Foreign RFID Tag Detected";
+
+    default:
+        return QString("Unknown Brake Cause (%1)")
+            .arg(usCauseID);
+    }
+}
 void nmsDBQuerys::SlotInsertDBOnboardBOKSHealthMsg(stOnboardKavachBOKSHealthMsg stOnBoardSysHealth)
 {
     QSqlQuery query(m_pcDB->Get());

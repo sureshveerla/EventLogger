@@ -23,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_nmsMainWindow_t {
-    const uint offsetsAndSize[396];
-    char stringdata0[3369];
+    const uint offsetsAndSize[400];
+    char stringdata0[3403];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_nmsMainWindow_t, stringdata0) + ofs), len 
@@ -46,188 +46,190 @@ QT_MOC_LITERAL(158, 11), // "strFaultMsg"
 QT_MOC_LITERAL(170, 24), // "SigStnFaultPktInserttoDB"
 QT_MOC_LITERAL(195, 16), // "stStationFaults*"
 QT_MOC_LITERAL(212, 12), // "pstStnFaults"
-QT_MOC_LITERAL(225, 14), // "SigStationInfo"
-QT_MOC_LITERAL(240, 11), // "SigLocoInfo"
-QT_MOC_LITERAL(252, 21), // "SigFaultMsginserttoDB"
-QT_MOC_LITERAL(274, 10), // "strMsgType"
-QT_MOC_LITERAL(285, 12), // "strTimestamp"
-QT_MOC_LITERAL(298, 15), // "QList<uint16_t>"
-QT_MOC_LITERAL(314, 14), // "faultByteArray"
-QT_MOC_LITERAL(329, 10), // "strFirmNam"
-QT_MOC_LITERAL(340, 8), // "uint32_t"
-QT_MOC_LITERAL(349, 4), // "uiID"
-QT_MOC_LITERAL(354, 24), // "SigStnFaultMsginserttoDB"
-QT_MOC_LITERAL(379, 8), // "uint16_t"
-QT_MOC_LITERAL(388, 11), // "usFaultCode"
-QT_MOC_LITERAL(400, 24), // "SigSMSFaultMsginserttoDB"
-QT_MOC_LITERAL(425, 12), // "strFirmNamID"
-QT_MOC_LITERAL(438, 27), // "SigSMSStnFaultMsginserttoDB"
-QT_MOC_LITERAL(466, 11), // "usFaultCOde"
-QT_MOC_LITERAL(478, 10), // "SigSendSMS"
-QT_MOC_LITERAL(489, 7), // "message"
-QT_MOC_LITERAL(497, 19), // "SigSendFaultmessage"
-QT_MOC_LITERAL(517, 12), // "strTimeStamp"
-QT_MOC_LITERAL(530, 9), // "strFirmid"
-QT_MOC_LITERAL(540, 24), // "SigAccessReqInsertintoDB"
-QT_MOC_LITERAL(565, 18), // "stAccessRequestPkt"
-QT_MOC_LITERAL(584, 8), // "stheader"
-QT_MOC_LITERAL(593, 9), // "uiPktType"
-QT_MOC_LITERAL(603, 8), // "uiPktLen"
-QT_MOC_LITERAL(612, 7), // "uiFrmNo"
-QT_MOC_LITERAL(620, 11), // "uiSrcLocoID"
-QT_MOC_LITERAL(632, 12), // "uiSrcLocoVer"
-QT_MOC_LITERAL(645, 13), // "uiAbsLoco_Loc"
-QT_MOC_LITERAL(659, 10), // "uiTrainLen"
-QT_MOC_LITERAL(670, 10), // "uiTrainSpd"
-QT_MOC_LITERAL(681, 11), // "uiMovMntDir"
-QT_MOC_LITERAL(693, 14), // "uiEmergencySts"
-QT_MOC_LITERAL(708, 10), // "uiLocoMode"
-QT_MOC_LITERAL(719, 10), // "uiApprStID"
-QT_MOC_LITERAL(730, 13), // "uiLastRfidTag"
-QT_MOC_LITERAL(744, 7), // "uitinNo"
-QT_MOC_LITERAL(752, 11), // "uiLongitude"
-QT_MOC_LITERAL(764, 10), // "uiLatitude"
-QT_MOC_LITERAL(775, 13), // "uiLocoRandmrl"
-QT_MOC_LITERAL(789, 9), // "uiMACCode"
-QT_MOC_LITERAL(799, 8), // "uiPktCRC"
-QT_MOC_LITERAL(808, 7), // "uint8_t"
-QT_MOC_LITERAL(816, 10), // "ucMASecCnt"
-QT_MOC_LITERAL(827, 9), // "usRouteID"
-QT_MOC_LITERAL(837, 5), // "uiCRC"
-QT_MOC_LITERAL(843, 26), // "SigLocoRegularInsertintoDB"
-QT_MOC_LITERAL(870, 11), // "uidoubtover"
-QT_MOC_LITERAL(882, 12), // "uidoubtunder"
-QT_MOC_LITERAL(895, 10), // "uitrainint"
-QT_MOC_LITERAL(906, 8), // "uiTagDup"
-QT_MOC_LITERAL(915, 13), // "uitagLinkInfo"
-QT_MOC_LITERAL(929, 10), // "uiBrkApply"
-QT_MOC_LITERAL(940, 12), // "uinewMAReply"
-QT_MOC_LITERAL(953, 15), // "uiLastRefProfNo"
-QT_MOC_LITERAL(969, 7), // "uiSigOV"
-QT_MOC_LITERAL(977, 9), // "uiInfoAck"
-QT_MOC_LITERAL(987, 7), // "uiSpare"
-QT_MOC_LITERAL(995, 14), // "strLocoHlthSts"
-QT_MOC_LITERAL(1010, 33), // "SigAccessAuthorityPktInsertin..."
-QT_MOC_LITERAL(1044, 17), // "uiSrcStnILCIBS_ID"
-QT_MOC_LITERAL(1062, 18), // "uiSRCStnILCIBS_ver"
-QT_MOC_LITERAL(1081, 15), // "uiStnILCIBS_Loc"
-QT_MOC_LITERAL(1097, 13), // "uiDestLoco_ID"
-QT_MOC_LITERAL(1111, 16), // "uiAlotUpLnk_Freq"
-QT_MOC_LITERAL(1128, 16), // "uiAlotDnLnk_Freq"
-QT_MOC_LITERAL(1145, 20), // "uiAlotTDMA_Timeslots"
-QT_MOC_LITERAL(1166, 14), // "uiStnRndNum_RS"
-QT_MOC_LITERAL(1181, 9), // "uiStnTDMA"
-QT_MOC_LITERAL(1191, 10), // "uiMAC_Code"
-QT_MOC_LITERAL(1202, 8), // "uiPktCrc"
-QT_MOC_LITERAL(1211, 37), // "SigAdditionalEmergencyPktInse..."
-QT_MOC_LITERAL(1249, 12), // "uiGenSoSCall"
-QT_MOC_LITERAL(1262, 27), // "SigInsertDBStationRegHeader"
-QT_MOC_LITERAL(1290, 8), // "stHeader"
-QT_MOC_LITERAL(1299, 20), // "StationRegularHeader"
-QT_MOC_LITERAL(1320, 13), // "stStnRglrHPkt"
-QT_MOC_LITERAL(1334, 27), // "SigInsertDBStationhealthPkt"
-QT_MOC_LITERAL(1362, 18), // "stStationHealthPkt"
-QT_MOC_LITERAL(1381, 12), // "stStnHlthPkt"
-QT_MOC_LITERAL(1394, 9), // "strEvntID"
-QT_MOC_LITERAL(1404, 11), // "strEvntData"
-QT_MOC_LITERAL(1416, 5), // "uiCrc"
-QT_MOC_LITERAL(1422, 27), // "SigInsertDBOnBoardhealthPkt"
-QT_MOC_LITERAL(1450, 18), // "stOnBoardHealthPkt"
-QT_MOC_LITERAL(1469, 14), // "stOnBrdHlthPkt"
-QT_MOC_LITERAL(1484, 23), // "SigInsertDBS2SPDIVerCmd"
-QT_MOC_LITERAL(1508, 14), // "stPacketHeader"
-QT_MOC_LITERAL(1523, 8), // "stPktHdr"
-QT_MOC_LITERAL(1532, 19), // "stPDIVerCheckCmdPkt"
-QT_MOC_LITERAL(1552, 11), // "stPDIVerCmd"
-QT_MOC_LITERAL(1564, 23), // "SigInsertDBS2SPDIVerMsg"
-QT_MOC_LITERAL(1588, 19), // "stPDIVerCheckMsgPkt"
-QT_MOC_LITERAL(1608, 11), // "stPDIVerMsg"
-QT_MOC_LITERAL(1620, 23), // "SigInsertDBS2SHeartBeat"
-QT_MOC_LITERAL(1644, 14), // "stHeartBeatPkt"
-QT_MOC_LITERAL(1659, 11), // "stHeartBeat"
-QT_MOC_LITERAL(1671, 30), // "SigInsertDBS2STrainHandOverReq"
-QT_MOC_LITERAL(1702, 21), // "stTrainHandOverReqPkt"
-QT_MOC_LITERAL(1724, 14), // "stTrnHndOveReq"
-QT_MOC_LITERAL(1739, 31), // "SigInsertDBS2STrainTakenOverMsg"
-QT_MOC_LITERAL(1771, 19), // "stTrainTakenOverPkt"
-QT_MOC_LITERAL(1791, 14), // "stTrnTknOveMsg"
-QT_MOC_LITERAL(1806, 42), // "SigInsertDBS2STrainHandOverCa..."
-QT_MOC_LITERAL(1849, 30), // "stTrainHandOverCancellationPkt"
-QT_MOC_LITERAL(1880, 18), // "stTrnHndOvrCnclPkt"
-QT_MOC_LITERAL(1899, 39), // "SigInsertDBS2STrainLengthInfo..."
-QT_MOC_LITERAL(1939, 20), // "stTrainLengthInfoPkt"
-QT_MOC_LITERAL(1960, 15), // "stTrnLenInfoPkt"
-QT_MOC_LITERAL(1976, 34), // "SigInsertDBS2SLengthInformati..."
-QT_MOC_LITERAL(2011, 20), // "stTrainLengthInfoAck"
-QT_MOC_LITERAL(2032, 15), // "stTrnLenInfoAck"
-QT_MOC_LITERAL(2048, 29), // "SigInsertDBS2STSLRouteRequest"
-QT_MOC_LITERAL(2078, 11), // "stTSLReqPkt"
-QT_MOC_LITERAL(2090, 13), // "stTSLRouteReq"
-QT_MOC_LITERAL(2104, 40), // "SigInsertDBS2STSLAuthorityInf..."
-QT_MOC_LITERAL(2145, 19), // "stTSLInformationPkt"
-QT_MOC_LITERAL(2165, 12), // "stTSLInfoPkt"
-QT_MOC_LITERAL(2178, 36), // "SigInsertDBS2SFieldElementsSt..."
-QT_MOC_LITERAL(2215, 27), // "stFieldElementsStatusReqPkt"
-QT_MOC_LITERAL(2243, 18), // "stFldElementStsReq"
-QT_MOC_LITERAL(2262, 42), // "SigInsertDBS2STrainHandoverCa..."
-QT_MOC_LITERAL(2305, 33), // "stTrainHandOverCancellationAc..."
-QT_MOC_LITERAL(2339, 18), // "stTrnHndOvrCnclAck"
-QT_MOC_LITERAL(2358, 26), // "SigInsertDBLocoRSSIMessage"
-QT_MOC_LITERAL(2385, 13), // "stLocoRSSIMsg"
-QT_MOC_LITERAL(2399, 10), // "stLocoRSSI"
-QT_MOC_LITERAL(2410, 29), // "SigInsertDBStationRSSIMessage"
-QT_MOC_LITERAL(2440, 16), // "stStationRSSIMsg"
-QT_MOC_LITERAL(2457, 9), // "stStnRSSI"
-QT_MOC_LITERAL(2467, 30), // "SigInsertDBStationKavachSysSts"
-QT_MOC_LITERAL(2498, 25), // "stStationaryKavachSysInfo"
-QT_MOC_LITERAL(2524, 16), // "stStnKavchSysSts"
-QT_MOC_LITERAL(2541, 30), // "SigInsertDBOnBoardEventMessage"
-QT_MOC_LITERAL(2572, 23), // "stOnboardKavachEventMsg"
-QT_MOC_LITERAL(2596, 17), // "stOnBoardEventMsg"
-QT_MOC_LITERAL(2614, 31), // "SigInsertDBOnBoardBrakeEventMsg"
-QT_MOC_LITERAL(2646, 28), // "stOnboardKavachBrakeEventMsg"
-QT_MOC_LITERAL(2675, 21), // "stOnBoardBrakeEvntMsg"
-QT_MOC_LITERAL(2697, 33), // "SigInsertDBOnBoardSystemHealt..."
-QT_MOC_LITERAL(2731, 28), // "stOnboardKavachBOKSHealthMsg"
-QT_MOC_LITERAL(2760, 18), // "stOnBoardSysHealth"
-QT_MOC_LITERAL(2779, 27), // "SigInsertDBFieldInputStatus"
-QT_MOC_LITERAL(2807, 10), // "usRelayCnt"
-QT_MOC_LITERAL(2818, 15), // "byArrRelayImage"
-QT_MOC_LITERAL(2834, 30), // "SigInsertDBFieldInputEventData"
-QT_MOC_LITERAL(2865, 16), // "stFieldEventData"
-QT_MOC_LITERAL(2882, 13), // "stFldEvntData"
-QT_MOC_LITERAL(2896, 18), // "SigShowAllStations"
-QT_MOC_LITERAL(2915, 21), // "SigStationisConnected"
-QT_MOC_LITERAL(2937, 14), // "strStationName"
-QT_MOC_LITERAL(2952, 7), // "bstatus"
-QT_MOC_LITERAL(2960, 18), // "SlotNewFaultPacket"
-QT_MOC_LITERAL(2979, 8), // "datagram"
-QT_MOC_LITERAL(2988, 21), // "SlotPreviousFaultInfo"
-QT_MOC_LITERAL(3010, 14), // "SlottabChanged"
-QT_MOC_LITERAL(3025, 5), // "index"
-QT_MOC_LITERAL(3031, 20), // "SlotUpadateSchematic"
-QT_MOC_LITERAL(3052, 20), // "SlotStationNameAndID"
-QT_MOC_LITERAL(3073, 15), // "strLstStationID"
-QT_MOC_LITERAL(3089, 18), // "strLstStationNames"
-QT_MOC_LITERAL(3108, 11), // "strDateTime"
-QT_MOC_LITERAL(3120, 11), // "bStationSts"
-QT_MOC_LITERAL(3132, 20), // "SlotStationRegHeader"
-QT_MOC_LITERAL(3153, 21), // "SlotStationconnStatus"
-QT_MOC_LITERAL(3175, 11), // "strHostAddr"
-QT_MOC_LITERAL(3187, 7), // "bStatus"
-QT_MOC_LITERAL(3195, 24), // "SlotKMSChannelChangeover"
-QT_MOC_LITERAL(3220, 8), // "newSimID"
-QT_MOC_LITERAL(3229, 21), // "SlotKMSPacketReceived"
-QT_MOC_LITERAL(3251, 7), // "msgType"
-QT_MOC_LITERAL(3259, 6), // "packet"
-QT_MOC_LITERAL(3266, 17), // "SlotKMSPacketSent"
-QT_MOC_LITERAL(3284, 10), // "SlotDoPing"
-QT_MOC_LITERAL(3295, 24), // "SlotSendNextReplayPacket"
-QT_MOC_LITERAL(3320, 15), // "SlotVCHeartbeat"
-QT_MOC_LITERAL(3336, 15), // "SlotGPSPosition"
-QT_MOC_LITERAL(3352, 4), // "dLat"
-QT_MOC_LITERAL(3357, 4), // "dLon"
-QT_MOC_LITERAL(3362, 6) // "bValid"
+QT_MOC_LITERAL(225, 14), // "strLstModuleID"
+QT_MOC_LITERAL(240, 18), // "strLstFaultCodeTyp"
+QT_MOC_LITERAL(259, 14), // "SigStationInfo"
+QT_MOC_LITERAL(274, 11), // "SigLocoInfo"
+QT_MOC_LITERAL(286, 21), // "SigFaultMsginserttoDB"
+QT_MOC_LITERAL(308, 10), // "strMsgType"
+QT_MOC_LITERAL(319, 12), // "strTimestamp"
+QT_MOC_LITERAL(332, 15), // "QList<uint16_t>"
+QT_MOC_LITERAL(348, 14), // "faultByteArray"
+QT_MOC_LITERAL(363, 10), // "strFirmNam"
+QT_MOC_LITERAL(374, 8), // "uint32_t"
+QT_MOC_LITERAL(383, 4), // "uiID"
+QT_MOC_LITERAL(388, 24), // "SigStnFaultMsginserttoDB"
+QT_MOC_LITERAL(413, 8), // "uint16_t"
+QT_MOC_LITERAL(422, 11), // "usFaultCode"
+QT_MOC_LITERAL(434, 24), // "SigSMSFaultMsginserttoDB"
+QT_MOC_LITERAL(459, 12), // "strFirmNamID"
+QT_MOC_LITERAL(472, 27), // "SigSMSStnFaultMsginserttoDB"
+QT_MOC_LITERAL(500, 11), // "usFaultCOde"
+QT_MOC_LITERAL(512, 10), // "SigSendSMS"
+QT_MOC_LITERAL(523, 7), // "message"
+QT_MOC_LITERAL(531, 19), // "SigSendFaultmessage"
+QT_MOC_LITERAL(551, 12), // "strTimeStamp"
+QT_MOC_LITERAL(564, 9), // "strFirmid"
+QT_MOC_LITERAL(574, 24), // "SigAccessReqInsertintoDB"
+QT_MOC_LITERAL(599, 18), // "stAccessRequestPkt"
+QT_MOC_LITERAL(618, 8), // "stheader"
+QT_MOC_LITERAL(627, 9), // "uiPktType"
+QT_MOC_LITERAL(637, 8), // "uiPktLen"
+QT_MOC_LITERAL(646, 7), // "uiFrmNo"
+QT_MOC_LITERAL(654, 11), // "uiSrcLocoID"
+QT_MOC_LITERAL(666, 12), // "uiSrcLocoVer"
+QT_MOC_LITERAL(679, 13), // "uiAbsLoco_Loc"
+QT_MOC_LITERAL(693, 10), // "uiTrainLen"
+QT_MOC_LITERAL(704, 10), // "uiTrainSpd"
+QT_MOC_LITERAL(715, 11), // "uiMovMntDir"
+QT_MOC_LITERAL(727, 14), // "uiEmergencySts"
+QT_MOC_LITERAL(742, 10), // "uiLocoMode"
+QT_MOC_LITERAL(753, 10), // "uiApprStID"
+QT_MOC_LITERAL(764, 13), // "uiLastRfidTag"
+QT_MOC_LITERAL(778, 7), // "uitinNo"
+QT_MOC_LITERAL(786, 11), // "uiLongitude"
+QT_MOC_LITERAL(798, 10), // "uiLatitude"
+QT_MOC_LITERAL(809, 13), // "uiLocoRandmrl"
+QT_MOC_LITERAL(823, 9), // "uiMACCode"
+QT_MOC_LITERAL(833, 8), // "uiPktCRC"
+QT_MOC_LITERAL(842, 7), // "uint8_t"
+QT_MOC_LITERAL(850, 10), // "ucMASecCnt"
+QT_MOC_LITERAL(861, 9), // "usRouteID"
+QT_MOC_LITERAL(871, 5), // "uiCRC"
+QT_MOC_LITERAL(877, 26), // "SigLocoRegularInsertintoDB"
+QT_MOC_LITERAL(904, 11), // "uidoubtover"
+QT_MOC_LITERAL(916, 12), // "uidoubtunder"
+QT_MOC_LITERAL(929, 10), // "uitrainint"
+QT_MOC_LITERAL(940, 8), // "uiTagDup"
+QT_MOC_LITERAL(949, 13), // "uitagLinkInfo"
+QT_MOC_LITERAL(963, 10), // "uiBrkApply"
+QT_MOC_LITERAL(974, 12), // "uinewMAReply"
+QT_MOC_LITERAL(987, 15), // "uiLastRefProfNo"
+QT_MOC_LITERAL(1003, 7), // "uiSigOV"
+QT_MOC_LITERAL(1011, 9), // "uiInfoAck"
+QT_MOC_LITERAL(1021, 7), // "uiSpare"
+QT_MOC_LITERAL(1029, 14), // "strLocoHlthSts"
+QT_MOC_LITERAL(1044, 33), // "SigAccessAuthorityPktInsertin..."
+QT_MOC_LITERAL(1078, 17), // "uiSrcStnILCIBS_ID"
+QT_MOC_LITERAL(1096, 18), // "uiSRCStnILCIBS_ver"
+QT_MOC_LITERAL(1115, 15), // "uiStnILCIBS_Loc"
+QT_MOC_LITERAL(1131, 13), // "uiDestLoco_ID"
+QT_MOC_LITERAL(1145, 16), // "uiAlotUpLnk_Freq"
+QT_MOC_LITERAL(1162, 16), // "uiAlotDnLnk_Freq"
+QT_MOC_LITERAL(1179, 20), // "uiAlotTDMA_Timeslots"
+QT_MOC_LITERAL(1200, 14), // "uiStnRndNum_RS"
+QT_MOC_LITERAL(1215, 9), // "uiStnTDMA"
+QT_MOC_LITERAL(1225, 10), // "uiMAC_Code"
+QT_MOC_LITERAL(1236, 8), // "uiPktCrc"
+QT_MOC_LITERAL(1245, 37), // "SigAdditionalEmergencyPktInse..."
+QT_MOC_LITERAL(1283, 12), // "uiGenSoSCall"
+QT_MOC_LITERAL(1296, 27), // "SigInsertDBStationRegHeader"
+QT_MOC_LITERAL(1324, 8), // "stHeader"
+QT_MOC_LITERAL(1333, 20), // "StationRegularHeader"
+QT_MOC_LITERAL(1354, 13), // "stStnRglrHPkt"
+QT_MOC_LITERAL(1368, 27), // "SigInsertDBStationhealthPkt"
+QT_MOC_LITERAL(1396, 18), // "stStationHealthPkt"
+QT_MOC_LITERAL(1415, 12), // "stStnHlthPkt"
+QT_MOC_LITERAL(1428, 9), // "strEvntID"
+QT_MOC_LITERAL(1438, 11), // "strEvntData"
+QT_MOC_LITERAL(1450, 5), // "uiCrc"
+QT_MOC_LITERAL(1456, 27), // "SigInsertDBOnBoardhealthPkt"
+QT_MOC_LITERAL(1484, 18), // "stOnBoardHealthPkt"
+QT_MOC_LITERAL(1503, 14), // "stOnBrdHlthPkt"
+QT_MOC_LITERAL(1518, 23), // "SigInsertDBS2SPDIVerCmd"
+QT_MOC_LITERAL(1542, 14), // "stPacketHeader"
+QT_MOC_LITERAL(1557, 8), // "stPktHdr"
+QT_MOC_LITERAL(1566, 19), // "stPDIVerCheckCmdPkt"
+QT_MOC_LITERAL(1586, 11), // "stPDIVerCmd"
+QT_MOC_LITERAL(1598, 23), // "SigInsertDBS2SPDIVerMsg"
+QT_MOC_LITERAL(1622, 19), // "stPDIVerCheckMsgPkt"
+QT_MOC_LITERAL(1642, 11), // "stPDIVerMsg"
+QT_MOC_LITERAL(1654, 23), // "SigInsertDBS2SHeartBeat"
+QT_MOC_LITERAL(1678, 14), // "stHeartBeatPkt"
+QT_MOC_LITERAL(1693, 11), // "stHeartBeat"
+QT_MOC_LITERAL(1705, 30), // "SigInsertDBS2STrainHandOverReq"
+QT_MOC_LITERAL(1736, 21), // "stTrainHandOverReqPkt"
+QT_MOC_LITERAL(1758, 14), // "stTrnHndOveReq"
+QT_MOC_LITERAL(1773, 31), // "SigInsertDBS2STrainTakenOverMsg"
+QT_MOC_LITERAL(1805, 19), // "stTrainTakenOverPkt"
+QT_MOC_LITERAL(1825, 14), // "stTrnTknOveMsg"
+QT_MOC_LITERAL(1840, 42), // "SigInsertDBS2STrainHandOverCa..."
+QT_MOC_LITERAL(1883, 30), // "stTrainHandOverCancellationPkt"
+QT_MOC_LITERAL(1914, 18), // "stTrnHndOvrCnclPkt"
+QT_MOC_LITERAL(1933, 39), // "SigInsertDBS2STrainLengthInfo..."
+QT_MOC_LITERAL(1973, 20), // "stTrainLengthInfoPkt"
+QT_MOC_LITERAL(1994, 15), // "stTrnLenInfoPkt"
+QT_MOC_LITERAL(2010, 34), // "SigInsertDBS2SLengthInformati..."
+QT_MOC_LITERAL(2045, 20), // "stTrainLengthInfoAck"
+QT_MOC_LITERAL(2066, 15), // "stTrnLenInfoAck"
+QT_MOC_LITERAL(2082, 29), // "SigInsertDBS2STSLRouteRequest"
+QT_MOC_LITERAL(2112, 11), // "stTSLReqPkt"
+QT_MOC_LITERAL(2124, 13), // "stTSLRouteReq"
+QT_MOC_LITERAL(2138, 40), // "SigInsertDBS2STSLAuthorityInf..."
+QT_MOC_LITERAL(2179, 19), // "stTSLInformationPkt"
+QT_MOC_LITERAL(2199, 12), // "stTSLInfoPkt"
+QT_MOC_LITERAL(2212, 36), // "SigInsertDBS2SFieldElementsSt..."
+QT_MOC_LITERAL(2249, 27), // "stFieldElementsStatusReqPkt"
+QT_MOC_LITERAL(2277, 18), // "stFldElementStsReq"
+QT_MOC_LITERAL(2296, 42), // "SigInsertDBS2STrainHandoverCa..."
+QT_MOC_LITERAL(2339, 33), // "stTrainHandOverCancellationAc..."
+QT_MOC_LITERAL(2373, 18), // "stTrnHndOvrCnclAck"
+QT_MOC_LITERAL(2392, 26), // "SigInsertDBLocoRSSIMessage"
+QT_MOC_LITERAL(2419, 13), // "stLocoRSSIMsg"
+QT_MOC_LITERAL(2433, 10), // "stLocoRSSI"
+QT_MOC_LITERAL(2444, 29), // "SigInsertDBStationRSSIMessage"
+QT_MOC_LITERAL(2474, 16), // "stStationRSSIMsg"
+QT_MOC_LITERAL(2491, 9), // "stStnRSSI"
+QT_MOC_LITERAL(2501, 30), // "SigInsertDBStationKavachSysSts"
+QT_MOC_LITERAL(2532, 25), // "stStationaryKavachSysInfo"
+QT_MOC_LITERAL(2558, 16), // "stStnKavchSysSts"
+QT_MOC_LITERAL(2575, 30), // "SigInsertDBOnBoardEventMessage"
+QT_MOC_LITERAL(2606, 23), // "stOnboardKavachEventMsg"
+QT_MOC_LITERAL(2630, 17), // "stOnBoardEventMsg"
+QT_MOC_LITERAL(2648, 31), // "SigInsertDBOnBoardBrakeEventMsg"
+QT_MOC_LITERAL(2680, 28), // "stOnboardKavachBrakeEventMsg"
+QT_MOC_LITERAL(2709, 21), // "stOnBoardBrakeEvntMsg"
+QT_MOC_LITERAL(2731, 33), // "SigInsertDBOnBoardSystemHealt..."
+QT_MOC_LITERAL(2765, 28), // "stOnboardKavachBOKSHealthMsg"
+QT_MOC_LITERAL(2794, 18), // "stOnBoardSysHealth"
+QT_MOC_LITERAL(2813, 27), // "SigInsertDBFieldInputStatus"
+QT_MOC_LITERAL(2841, 10), // "usRelayCnt"
+QT_MOC_LITERAL(2852, 15), // "byArrRelayImage"
+QT_MOC_LITERAL(2868, 30), // "SigInsertDBFieldInputEventData"
+QT_MOC_LITERAL(2899, 16), // "stFieldEventData"
+QT_MOC_LITERAL(2916, 13), // "stFldEvntData"
+QT_MOC_LITERAL(2930, 18), // "SigShowAllStations"
+QT_MOC_LITERAL(2949, 21), // "SigStationisConnected"
+QT_MOC_LITERAL(2971, 14), // "strStationName"
+QT_MOC_LITERAL(2986, 7), // "bstatus"
+QT_MOC_LITERAL(2994, 18), // "SlotNewFaultPacket"
+QT_MOC_LITERAL(3013, 8), // "datagram"
+QT_MOC_LITERAL(3022, 21), // "SlotPreviousFaultInfo"
+QT_MOC_LITERAL(3044, 14), // "SlottabChanged"
+QT_MOC_LITERAL(3059, 5), // "index"
+QT_MOC_LITERAL(3065, 20), // "SlotUpadateSchematic"
+QT_MOC_LITERAL(3086, 20), // "SlotStationNameAndID"
+QT_MOC_LITERAL(3107, 15), // "strLstStationID"
+QT_MOC_LITERAL(3123, 18), // "strLstStationNames"
+QT_MOC_LITERAL(3142, 11), // "strDateTime"
+QT_MOC_LITERAL(3154, 11), // "bStationSts"
+QT_MOC_LITERAL(3166, 20), // "SlotStationRegHeader"
+QT_MOC_LITERAL(3187, 21), // "SlotStationconnStatus"
+QT_MOC_LITERAL(3209, 11), // "strHostAddr"
+QT_MOC_LITERAL(3221, 7), // "bStatus"
+QT_MOC_LITERAL(3229, 24), // "SlotKMSChannelChangeover"
+QT_MOC_LITERAL(3254, 8), // "newSimID"
+QT_MOC_LITERAL(3263, 21), // "SlotKMSPacketReceived"
+QT_MOC_LITERAL(3285, 7), // "msgType"
+QT_MOC_LITERAL(3293, 6), // "packet"
+QT_MOC_LITERAL(3300, 17), // "SlotKMSPacketSent"
+QT_MOC_LITERAL(3318, 10), // "SlotDoPing"
+QT_MOC_LITERAL(3329, 24), // "SlotSendNextReplayPacket"
+QT_MOC_LITERAL(3354, 15), // "SlotVCHeartbeat"
+QT_MOC_LITERAL(3370, 15), // "SlotGPSPosition"
+QT_MOC_LITERAL(3386, 4), // "dLat"
+QT_MOC_LITERAL(3391, 4), // "dLon"
+QT_MOC_LITERAL(3396, 6) // "bValid"
 
     },
     "nmsMainWindow\0SigSendAckNMStoKavach\0"
@@ -236,9 +238,10 @@ QT_MOC_LITERAL(3362, 6) // "bValid"
     "stKavachtoNMS*\0pstKavachtoNMS\0"
     "strFaultsCode\0strFaultMsg\0"
     "SigStnFaultPktInserttoDB\0stStationFaults*\0"
-    "pstStnFaults\0SigStationInfo\0SigLocoInfo\0"
-    "SigFaultMsginserttoDB\0strMsgType\0"
-    "strTimestamp\0QList<uint16_t>\0"
+    "pstStnFaults\0strLstModuleID\0"
+    "strLstFaultCodeTyp\0SigStationInfo\0"
+    "SigLocoInfo\0SigFaultMsginserttoDB\0"
+    "strMsgType\0strTimestamp\0QList<uint16_t>\0"
     "faultByteArray\0strFirmNam\0uint32_t\0"
     "uiID\0SigStnFaultMsginserttoDB\0uint16_t\0"
     "usFaultCode\0SigSMSFaultMsginserttoDB\0"
@@ -345,118 +348,118 @@ static const uint qt_meta_data_nmsMainWindow[] = {
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
        1,    3,  338,    2, 0x06,    1 /* Public */,
        8,    3,  345,    2, 0x06,    5 /* Public */,
-      13,    3,  352,    2, 0x06,    9 /* Public */,
-      16,    0,  359,    2, 0x06,   13 /* Public */,
-      17,    0,  360,    2, 0x06,   14 /* Public */,
-      18,    5,  361,    2, 0x06,   15 /* Public */,
-      26,    5,  372,    2, 0x06,   21 /* Public */,
-      29,    4,  383,    2, 0x06,   27 /* Public */,
-      31,    4,  392,    2, 0x06,   32 /* Public */,
-      33,    2,  401,    2, 0x06,   37 /* Public */,
-      35,    4,  406,    2, 0x06,   40 /* Public */,
-      38,   23,  415,    2, 0x06,   45 /* Public */,
-      64,   31,  462,    2, 0x06,   69 /* Public */,
-      77,   16,  525,    2, 0x06,  101 /* Public */,
-      89,    9,  558,    2, 0x06,  118 /* Public */,
-      91,    2,  577,    2, 0x06,  128 /* Public */,
-      95,    4,  582,    2, 0x06,  131 /* Public */,
-     101,    4,  591,    2, 0x06,  136 /* Public */,
-     104,    2,  600,    2, 0x06,  141 /* Public */,
-     109,    2,  605,    2, 0x06,  144 /* Public */,
-     112,    2,  610,    2, 0x06,  147 /* Public */,
-     115,    2,  615,    2, 0x06,  150 /* Public */,
-     118,    2,  620,    2, 0x06,  153 /* Public */,
-     121,    2,  625,    2, 0x06,  156 /* Public */,
-     124,    2,  630,    2, 0x06,  159 /* Public */,
-     127,    2,  635,    2, 0x06,  162 /* Public */,
-     130,    2,  640,    2, 0x06,  165 /* Public */,
-     133,    2,  645,    2, 0x06,  168 /* Public */,
-     136,    2,  650,    2, 0x06,  171 /* Public */,
-     139,    2,  655,    2, 0x06,  174 /* Public */,
-     142,    1,  660,    2, 0x06,  177 /* Public */,
-     145,    1,  663,    2, 0x06,  179 /* Public */,
-     148,    1,  666,    2, 0x06,  181 /* Public */,
-     151,    1,  669,    2, 0x06,  183 /* Public */,
-     154,    1,  672,    2, 0x06,  185 /* Public */,
-     157,    1,  675,    2, 0x06,  187 /* Public */,
-     160,    4,  678,    2, 0x06,  189 /* Public */,
-     163,    1,  687,    2, 0x06,  194 /* Public */,
-     166,    0,  690,    2, 0x06,  196 /* Public */,
-     167,    2,  691,    2, 0x06,  197 /* Public */,
+      13,    5,  352,    2, 0x06,    9 /* Public */,
+      18,    0,  363,    2, 0x06,   15 /* Public */,
+      19,    0,  364,    2, 0x06,   16 /* Public */,
+      20,    5,  365,    2, 0x06,   17 /* Public */,
+      28,    5,  376,    2, 0x06,   23 /* Public */,
+      31,    4,  387,    2, 0x06,   29 /* Public */,
+      33,    4,  396,    2, 0x06,   34 /* Public */,
+      35,    2,  405,    2, 0x06,   39 /* Public */,
+      37,    4,  410,    2, 0x06,   42 /* Public */,
+      40,   23,  419,    2, 0x06,   47 /* Public */,
+      66,   31,  466,    2, 0x06,   71 /* Public */,
+      79,   16,  529,    2, 0x06,  103 /* Public */,
+      91,    9,  562,    2, 0x06,  120 /* Public */,
+      93,    2,  581,    2, 0x06,  130 /* Public */,
+      97,    4,  586,    2, 0x06,  133 /* Public */,
+     103,    4,  595,    2, 0x06,  138 /* Public */,
+     106,    2,  604,    2, 0x06,  143 /* Public */,
+     111,    2,  609,    2, 0x06,  146 /* Public */,
+     114,    2,  614,    2, 0x06,  149 /* Public */,
+     117,    2,  619,    2, 0x06,  152 /* Public */,
+     120,    2,  624,    2, 0x06,  155 /* Public */,
+     123,    2,  629,    2, 0x06,  158 /* Public */,
+     126,    2,  634,    2, 0x06,  161 /* Public */,
+     129,    2,  639,    2, 0x06,  164 /* Public */,
+     132,    2,  644,    2, 0x06,  167 /* Public */,
+     135,    2,  649,    2, 0x06,  170 /* Public */,
+     138,    2,  654,    2, 0x06,  173 /* Public */,
+     141,    2,  659,    2, 0x06,  176 /* Public */,
+     144,    1,  664,    2, 0x06,  179 /* Public */,
+     147,    1,  667,    2, 0x06,  181 /* Public */,
+     150,    1,  670,    2, 0x06,  183 /* Public */,
+     153,    1,  673,    2, 0x06,  185 /* Public */,
+     156,    1,  676,    2, 0x06,  187 /* Public */,
+     159,    1,  679,    2, 0x06,  189 /* Public */,
+     162,    4,  682,    2, 0x06,  191 /* Public */,
+     165,    1,  691,    2, 0x06,  196 /* Public */,
+     168,    0,  694,    2, 0x06,  198 /* Public */,
+     169,    2,  695,    2, 0x06,  199 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-     170,    3,  696,    2, 0x08,  200 /* Private */,
-     172,    0,  703,    2, 0x08,  204 /* Private */,
-     173,    1,  704,    2, 0x08,  205 /* Private */,
-     175,    3,  707,    2, 0x08,  207 /* Private */,
-     176,    4,  714,    2, 0x08,  211 /* Private */,
-     181,    1,  723,    2, 0x08,  216 /* Private */,
-     182,    2,  726,    2, 0x08,  218 /* Private */,
-     185,    1,  731,    2, 0x08,  221 /* Private */,
-     187,    2,  734,    2, 0x08,  223 /* Private */,
-     190,    2,  739,    2, 0x08,  226 /* Private */,
-     191,    0,  744,    2, 0x08,  229 /* Private */,
-     192,    0,  745,    2, 0x08,  230 /* Private */,
-     193,    0,  746,    2, 0x08,  231 /* Private */,
-     194,    3,  747,    2, 0x08,  232 /* Private */,
+     172,    3,  700,    2, 0x08,  202 /* Private */,
+     174,    0,  707,    2, 0x08,  206 /* Private */,
+     175,    1,  708,    2, 0x08,  207 /* Private */,
+     177,    3,  711,    2, 0x08,  209 /* Private */,
+     178,    4,  718,    2, 0x08,  213 /* Private */,
+     183,    1,  727,    2, 0x08,  218 /* Private */,
+     184,    2,  730,    2, 0x08,  220 /* Private */,
+     187,    1,  735,    2, 0x08,  223 /* Private */,
+     189,    2,  738,    2, 0x08,  225 /* Private */,
+     192,    2,  743,    2, 0x08,  228 /* Private */,
+     193,    0,  748,    2, 0x08,  231 /* Private */,
+     194,    0,  749,    2, 0x08,  232 /* Private */,
+     195,    0,  750,    2, 0x08,  233 /* Private */,
+     196,    3,  751,    2, 0x08,  234 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, 0x80000000 | 6,    4,    5,    7,
     QMetaType::Void, 0x80000000 | 9, QMetaType::QString, QMetaType::QString,   10,   11,   12,
-    QMetaType::Void, 0x80000000 | 14, QMetaType::QString, QMetaType::QString,   15,   11,   12,
+    QMetaType::Void, 0x80000000 | 14, QMetaType::QStringList, QMetaType::QStringList, QMetaType::QStringList, QMetaType::QStringList,   15,   16,   17,   11,   12,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 21, QMetaType::QString, 0x80000000 | 24,   19,   20,   22,   23,   25,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 27, QMetaType::QString, 0x80000000 | 24,   19,   20,   28,   23,   25,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 21, QMetaType::QString,   19,   20,   22,   30,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 27, QMetaType::QString,   19,   20,   32,   30,
-    QMetaType::Void, 0x80000000 | 24, QMetaType::QString,   25,   34,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,   19,   36,   37,   12,
-    QMetaType::Void, 0x80000000 | 39, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 60, 0x80000000 | 27, 0x80000000 | 24,   40,   41,   42,   43,   44,   45,   46,   47,   48,   49,   50,   51,   52,   53,   54,   55,   56,   57,   58,   59,   61,   62,   63,
-    QMetaType::Void, 0x80000000 | 39, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, QMetaType::QString, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 60, 0x80000000 | 27, 0x80000000 | 24,   40,   41,   42,   43,   44,   45,   46,   65,   66,   67,   47,   48,   49,   50,   51,   53,   68,   69,   54,   70,   71,   72,   73,   74,   75,   76,   58,   59,   61,   62,   63,
-    QMetaType::Void, 0x80000000 | 39, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24,   40,   41,   42,   43,   78,   79,   80,   81,   82,   83,   84,   85,   86,   87,   88,   63,
-    QMetaType::Void, 0x80000000 | 39, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24, 0x80000000 | 24,   40,   41,   42,   43,   78,   79,   80,   90,   63,
-    QMetaType::Void, 0x80000000 | 39, 0x80000000 | 93,   92,   94,
-    QMetaType::Void, 0x80000000 | 96, QMetaType::QStringList, QMetaType::QStringList, 0x80000000 | 24,   97,   98,   99,  100,
-    QMetaType::Void, 0x80000000 | 102, QMetaType::QString, QMetaType::QString, 0x80000000 | 24,  103,   98,   99,  100,
-    QMetaType::Void, 0x80000000 | 105, 0x80000000 | 107,  106,  108,
-    QMetaType::Void, 0x80000000 | 105, 0x80000000 | 110,  106,  111,
-    QMetaType::Void, 0x80000000 | 105, 0x80000000 | 113,  106,  114,
-    QMetaType::Void, 0x80000000 | 105, 0x80000000 | 116,  106,  117,
-    QMetaType::Void, 0x80000000 | 105, 0x80000000 | 119,  106,  120,
-    QMetaType::Void, 0x80000000 | 105, 0x80000000 | 122,  106,  123,
-    QMetaType::Void, 0x80000000 | 105, 0x80000000 | 125,  106,  126,
-    QMetaType::Void, 0x80000000 | 105, 0x80000000 | 128,  106,  129,
-    QMetaType::Void, 0x80000000 | 105, 0x80000000 | 131,  106,  132,
-    QMetaType::Void, 0x80000000 | 105, 0x80000000 | 134,  106,  135,
-    QMetaType::Void, 0x80000000 | 105, 0x80000000 | 137,  106,  138,
-    QMetaType::Void, 0x80000000 | 105, 0x80000000 | 140,  106,  141,
-    QMetaType::Void, 0x80000000 | 143,  144,
-    QMetaType::Void, 0x80000000 | 146,  147,
-    QMetaType::Void, 0x80000000 | 149,  150,
-    QMetaType::Void, 0x80000000 | 152,  153,
-    QMetaType::Void, 0x80000000 | 155,  156,
-    QMetaType::Void, 0x80000000 | 158,  159,
-    QMetaType::Void, 0x80000000 | 105, 0x80000000 | 27, QMetaType::QByteArray, 0x80000000 | 24,  106,  161,  162,   63,
-    QMetaType::Void, 0x80000000 | 164,  165,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 23, QMetaType::QString, 0x80000000 | 26,   21,   22,   24,   25,   27,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 29, QMetaType::QString, 0x80000000 | 26,   21,   22,   30,   25,   27,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 23, QMetaType::QString,   21,   22,   24,   32,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 29, QMetaType::QString,   21,   22,   34,   32,
+    QMetaType::Void, 0x80000000 | 26, QMetaType::QString,   27,   36,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,   21,   38,   39,   12,
+    QMetaType::Void, 0x80000000 | 41, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 62, 0x80000000 | 29, 0x80000000 | 26,   42,   43,   44,   45,   46,   47,   48,   49,   50,   51,   52,   53,   54,   55,   56,   57,   58,   59,   60,   61,   63,   64,   65,
+    QMetaType::Void, 0x80000000 | 41, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, QMetaType::QString, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 62, 0x80000000 | 29, 0x80000000 | 26,   42,   43,   44,   45,   46,   47,   48,   67,   68,   69,   49,   50,   51,   52,   53,   55,   70,   71,   56,   72,   73,   74,   75,   76,   77,   78,   60,   61,   63,   64,   65,
+    QMetaType::Void, 0x80000000 | 41, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26,   42,   43,   44,   45,   80,   81,   82,   83,   84,   85,   86,   87,   88,   89,   90,   65,
+    QMetaType::Void, 0x80000000 | 41, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26,   42,   43,   44,   45,   80,   81,   82,   92,   65,
+    QMetaType::Void, 0x80000000 | 41, 0x80000000 | 95,   94,   96,
+    QMetaType::Void, 0x80000000 | 98, QMetaType::QStringList, QMetaType::QStringList, 0x80000000 | 26,   99,  100,  101,  102,
+    QMetaType::Void, 0x80000000 | 104, QMetaType::QString, QMetaType::QString, 0x80000000 | 26,  105,  100,  101,  102,
+    QMetaType::Void, 0x80000000 | 107, 0x80000000 | 109,  108,  110,
+    QMetaType::Void, 0x80000000 | 107, 0x80000000 | 112,  108,  113,
+    QMetaType::Void, 0x80000000 | 107, 0x80000000 | 115,  108,  116,
+    QMetaType::Void, 0x80000000 | 107, 0x80000000 | 118,  108,  119,
+    QMetaType::Void, 0x80000000 | 107, 0x80000000 | 121,  108,  122,
+    QMetaType::Void, 0x80000000 | 107, 0x80000000 | 124,  108,  125,
+    QMetaType::Void, 0x80000000 | 107, 0x80000000 | 127,  108,  128,
+    QMetaType::Void, 0x80000000 | 107, 0x80000000 | 130,  108,  131,
+    QMetaType::Void, 0x80000000 | 107, 0x80000000 | 133,  108,  134,
+    QMetaType::Void, 0x80000000 | 107, 0x80000000 | 136,  108,  137,
+    QMetaType::Void, 0x80000000 | 107, 0x80000000 | 139,  108,  140,
+    QMetaType::Void, 0x80000000 | 107, 0x80000000 | 142,  108,  143,
+    QMetaType::Void, 0x80000000 | 145,  146,
+    QMetaType::Void, 0x80000000 | 148,  149,
+    QMetaType::Void, 0x80000000 | 151,  152,
+    QMetaType::Void, 0x80000000 | 154,  155,
+    QMetaType::Void, 0x80000000 | 157,  158,
+    QMetaType::Void, 0x80000000 | 160,  161,
+    QMetaType::Void, 0x80000000 | 107, 0x80000000 | 29, QMetaType::QByteArray, 0x80000000 | 26,  108,  163,  164,   65,
+    QMetaType::Void, 0x80000000 | 166,  167,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::Bool,  168,  169,
+    QMetaType::Void, QMetaType::QString, QMetaType::Bool,  170,  171,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, QMetaType::QByteArray,    4,    5,  171,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, QMetaType::QByteArray,    4,    5,  173,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,  174,
-    QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, QMetaType::QByteArray,    4,    5,  171,
-    QMetaType::Void, QMetaType::QStringList, QMetaType::QStringList, QMetaType::QString, QMetaType::Bool,  177,  178,  179,  180,
-    QMetaType::Void, 0x80000000 | 93,   94,
-    QMetaType::Void, QMetaType::QString, QMetaType::Bool,  183,  184,
-    QMetaType::Void, QMetaType::UChar,  186,
-    QMetaType::Void, QMetaType::UChar, QMetaType::QByteArray,  188,  189,
-    QMetaType::Void, QMetaType::UChar, QMetaType::QByteArray,  188,  189,
+    QMetaType::Void, QMetaType::Int,  176,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, QMetaType::QByteArray,    4,    5,  173,
+    QMetaType::Void, QMetaType::QStringList, QMetaType::QStringList, QMetaType::QString, QMetaType::Bool,  179,  180,  181,  182,
+    QMetaType::Void, 0x80000000 | 95,   96,
+    QMetaType::Void, QMetaType::QString, QMetaType::Bool,  185,  186,
+    QMetaType::Void, QMetaType::UChar,  188,
+    QMetaType::Void, QMetaType::UChar, QMetaType::QByteArray,  190,  191,
+    QMetaType::Void, QMetaType::UChar, QMetaType::QByteArray,  190,  191,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Double, QMetaType::Double, QMetaType::Bool,  195,  196,  197,
+    QMetaType::Void, QMetaType::Double, QMetaType::Double, QMetaType::Bool,  197,  198,  199,
 
        0        // eod
 };
@@ -469,7 +472,7 @@ void nmsMainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         switch (_id) {
         case 0: _t->SigSendAckNMStoKavach((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<stNMStoKavach*>>(_a[3]))); break;
         case 1: _t->SigFaultPktInserttoDB((*reinterpret_cast< std::add_pointer_t<stKavachtoNMS*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
-        case 2: _t->SigStnFaultPktInserttoDB((*reinterpret_cast< std::add_pointer_t<stStationFaults*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
+        case 2: _t->SigStnFaultPktInserttoDB((*reinterpret_cast< std::add_pointer_t<stStationFaults*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[5]))); break;
         case 3: _t->SigStationInfo(); break;
         case 4: _t->SigLocoInfo(); break;
         case 5: _t->SigFaultMsginserttoDB((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QList<uint16_t>>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[5]))); break;
@@ -750,7 +753,7 @@ void nmsMainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
             }
         }
         {
-            using _t = void (nmsMainWindow::*)(stStationFaults * , QString , QString );
+            using _t = void (nmsMainWindow::*)(stStationFaults * , QStringList , QStringList , QStringList , QStringList );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&nmsMainWindow::SigStnFaultPktInserttoDB)) {
                 *result = 2;
                 return;
@@ -1025,7 +1028,7 @@ const QMetaObject nmsMainWindow::staticMetaObject = { {
     qt_static_metacall,
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_nmsMainWindow_t
-, QtPrivate::TypeAndForceComplete<nmsMainWindow, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<stNMStoKavach *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stKavachtoNMS *, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stStationFaults *, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QList<uint16_t>, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QList<uint16_t>, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint8_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint8_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<StationRegularHeader, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stStationHealthPkt, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stOnBoardHealthPkt, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stPDIVerCheckCmdPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stPDIVerCheckMsgPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stHeartBeatPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainHandOverReqPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainTakenOverPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainHandOverCancellationPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainLengthInfoPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainLengthInfoAck, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTSLReqPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTSLInformationPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stFieldElementsStatusReqPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainHandOverCancellationAckPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stLocoRSSIMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stStationRSSIMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stStationaryKavachSysInfo, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stOnboardKavachEventMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stOnboardKavachBrakeEventMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stOnboardKavachBOKSHealthMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stFieldEventData, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>
+, QtPrivate::TypeAndForceComplete<nmsMainWindow, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<stNMStoKavach *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stKavachtoNMS *, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stStationFaults *, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QList<uint16_t>, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QList<uint16_t>, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint8_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint8_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<StationRegularHeader, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stStationHealthPkt, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stOnBoardHealthPkt, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stPDIVerCheckCmdPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stPDIVerCheckMsgPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stHeartBeatPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainHandOverReqPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainTakenOverPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainHandOverCancellationPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainLengthInfoPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainLengthInfoAck, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTSLReqPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTSLInformationPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stFieldElementsStatusReqPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainHandOverCancellationAckPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stLocoRSSIMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stStationRSSIMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stStationaryKavachSysInfo, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stOnboardKavachEventMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stOnboardKavachBrakeEventMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stOnboardKavachBOKSHealthMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stFieldEventData, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>
 , QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<StationRegularHeader, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>
 
 
@@ -1079,9 +1082,9 @@ void nmsMainWindow::SigFaultPktInserttoDB(stKavachtoNMS * _t1, QString _t2, QStr
 }
 
 // SIGNAL 2
-void nmsMainWindow::SigStnFaultPktInserttoDB(stStationFaults * _t1, QString _t2, QString _t3)
+void nmsMainWindow::SigStnFaultPktInserttoDB(stStationFaults * _t1, QStringList _t2, QStringList _t3, QStringList _t4, QStringList _t5)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t4))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t5))) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 
