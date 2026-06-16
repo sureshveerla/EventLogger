@@ -30,9 +30,7 @@ EventLogger::EventLogger(QObject *parent)
 
     qDebug() << "UART GPS connected successfully on /dev/ttyS0";
 
-    connect(m_serial, &QSerialPort::readyRead,
-            this, &EventLogger::readGPSData,
-            Qt::QueuedConnection);
+
 }
 
 void EventLogger::readGPSData()
@@ -42,8 +40,6 @@ void EventLogger::readGPSData()
     QByteArray raw = m_serial->readAll();
     m_buffer.append(raw);
 
-    // 🔍 Debug raw stream (optional)
- //   qDebug() << "RAW:" << raw;
 
     while (m_buffer.contains('\n'))
     {
@@ -51,8 +47,6 @@ void EventLogger::readGPSData()
         QByteArray line = m_buffer.left(index).trimmed();
         m_buffer.remove(0, index + 1);
 
-        // 🔍 Print every NMEA line
-      //  qDebug() << "NMEA:" << line;
 
         if (line.startsWith("$GPRMC") || line.startsWith("$GNRMC"))
         {

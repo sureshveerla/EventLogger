@@ -109,7 +109,7 @@ Q_DECLARE_METATYPE(stNMStoKavach);
 
 typedef struct staccessrequestpkt {
     quint16 usStartFrame;     // 0xAAAA
-    quint8  ucMsgType;        // 0x12
+    quint8  ucMsgType;        // 0x11
     quint16 usMsgLength;
     quint16 usMsgSeq;
     quint16 usStatKavachID;
@@ -120,13 +120,7 @@ typedef struct staccessrequestpkt {
     quint8  ucRadioType;      // 0xF1
     quint8  ucSOF1;           // 0xA5
     quint8  ucSOF2;           // 0xC3
-
-    // NOTE: Variable-length txBuffer comes here — can't be stored in struct directly
-
-    // Then:
-    // quint8 MASectionCount;
-    // quint16 routeId;
-    // quint32 uiCRC;
+    quint32 uiCRC;
 } __attribute__((packed)) stAccessRequestPkt;
 Q_DECLARE_METATYPE(stAccessRequestPkt);
 

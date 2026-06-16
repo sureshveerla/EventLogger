@@ -11,10 +11,6 @@
 uint32_t CalculateCRC32 (const uint32_t cnt,
                           const uint8_t *buf);
 
-uint32_t CalculateCRC32_KMS (const uint32_t cnt,
-                          const uint8_t *buf);
-
-
 
 #ifdef __cplusplus
   }

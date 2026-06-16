@@ -2633,24 +2633,32 @@ void nmsMainWindow::ForwardToNMS(QByteArray datagram)
 
 void nmsMainWindow::ForwardViaGSM(const QByteArray &datagram)
 {
-    QString  strNMSGsmIP   = "192.25.195.1";  // RUT956 SIM IP
-    quint16  usNMSGsmPort  = 5005;
-    QString  strLARAIP     = "10.204.31.90";      // ← LARA-R6801 usb0 IP
+    // Teltonika RUT956 is on the same LAN switch — reach it directly via Ethernet
+    QString  strRUT956_IP   = "192.250.195.1";   // Teltonika LAN IP (fixed typo from 192.25.195.1)
+    quint16  usNMSGsmPort   = 5005;
+    QString  strELU_LAN_IP  = "192.250.195.16";  // EventLogger's own LAN IP — bind to force correct interface
 
     QUdpSocket gsmSocket;
+    bool bBind = gsmSocket.bind(QHostAddress(strELU_LAN_IP), 0);
 
-    // Bind to LARA-R6801 interface — forces packet out via SIM, not LAN
-    gsmSocket.bind(QHostAddress(strLARAIP), 0);
+    qDebug() << "Bind Result     =" << bBind;
+    qDebug() << "Local Address   =" << gsmSocket.localAddress();
+    qDebug() << "Local Port      =" << gsmSocket.localPort();
 
     qint64 sent = gsmSocket.writeDatagram(
         datagram,
-        QHostAddress(strNMSGsmIP),
+        QHostAddress(strRUT956_IP),
         usNMSGsmPort);
 
-    if (sent == -1)
-        qWarning() << "[EventLogger GSM] Send FAILED:" << gsmSocket.errorString();
+    if (sent < 0)
+    {
+        qDebug() << "UDP Send Failed :" << gsmSocket.errorString();
+    }
     else
-        qDebug() << "[EventLogger GSM] Sent via LARA SIM ->" << strNMSGsmIP << ":" << usNMSGsmPort << "bytes:" << sent;
+    {
+        qDebug() << "UDP Sent        : " << sent << "bytes"
+                 << "-> " << strRUT956_IP << ":" << usNMSGsmPort;
+    }
 }
 
 void nmsMainWindow::SendAckNMStoKavach(QHostAddress senderIP, quint16 senderPort)
@@ -3087,7 +3095,7 @@ void nmsMainWindow::InitNMSPingThread()
 
     // ── Replay timer (50 ms between packets) ─────────────────
     m_pcReplayTimer = new QTimer();
-    m_pcReplayTimer->setInterval(50);
+    m_pcReplayTimer->setInterval(10);
     m_pcReplayTimer->moveToThread(m_pcPingThread);
 
     // Start ping timer when thread starts
@@ -3113,7 +3121,7 @@ void nmsMainWindow::InitNMSPingThread()
     m_pcPingThread->start();
 
     qInfo() << "[PingThread] Started — pinging NMS" << m_strNMSIP
-            << "every 5 s";
+            << "every 1 s";
 }
 
 // ============================================================
@@ -3349,10 +3357,10 @@ void nmsMainWindow::SlotVCHeartbeat()
     QHostAddress vcAddr(m_strVCIP);
 
     // ── 0x28 — GNSS Position Message ─────────────────────────
-    QByteArray pkt28 = Build0x28Packet();
-    m_pcVCSock->writeDatagram(pkt28, vcAddr, m_usVCPort);
-    qDebug() << "[VCHb] Sent 0x28" << pkt28.size() << "bytes to VC";
-    qDebug() << "[VCHb] Sent 0x28"
+   QByteArray pkt28 = Build0x28Packet();
+   m_pcVCSock->writeDatagram(pkt28, vcAddr, m_usVCPort);
+
+   qDebug() << "GNSS Position Sent 0x28 to "
              << "IP:" << vcAddr.toString()
              << "Port:" << m_usVCPort
              << "Size:" << pkt28.size()
@@ -3361,15 +3369,14 @@ void nmsMainWindow::SlotVCHeartbeat()
 
 
     // ── 0xA2 — ELU Diagnostics / Heartbeat ───────────────────
-    // QByteArray pktA2 = Build0xA2Packet();
-    // m_pcVCSock->writeDatagram(pktA2, vcAddr, m_usVCPort);
-    // qDebug() << "[VCHb] Sent 0xA2" << pktA2.size() << "bytes to VC";
+    QByteArray pktA2 = Build0xA2Packet();
+    m_pcVCSock->writeDatagram(pktA2, vcAddr, m_usVCPort);
 
-    // qDebug() << "[VCHb] Sent 0xA2"
-    //          << "IP:" << vcAddr.toString()
-    //          << "Port:" << m_usVCPort
-    //          << "Size:" << pktA2.size()
-    //          << "Data:" << pktA2.toHex(' ').toUpper();
+    qDebug() << "ELU Diagnostics/HeartBeat 0xA2 to"
+             << "IP:" << vcAddr.toString()
+             << "Port:" << m_usVCPort
+             << "Size:" << pktA2.size()
+             << "Data:" << pktA2.toHex(' ').toUpper();
 }
 
 // ============================================================
@@ -3566,6 +3573,8 @@ QByteArray nmsMainWindow::Build0xA2Packet()
     // NMS Communication Status: 1=OK, 0=Fail
     quint8 nmsOK = (!m_bNMSOffline && !m_bNMSAppDown) ? 1 : 0;
     pkt.append(static_cast<char>(nmsOK));
+
+    qDebug()<<" NMS is Ok or Not: "<<nmsOK;
 
     // GNSS Link Status: 1=OK, 0=Fail
     pkt.append(static_cast<char>(m_bGNSSValid ? 1 : 0));

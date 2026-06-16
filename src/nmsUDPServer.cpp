@@ -392,7 +392,7 @@ void nmsUDPServer::InitKMS()
     QString eluBIP = cfg.value("KMS/ELU_B_IP").toString();
     QString vcIP   = cfg.value("KMS/VC_IP").toString();
     quint16 vcPort = static_cast<quint16>(cfg.value("KMS/VC_PORT", 0).toUInt());
-
+    qDebug()<<" VC Port : "<<vcPort;
     if (eluAIP.isEmpty() || eluBIP.isEmpty() || vcIP.isEmpty() || vcPort == 0)
     {
         qCritical() << "[KMS] Config.cfg missing required [KMS] entries:"
