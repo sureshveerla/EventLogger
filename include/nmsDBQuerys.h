@@ -177,6 +177,7 @@ private:
 
     void InsertSMSHBLFaultMsg(QString strMsgType, QString strTimestamp, QString strFaultCode,
                               QString strFirmnamid, QString strFaultMsg);
+
     void InsertSMSMEDHAFaultMsg(QString strMsgType, QString strTimestamp,uint16_t usFaultCode,
                                 QString strFirmnamid,QString strFaultMsg);
 
