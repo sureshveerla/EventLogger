@@ -1,29 +1,4 @@
 
-/******************************************************************************
- *                                                                            *
- * Application Name : RFPSDB                                                  *
- *                                                                            *
- * File name        : RFPSDB.h                                                *
- *                                                                            *
- * Class name       : RFPSDB                                                  *
- *                                                                            *
- * Author           : DLRL RFPS                                               *
- *                                                                            *
- * Description      : This class is part of the RFPSDB library, which is used *
- *                    to establish the connection with the PostgreSQL         *
- *                    database. Periodically checks the connectivity with     *
- *                    the database.                                           *
- *                                                                            *
- * Date             : 10 sep, 2014                                            *
- *                                                                            *
- * Version          : 0.0.1                                                   *
- *                                                                            *
- * Reference        : None                                                    *
- *                                                                            *
- * Remarks          : None                                                    *
- *                                                                            *
- ******************************************************************************/
-
 #ifndef NMS_DB_H
 #define NMS_DB_H
 
@@ -61,7 +36,7 @@ class NMSDB : public QThread
       /** @brief functon returns the status of the database connection */
     bool IsDBOpen();
 
-      /** @brief function returns RFPS_TRUE if connected to the database. Otherwise
+      /** @brief function returns true if connected to the database. Otherwise
          false will be returned. */
     bool IsConnected();
 
@@ -95,4 +70,4 @@ class NMSDB : public QThread
     QSqlDatabase      m_ocDB;
 };
 
-#endif /* RFPS_DB_H */
+#endif /* NMS_DB_H */

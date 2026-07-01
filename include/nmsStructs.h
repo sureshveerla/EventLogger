@@ -1,29 +1,6 @@
 
-/******************************************************************************
- *                                                                            *
- * Application Name : RFPSCommon                                              *
- *                                                                            *
- * File name        : RFPSStructs.h                                           *
- *                                                                            *
- * Class name       : N/A                                                     *
- *                                                                            *
- * Author           : SaNa Software                                           *
- *                                                                            *
- * Description      : The file contains the structures used in the project.   *
- *                                                                            *
- * Date             : 20 Jun, 2023                                            *
- *                                                                            *
- * Version          : 1.0                                                     *
- *                                                                            *
- * Reference        : None                                                    *
- *                                                                            *
- * Remarks          : These structures are taken from the earlier version.    *
- *                    Need to revisit these structures.                       *
- *                                                                            *
- ******************************************************************************/
-
-#ifndef _RFPS_STRUCTS_H_
-#define _RFPS_STRUCTS_H_
+#ifndef _NMS_STRUCTS_H_
+#define _NMS_STRUCTS_H_
 
 #include "nmsQtInc.h"
 #include "nmsEnum.h"
@@ -990,4 +967,4 @@ struct TempSpeedRestrictionPkt
 
 };
 
-#endif // _RFPS_STRUCTS_H_
+#endif // _NMS_STRUCTS_H_

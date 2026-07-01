@@ -571,11 +571,6 @@ void nmsMainWindow::ProcessTSRMSMessagePkt(QByteArray datagram)
 {
     memcpy(&m_stPktHdr, datagram.constData(), sizeof(stPacketHeader));
 
-    // stPktHdr.usStartFrame = qFromBigEndian(stPktHdr.usStartFrame);
-    // stPktHdr.usMsgLength  = qFromBigEndian(stPktHdr.usMsgLength);
-    // stPktHdr.usStatKavachID = qFromBigEndian(stPktHdr.usStatKavachID);
-    // stPktHdr.usNMSID      = qFromBigEndian(stPktHdr.usNMSID);
-
     int offset = sizeof(stPacketHeader);
 
     if (datagram.size() < offset + 2)
@@ -3330,8 +3325,8 @@ void nmsMainWindow::InitVCHeartbeat()
     m_pcVCTimer = new QTimer(this);
     m_pcVCTimer->setInterval(intervalMs);
 
-    connect(m_pcVCTimer, &QTimer::timeout,
-            this,        &nmsMainWindow::SlotVCHeartbeat);
+    // connect(m_pcVCTimer, &QTimer::timeout,
+    //         this,        &nmsMainWindow::SlotVCHeartbeat);
 
     m_pcVCTimer->start();
 

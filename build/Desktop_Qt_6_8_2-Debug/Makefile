@@ -1603,88 +1603,6 @@ moc_nmsDBQuerys.cpp: ../../include/nmsDBQuerys.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
 		../../include/nmsDB.h \
 		../../include/nmsStructs.h \
 		../../include/nmsEnum.h \
@@ -2057,88 +1975,6 @@ moc_nmsUDPServer.cpp: ../../include/nmsUDPServer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
 		../../include/nmsStructs.h \
 		../../include/nmsEnum.h \
 		../../include/kavachpkthandler.h \
@@ -2656,88 +2492,6 @@ moc_EventLoggerKMS.cpp: ../../include/EventLoggerKMS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
 		../../include/crc32.h \
 		moc_predefs.h \
 		/opt/Qt/6.8.2/gcc_64/libexec/moc
@@ -3107,88 +2861,6 @@ moc_kavachpkthandler.cpp: ../../include/kavachpkthandler.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMutexLocker \
 		../../include/crc32.h \
 		moc_predefs.h \
@@ -3561,88 +3233,6 @@ moc_KAVACH_PARSEPACKET.cpp: ../../include/KAVACH_PARSEPACKET.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
 		../../include/nmsEnum.h \
 		../../include/nmsDefines.h \
 		moc_predefs.h \
@@ -4013,88 +3603,6 @@ moc_nmsDB.cpp: ../../include/nmsDB.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
 		moc_predefs.h \
 		/opt/Qt/6.8.2/gcc_64/libexec/moc
 	/opt/Qt/6.8.2/gcc_64/libexec/moc $(DEFINES) --include /home/sana/Projects/BHEL/EventLogger/build/Desktop_Qt_6_8_2-Debug/moc_predefs.h -I/opt/Qt/6.8.2/gcc_64/mkspecs/linux-g++ -I/home/sana/Projects/BHEL/EventLogger -I/home/sana/Projects/BHEL/EventLogger/src -I/home/sana/Projects/BHEL/EventLogger/include -I/home/sana/Projects/BHEL/include -I/opt/Qt/6.8.2/gcc_64/include -I/opt/Qt/6.8.2/gcc_64/include/QtSerialPort -I/opt/Qt/6.8.2/gcc_64/include/QtNetwork -I/opt/Qt/6.8.2/gcc_64/include/QtSql -I/opt/Qt/6.8.2/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../include/nmsDB.h -o moc_nmsDB.cpp
@@ -4464,88 +3972,6 @@ moc_nmsMainWindow.cpp: ../../include/nmsMainWindow.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
 		../../include/nmsStructs.h \
 		../../include/nmsEnum.h \
 		../../include/kavachpkthandler.h \
@@ -4946,88 +4372,6 @@ main.o: ../../src/main.cpp /opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication 
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
 		../../include/nmsStructs.h \
 		../../include/nmsEnum.h \
 		../../include/kavachpkthandler.h \
@@ -5419,93 +4763,11 @@ EventLoggerKMS.o: ../../src/EventLoggerKMS.cpp ../../include/EventLoggerKMS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
 		../../include/crc32.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EventLoggerKMS.o ../../src/EventLoggerKMS.cpp
 
-nmsDBQuerys.o: ../../src/nmsDBQuerys.cpp ../../include/nmsDBQuerys.h \
-		../../include/nmsQtInc.h \
+nmsDBQuerys.o: ../../src/nmsDBQuerys.cpp /home/sana/EventLogger/include/nmsDBQuerys.h \
+		/home/sana/EventLogger/include/nmsQtInc.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcoreapplication.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qglobal.h \
@@ -5950,10 +5212,10 @@ nmsDBQuerys.o: ../../src/nmsDBQuerys.cpp ../../include/nmsDBQuerys.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
-		../../include/nmsDB.h \
-		../../include/nmsStructs.h \
-		../../include/nmsEnum.h \
-		../../include/nmsDefines.h
+		/home/sana/EventLogger/include/nmsDB.h \
+		/home/sana/EventLogger/include/nmsStructs.h \
+		/home/sana/EventLogger/include/nmsEnum.h \
+		/home/sana/EventLogger/include/nmsDefines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nmsDBQuerys.o ../../src/nmsDBQuerys.cpp
 
 EventLoggerGPS.o: ../../src/EventLoggerGPS.cpp ../../include/EventLoggerGPS.h \
@@ -6087,7 +5349,7 @@ EventLoggerGPS.o: ../../src/EventLoggerGPS.cpp ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EventLoggerGPS.o ../../src/EventLoggerGPS.cpp
 
-nmsUDPServer.o: ../../src/nmsUDPServer.cpp ../../include/nmsUDPServer.h \
+nmsUDPServer.o: ../../src/nmsUDPServer.cpp /home/sana/EventLogger/include/nmsUDPServer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QObject \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobject.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobjectdefs.h \
@@ -6189,7 +5451,7 @@ nmsUDPServer.o: ../../src/nmsUDPServer.cpp ../../include/nmsUDPServer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qscopeguard.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobject_impl.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbindingstorage.h \
-		../../include/nmsQtInc.h \
+		/home/sana/EventLogger/include/nmsQtInc.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcoreapplication.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdeadlinetimer.h \
@@ -6533,12 +5795,12 @@ nmsUDPServer.o: ../../src/nmsUDPServer.cpp ../../include/nmsUDPServer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
-		../../include/nmsStructs.h \
-		../../include/nmsEnum.h \
-		../../include/kavachpkthandler.h \
+		/home/sana/EventLogger/include/nmsStructs.h \
+		/home/sana/EventLogger/include/nmsEnum.h \
+		/home/sana/EventLogger/include/kavachpkthandler.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMutexLocker \
-		../../include/crc32.h \
-		../../include/EventLoggerKMS.h \
+		/home/sana/EventLogger/include/crc32.h \
+		/home/sana/EventLogger/include/EventLoggerKMS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtNetwork/QHostAddress \
 		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/QSerialPort \
 		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qserialport.h \
@@ -6911,88 +6173,6 @@ kavachpkthandler.o: ../../src/kavachpkthandler.cpp ../../include/kavachpkthandle
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMutexLocker \
 		../../include/crc32.h \
 		../../include/nmsStructs.h \
@@ -7365,88 +6545,6 @@ KAVACH_PARSEPACKET.o: ../../src/KAVACH_PARSEPACKET.cpp ../../include/KAVACH_PARS
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
 		../../include/nmsEnum.h \
 		../../include/nmsDefines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o KAVACH_PARSEPACKET.o ../../src/KAVACH_PARSEPACKET.cpp
@@ -7814,89 +6912,7 @@ nmsDB.o: ../../src/nmsDB.cpp ../../include/nmsDB.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlQuery \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
-		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h
+		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nmsDB.o ../../src/nmsDB.cpp
 
 nmsMainWindow.o: ../../src/nmsMainWindow.cpp ../../include/nmsMainWindow.h \
@@ -8264,88 +7280,6 @@ nmsMainWindow.o: ../../src/nmsMainWindow.cpp ../../include/nmsMainWindow.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
 		../../include/nmsStructs.h \
 		../../include/nmsEnum.h \
 		../../include/kavachpkthandler.h \

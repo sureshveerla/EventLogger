@@ -58,19 +58,6 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 
-
-#ifdef RFPS_VISUALIZATION
-    /* 3D visualization classes. */
-  #include <QtDataVisualization/qdatavisualizationglobal.h>
-  #include <QtDataVisualization/q3dbars.h>
-  #include <QtDataVisualization/q3dtheme.h>
-
-#if (QT_VERSION <= QT_VERSION_CHECK(6, 0, 0))
-     using namespace QtDataVisualization;
-  #endif /* QT_VERSION */
-#endif /* RFPS_VISUALIZATION */
-
-#include <fstream>
 #include <iostream>
 #include <stdio.h>
 #include <string.h>

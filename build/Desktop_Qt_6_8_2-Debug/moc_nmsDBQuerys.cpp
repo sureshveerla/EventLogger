@@ -55,17 +55,6 @@ static constexpr auto qt_meta_stringdata_ZN11nmsDBQuerysE = QtMocHelpers::string
     "SigDBfaultmsgInfo",
     "SigDBSMSFaultsinfo",
     "QList<QStringList>",
-    "SlotInsertSMSNumbers",
-    "strUName",
-    "strMobNo",
-    "bStatus",
-    "SlotFetchSMSNumbers",
-    "SlotDeleteSMSNumber",
-    "SlotUpdateSMSNumber",
-    "strName",
-    "bstatus",
-    "QList<QList<QString>>",
-    "lstvalues",
     "SlotFaultPktInserttoDB",
     "stKavachtoNMS*",
     "pstKavachtoNMS",
@@ -249,11 +238,16 @@ static constexpr auto qt_meta_stringdata_ZN11nmsDBQuerysE = QtMocHelpers::string
     "strFieldId",
     "ucStatus",
     "SlotInsertRemoteUser",
+    "strName",
+    "strUName",
     "strPwd",
+    "bStatus",
     "SlotFetchRemoteUsers",
     "SlotDeleteRemoteUser",
     "strUserID",
-    "SlotUpdateRemoteUser"
+    "SlotUpdateRemoteUser",
+    "QList<QList<QString>>",
+    "lstvalues"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -265,7 +259,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11nmsDBQuerysE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      60,   14, // methods
+      55,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -273,68 +267,63 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11nmsDBQuerysE[] = {
        6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    4,  374,    2, 0x06,    1 /* Public */,
-       9,    4,  383,    2, 0x06,    6 /* Public */,
-      10,    4,  392,    2, 0x06,   11 /* Public */,
-      11,    4,  401,    2, 0x06,   16 /* Public */,
-      12,    4,  410,    2, 0x06,   21 /* Public */,
-      13,    4,  419,    2, 0x06,   26 /* Public */,
+       1,    4,  344,    2, 0x06,    1 /* Public */,
+       9,    4,  353,    2, 0x06,    6 /* Public */,
+      10,    4,  362,    2, 0x06,   11 /* Public */,
+      11,    4,  371,    2, 0x06,   16 /* Public */,
+      12,    4,  380,    2, 0x06,   21 /* Public */,
+      13,    4,  389,    2, 0x06,   26 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      15,    3,  428,    2, 0x0a,   31 /* Public */,
-      19,    0,  435,    2, 0x0a,   35 /* Public */,
-      20,    1,  436,    2, 0x0a,   36 /* Public */,
-      21,    3,  439,    2, 0x0a,   38 /* Public */,
-      21,    1,  446,    2, 0x0a,   42 /* Public */,
-      26,    3,  449,    2, 0x0a,   44 /* Public */,
-      31,    5,  456,    2, 0x0a,   48 /* Public */,
-      36,    0,  467,    2, 0x0a,   54 /* Public */,
-      37,    0,  468,    2, 0x0a,   55 /* Public */,
-      38,    0,  469,    2, 0x0a,   56 /* Public */,
-      39,    5,  470,    2, 0x0a,   57 /* Public */,
-      47,    5,  481,    2, 0x0a,   63 /* Public */,
-      49,    4,  492,    2, 0x0a,   69 /* Public */,
-      51,    4,  501,    2, 0x0a,   74 /* Public */,
-      54,   23,  510,    2, 0x0a,   79 /* Public */,
-      79,   31,  557,    2, 0x0a,  103 /* Public */,
-      92,   16,  620,    2, 0x0a,  135 /* Public */,
-     104,    9,  653,    2, 0x0a,  152 /* Public */,
-     106,    1,  672,    2, 0x0a,  162 /* Public */,
-     109,    1,  675,    2, 0x0a,  164 /* Public */,
-     112,    1,  678,    2, 0x0a,  166 /* Public */,
-     115,    1,  681,    2, 0x0a,  168 /* Public */,
-     118,    1,  684,    2, 0x0a,  170 /* Public */,
-     121,    1,  687,    2, 0x0a,  172 /* Public */,
-     124,    1,  690,    2, 0x0a,  174 /* Public */,
-     127,    1,  693,    2, 0x0a,  176 /* Public */,
-     130,    2,  696,    2, 0x0a,  178 /* Public */,
-     134,    4,  701,    2, 0x0a,  181 /* Public */,
-     140,    4,  710,    2, 0x0a,  186 /* Public */,
-     143,    2,  719,    2, 0x0a,  191 /* Public */,
-     148,    2,  724,    2, 0x0a,  194 /* Public */,
-     151,    2,  729,    2, 0x0a,  197 /* Public */,
-     154,    2,  734,    2, 0x0a,  200 /* Public */,
-     157,    2,  739,    2, 0x0a,  203 /* Public */,
-     160,    2,  744,    2, 0x0a,  206 /* Public */,
-     163,    2,  749,    2, 0x0a,  209 /* Public */,
-     166,    2,  754,    2, 0x0a,  212 /* Public */,
-     169,    2,  759,    2, 0x0a,  215 /* Public */,
-     172,    2,  764,    2, 0x0a,  218 /* Public */,
-     175,    2,  769,    2, 0x0a,  221 /* Public */,
-     178,    2,  774,    2, 0x0a,  224 /* Public */,
-     181,    1,  779,    2, 0x0a,  227 /* Public */,
-     184,    1,  782,    2, 0x0a,  229 /* Public */,
-     187,    1,  785,    2, 0x0a,  231 /* Public */,
-     190,    1,  788,    2, 0x0a,  233 /* Public */,
-     193,    1,  791,    2, 0x0a,  235 /* Public */,
-     196,    1,  794,    2, 0x0a,  237 /* Public */,
-     199,    4,  797,    2, 0x0a,  239 /* Public */,
-     202,    1,  806,    2, 0x0a,  244 /* Public */,
-     205,    2,  809,    2, 0x0a,  246 /* Public */,
-     208,    4,  814,    2, 0x0a,  249 /* Public */,
-     210,    0,  823,    2, 0x0a,  254 /* Public */,
-     211,    1,  824,    2, 0x0a,  255 /* Public */,
-     213,    1,  827,    2, 0x0a,  257 /* Public */,
+      15,    3,  398,    2, 0x0a,   31 /* Public */,
+      20,    5,  405,    2, 0x0a,   35 /* Public */,
+      25,    0,  416,    2, 0x0a,   41 /* Public */,
+      26,    0,  417,    2, 0x0a,   42 /* Public */,
+      27,    0,  418,    2, 0x0a,   43 /* Public */,
+      28,    5,  419,    2, 0x0a,   44 /* Public */,
+      36,    5,  430,    2, 0x0a,   50 /* Public */,
+      38,    4,  441,    2, 0x0a,   56 /* Public */,
+      40,    4,  450,    2, 0x0a,   61 /* Public */,
+      43,   23,  459,    2, 0x0a,   66 /* Public */,
+      68,   31,  506,    2, 0x0a,   90 /* Public */,
+      81,   16,  569,    2, 0x0a,  122 /* Public */,
+      93,    9,  602,    2, 0x0a,  139 /* Public */,
+      95,    1,  621,    2, 0x0a,  149 /* Public */,
+      98,    1,  624,    2, 0x0a,  151 /* Public */,
+     101,    1,  627,    2, 0x0a,  153 /* Public */,
+     104,    1,  630,    2, 0x0a,  155 /* Public */,
+     107,    1,  633,    2, 0x0a,  157 /* Public */,
+     110,    1,  636,    2, 0x0a,  159 /* Public */,
+     113,    1,  639,    2, 0x0a,  161 /* Public */,
+     116,    1,  642,    2, 0x0a,  163 /* Public */,
+     119,    2,  645,    2, 0x0a,  165 /* Public */,
+     123,    4,  650,    2, 0x0a,  168 /* Public */,
+     129,    4,  659,    2, 0x0a,  173 /* Public */,
+     132,    2,  668,    2, 0x0a,  178 /* Public */,
+     137,    2,  673,    2, 0x0a,  181 /* Public */,
+     140,    2,  678,    2, 0x0a,  184 /* Public */,
+     143,    2,  683,    2, 0x0a,  187 /* Public */,
+     146,    2,  688,    2, 0x0a,  190 /* Public */,
+     149,    2,  693,    2, 0x0a,  193 /* Public */,
+     152,    2,  698,    2, 0x0a,  196 /* Public */,
+     155,    2,  703,    2, 0x0a,  199 /* Public */,
+     158,    2,  708,    2, 0x0a,  202 /* Public */,
+     161,    2,  713,    2, 0x0a,  205 /* Public */,
+     164,    2,  718,    2, 0x0a,  208 /* Public */,
+     167,    2,  723,    2, 0x0a,  211 /* Public */,
+     170,    1,  728,    2, 0x0a,  214 /* Public */,
+     173,    1,  731,    2, 0x0a,  216 /* Public */,
+     176,    1,  734,    2, 0x0a,  218 /* Public */,
+     179,    1,  737,    2, 0x0a,  220 /* Public */,
+     182,    1,  740,    2, 0x0a,  222 /* Public */,
+     185,    1,  743,    2, 0x0a,  224 /* Public */,
+     188,    4,  746,    2, 0x0a,  226 /* Public */,
+     191,    1,  755,    2, 0x0a,  231 /* Public */,
+     194,    2,  758,    2, 0x0a,  233 /* Public */,
+     197,    4,  763,    2, 0x0a,  236 /* Public */,
+     202,    0,  772,    2, 0x0a,  241 /* Public */,
+     203,    1,  773,    2, 0x0a,  242 /* Public */,
+     205,    1,  776,    2, 0x0a,  244 /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 5, QMetaType::QStringList, QMetaType::QStringList,    4,    6,    7,    8,
@@ -345,60 +334,55 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11nmsDBQuerysE[] = {
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 5, QMetaType::QStringList, 0x80000000 | 14,    4,    6,    7,    8,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Bool,   16,   17,   18,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   17,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Bool,   22,   17,   23,
-    QMetaType::Void, 0x80000000 | 24,   25,
-    QMetaType::Void, 0x80000000 | 27, QMetaType::QString, QMetaType::QString,   28,   29,   30,
-    QMetaType::Void, 0x80000000 | 32, QMetaType::QStringList, QMetaType::QStringList, QMetaType::QStringList, QMetaType::QStringList,   33,   34,   35,   29,   30,
+    QMetaType::Void, 0x80000000 | 16, QMetaType::QString, QMetaType::QString,   17,   18,   19,
+    QMetaType::Void, 0x80000000 | 21, QMetaType::QStringList, QMetaType::QStringList, QMetaType::QStringList, QMetaType::QStringList,   22,   23,   24,   18,   19,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 42, QMetaType::QString, 0x80000000 | 45,   40,   41,   43,   44,   46,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 5, QMetaType::QString, 0x80000000 | 45,   40,   41,   48,   44,   46,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 42, QMetaType::QString,   40,   41,   43,   50,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 5, QMetaType::QString,   40,   41,   52,   53,
-    QMetaType::Void, 0x80000000 | 55, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 3, 0x80000000 | 5, 0x80000000 | 45,   56,   57,   58,   59,   60,   61,   62,   63,   64,   65,   66,   67,   68,   69,   70,   71,   72,   73,   74,   75,   76,   77,   78,
-    QMetaType::Void, 0x80000000 | 55, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, QMetaType::QString, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 3, 0x80000000 | 5, 0x80000000 | 45,   56,   57,   58,   59,   60,   61,   62,   80,   81,   82,   63,   64,   65,   66,   67,   69,   83,   84,   70,   85,   86,   87,   88,   89,   90,   91,   74,   75,   76,   77,   78,
-    QMetaType::Void, 0x80000000 | 55, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45,   56,   57,   58,   59,   93,   94,   95,   96,   97,   98,   99,  100,  101,  102,  103,   78,
-    QMetaType::Void, 0x80000000 | 55, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45, 0x80000000 | 45,   56,   57,   58,   59,   93,   94,   95,  105,   78,
-    QMetaType::Void, 0x80000000 | 107,  108,
-    QMetaType::Void, 0x80000000 | 110,  111,
-    QMetaType::Void, 0x80000000 | 113,  114,
-    QMetaType::Void, 0x80000000 | 116,  117,
-    QMetaType::Void, 0x80000000 | 119,  120,
-    QMetaType::Void, 0x80000000 | 122,  123,
-    QMetaType::Void, 0x80000000 | 125,  126,
-    QMetaType::Void, 0x80000000 | 128,  129,
-    QMetaType::ULongLong, 0x80000000 | 55, 0x80000000 | 132,  131,  133,
-    QMetaType::Void, 0x80000000 | 135, QMetaType::QStringList, QMetaType::QStringList, 0x80000000 | 45,  136,  137,  138,  139,
-    QMetaType::Void, 0x80000000 | 141, QMetaType::QString, QMetaType::QString, 0x80000000 | 45,  142,  137,  138,  139,
-    QMetaType::Void, 0x80000000 | 144, 0x80000000 | 146,  145,  147,
-    QMetaType::Void, 0x80000000 | 144, 0x80000000 | 149,  145,  150,
-    QMetaType::Void, 0x80000000 | 144, 0x80000000 | 152,  145,  153,
-    QMetaType::Void, 0x80000000 | 144, 0x80000000 | 155,  145,  156,
-    QMetaType::Void, 0x80000000 | 144, 0x80000000 | 158,  145,  159,
-    QMetaType::Void, 0x80000000 | 144, 0x80000000 | 161,  145,  162,
-    QMetaType::Void, 0x80000000 | 144, 0x80000000 | 164,  145,  165,
-    QMetaType::Void, 0x80000000 | 144, 0x80000000 | 167,  145,  168,
-    QMetaType::Void, 0x80000000 | 144, 0x80000000 | 170,  145,  171,
-    QMetaType::Void, 0x80000000 | 144, 0x80000000 | 173,  145,  174,
-    QMetaType::Void, 0x80000000 | 144, 0x80000000 | 176,  145,  177,
-    QMetaType::Void, 0x80000000 | 144, 0x80000000 | 179,  145,  180,
-    QMetaType::Void, 0x80000000 | 182,  183,
-    QMetaType::Void, 0x80000000 | 185,  186,
-    QMetaType::Void, 0x80000000 | 188,  189,
-    QMetaType::Void, 0x80000000 | 191,  192,
-    QMetaType::Void, 0x80000000 | 194,  195,
-    QMetaType::Void, 0x80000000 | 197,  198,
-    QMetaType::Void, 0x80000000 | 144, 0x80000000 | 5, QMetaType::QByteArray, 0x80000000 | 45,  145,  200,  201,   78,
-    QMetaType::Void, 0x80000000 | 203,  204,
-    QMetaType::Void, QMetaType::QString, 0x80000000 | 3,  206,  207,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::Bool,   22,   16,  209,   18,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 31, QMetaType::QString, 0x80000000 | 34,   29,   30,   32,   33,   35,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 5, QMetaType::QString, 0x80000000 | 34,   29,   30,   37,   33,   35,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 31, QMetaType::QString,   29,   30,   32,   39,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, 0x80000000 | 5, QMetaType::QString,   29,   30,   41,   42,
+    QMetaType::Void, 0x80000000 | 44, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 3, 0x80000000 | 5, 0x80000000 | 34,   45,   46,   47,   48,   49,   50,   51,   52,   53,   54,   55,   56,   57,   58,   59,   60,   61,   62,   63,   64,   65,   66,   67,
+    QMetaType::Void, 0x80000000 | 44, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, QMetaType::QString, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 3, 0x80000000 | 5, 0x80000000 | 34,   45,   46,   47,   48,   49,   50,   51,   69,   70,   71,   52,   53,   54,   55,   56,   58,   72,   73,   59,   74,   75,   76,   77,   78,   79,   80,   63,   64,   65,   66,   67,
+    QMetaType::Void, 0x80000000 | 44, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34,   45,   46,   47,   48,   82,   83,   84,   85,   86,   87,   88,   89,   90,   91,   92,   67,
+    QMetaType::Void, 0x80000000 | 44, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34, 0x80000000 | 34,   45,   46,   47,   48,   82,   83,   84,   94,   67,
+    QMetaType::Void, 0x80000000 | 96,   97,
+    QMetaType::Void, 0x80000000 | 99,  100,
+    QMetaType::Void, 0x80000000 | 102,  103,
+    QMetaType::Void, 0x80000000 | 105,  106,
+    QMetaType::Void, 0x80000000 | 108,  109,
+    QMetaType::Void, 0x80000000 | 111,  112,
+    QMetaType::Void, 0x80000000 | 114,  115,
+    QMetaType::Void, 0x80000000 | 117,  118,
+    QMetaType::ULongLong, 0x80000000 | 44, 0x80000000 | 121,  120,  122,
+    QMetaType::Void, 0x80000000 | 124, QMetaType::QStringList, QMetaType::QStringList, 0x80000000 | 34,  125,  126,  127,  128,
+    QMetaType::Void, 0x80000000 | 130, QMetaType::QString, QMetaType::QString, 0x80000000 | 34,  131,  126,  127,  128,
+    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 135,  134,  136,
+    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 138,  134,  139,
+    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 141,  134,  142,
+    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 144,  134,  145,
+    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 147,  134,  148,
+    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 150,  134,  151,
+    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 153,  134,  154,
+    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 156,  134,  157,
+    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 159,  134,  160,
+    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 162,  134,  163,
+    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 165,  134,  166,
+    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 168,  134,  169,
+    QMetaType::Void, 0x80000000 | 171,  172,
+    QMetaType::Void, 0x80000000 | 174,  175,
+    QMetaType::Void, 0x80000000 | 177,  178,
+    QMetaType::Void, 0x80000000 | 180,  181,
+    QMetaType::Void, 0x80000000 | 183,  184,
+    QMetaType::Void, 0x80000000 | 186,  187,
+    QMetaType::Void, 0x80000000 | 133, 0x80000000 | 5, QMetaType::QByteArray, 0x80000000 | 34,  134,  189,  190,   67,
+    QMetaType::Void, 0x80000000 | 192,  193,
+    QMetaType::Void, QMetaType::QString, 0x80000000 | 3,  195,  196,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::Bool,  198,  199,  200,  201,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,  212,
-    QMetaType::Void, 0x80000000 | 24,   25,
+    QMetaType::Void, QMetaType::QString,  204,
+    QMetaType::Void, 0x80000000 | 206,  207,
 
        0        // eod
 };
@@ -448,24 +432,6 @@ Q_CONSTINIT const QMetaObject nmsDBQuerys::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>,
         QtPrivate::TypeAndForceComplete<QStringList, std::false_type>,
         QtPrivate::TypeAndForceComplete<QList<QStringList>, std::false_type>,
-        // method 'SlotInsertSMSNumbers'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
-        // method 'SlotFetchSMSNumbers'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'SlotDeleteSMSNumber'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        // method 'SlotUpdateSMSNumber'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
-        // method 'SlotUpdateSMSNumber'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QList<QList<QString>>, std::false_type>,
         // method 'SlotFaultPktInserttoDB'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<stKavachtoNMS *, std::false_type>,
@@ -745,61 +711,56 @@ void nmsDBQuerys::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 3: _t->SigDBLocoInfo((*reinterpret_cast< std::add_pointer_t<uint8_t>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint16_t>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[4]))); break;
         case 4: _t->SigDBfaultmsgInfo((*reinterpret_cast< std::add_pointer_t<uint8_t>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint16_t>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[4]))); break;
         case 5: _t->SigDBSMSFaultsinfo((*reinterpret_cast< std::add_pointer_t<uint8_t>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint16_t>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QList<QStringList>>>(_a[4]))); break;
-        case 6: _t->SlotInsertSMSNumbers((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
-        case 7: _t->SlotFetchSMSNumbers(); break;
-        case 8: _t->SlotDeleteSMSNumber((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 9: _t->SlotUpdateSMSNumber((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
-        case 10: _t->SlotUpdateSMSNumber((*reinterpret_cast< std::add_pointer_t<QList<QList<QString>>>>(_a[1]))); break;
-        case 11: _t->SlotFaultPktInserttoDB((*reinterpret_cast< std::add_pointer_t<stKavachtoNMS*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
-        case 12: _t->SlotStnFaultPktInserttoDB((*reinterpret_cast< std::add_pointer_t<stStationFaults*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[5]))); break;
-        case 13: _t->SlotStationInfo(); break;
-        case 14: _t->SlotLocoInfo(); break;
-        case 15: _t->SlotPrvPromptInfo(); break;
-        case 16: _t->SlotFaultMsginserttoDB((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QList<uint16_t>>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[5]))); break;
-        case 17: _t->SlotStnFaultMsginserttoDB((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<uint16_t>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[5]))); break;
-        case 18: _t->SlotSMSFaultMsginserttoDB((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QList<uint16_t>>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4]))); break;
-        case 19: _t->SlotSMSStnFaultMsginserttoDB((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<uint16_t>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4]))); break;
-        case 20: _t->SlotAccessReqInsertintoDB((*reinterpret_cast< std::add_pointer_t<stAccessRequestPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[8])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[9])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[10])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[11])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[12])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[13])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[14])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[15])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[16])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[17])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[18])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[19])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[20])),(*reinterpret_cast< std::add_pointer_t<uint8_t>>(_a[21])),(*reinterpret_cast< std::add_pointer_t<uint16_t>>(_a[22])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[23]))); break;
-        case 21: _t->SlotLocoRegularInsertintoDB((*reinterpret_cast< std::add_pointer_t<stAccessRequestPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[8])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[9])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[10])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[11])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[12])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[13])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[14])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[15])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[16])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[17])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[18])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[19])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[20])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[21])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[22])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[23])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[24])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[25])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[26])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[27])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[28])),(*reinterpret_cast< std::add_pointer_t<uint8_t>>(_a[29])),(*reinterpret_cast< std::add_pointer_t<uint16_t>>(_a[30])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[31]))); break;
-        case 22: _t->SlotAccessAuthorityPktInsertintoDB((*reinterpret_cast< std::add_pointer_t<stAccessRequestPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[8])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[9])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[10])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[11])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[12])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[13])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[14])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[15])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[16]))); break;
-        case 23: _t->SlotAdditionalEmergencyPktInsertintoDB((*reinterpret_cast< std::add_pointer_t<stAccessRequestPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[8])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[9]))); break;
-        case 24: _t->SlotInsertDBStnRegMASubPkt((*reinterpret_cast< std::add_pointer_t<MovementAuthorityPkt>>(_a[1]))); break;
-        case 25: _t->SlotInsertDBStnRegSSPSubPkt((*reinterpret_cast< std::add_pointer_t<StaticSpeedProfilePkt>>(_a[1]))); break;
-        case 26: _t->SlotInsertDBStnRegGradientSubPkt((*reinterpret_cast< std::add_pointer_t<GradientProfilePkt>>(_a[1]))); break;
-        case 27: _t->SlotInsertDBStnRegLCGateSubPkt((*reinterpret_cast< std::add_pointer_t<LCGateProfilePkt>>(_a[1]))); break;
-        case 28: _t->SlotInsertDBStnRegTurnoutSpeedSubPkt((*reinterpret_cast< std::add_pointer_t<TurnoutSpeedProfilePkt>>(_a[1]))); break;
-        case 29: _t->SlotInsertDBStnRegTagLinkingInfoSubPkt((*reinterpret_cast< std::add_pointer_t<TagLinkingInfoPkt>>(_a[1]))); break;
-        case 30: _t->SlotInsertDBStnRegTrackCondDataSubPkt((*reinterpret_cast< std::add_pointer_t<TrackConditionPkt>>(_a[1]))); break;
-        case 31: _t->SlotInsertDBStnRegTSRSubPkt((*reinterpret_cast< std::add_pointer_t<TempSpeedRestrictionPkt>>(_a[1]))); break;
-        case 32: { quint64 _r = _t->SlotInsertDBStationRegHeader((*reinterpret_cast< std::add_pointer_t<stAccessRequestPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<StationRegularHeader>>(_a[2])));
+        case 6: _t->SlotFaultPktInserttoDB((*reinterpret_cast< std::add_pointer_t<stKavachtoNMS*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
+        case 7: _t->SlotStnFaultPktInserttoDB((*reinterpret_cast< std::add_pointer_t<stStationFaults*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[5]))); break;
+        case 8: _t->SlotStationInfo(); break;
+        case 9: _t->SlotLocoInfo(); break;
+        case 10: _t->SlotPrvPromptInfo(); break;
+        case 11: _t->SlotFaultMsginserttoDB((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QList<uint16_t>>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[5]))); break;
+        case 12: _t->SlotStnFaultMsginserttoDB((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<uint16_t>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[5]))); break;
+        case 13: _t->SlotSMSFaultMsginserttoDB((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QList<uint16_t>>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4]))); break;
+        case 14: _t->SlotSMSStnFaultMsginserttoDB((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<uint16_t>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4]))); break;
+        case 15: _t->SlotAccessReqInsertintoDB((*reinterpret_cast< std::add_pointer_t<stAccessRequestPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[8])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[9])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[10])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[11])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[12])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[13])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[14])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[15])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[16])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[17])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[18])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[19])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[20])),(*reinterpret_cast< std::add_pointer_t<uint8_t>>(_a[21])),(*reinterpret_cast< std::add_pointer_t<uint16_t>>(_a[22])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[23]))); break;
+        case 16: _t->SlotLocoRegularInsertintoDB((*reinterpret_cast< std::add_pointer_t<stAccessRequestPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[8])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[9])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[10])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[11])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[12])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[13])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[14])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[15])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[16])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[17])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[18])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[19])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[20])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[21])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[22])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[23])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[24])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[25])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[26])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[27])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[28])),(*reinterpret_cast< std::add_pointer_t<uint8_t>>(_a[29])),(*reinterpret_cast< std::add_pointer_t<uint16_t>>(_a[30])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[31]))); break;
+        case 17: _t->SlotAccessAuthorityPktInsertintoDB((*reinterpret_cast< std::add_pointer_t<stAccessRequestPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[8])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[9])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[10])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[11])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[12])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[13])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[14])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[15])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[16]))); break;
+        case 18: _t->SlotAdditionalEmergencyPktInsertintoDB((*reinterpret_cast< std::add_pointer_t<stAccessRequestPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[8])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[9]))); break;
+        case 19: _t->SlotInsertDBStnRegMASubPkt((*reinterpret_cast< std::add_pointer_t<MovementAuthorityPkt>>(_a[1]))); break;
+        case 20: _t->SlotInsertDBStnRegSSPSubPkt((*reinterpret_cast< std::add_pointer_t<StaticSpeedProfilePkt>>(_a[1]))); break;
+        case 21: _t->SlotInsertDBStnRegGradientSubPkt((*reinterpret_cast< std::add_pointer_t<GradientProfilePkt>>(_a[1]))); break;
+        case 22: _t->SlotInsertDBStnRegLCGateSubPkt((*reinterpret_cast< std::add_pointer_t<LCGateProfilePkt>>(_a[1]))); break;
+        case 23: _t->SlotInsertDBStnRegTurnoutSpeedSubPkt((*reinterpret_cast< std::add_pointer_t<TurnoutSpeedProfilePkt>>(_a[1]))); break;
+        case 24: _t->SlotInsertDBStnRegTagLinkingInfoSubPkt((*reinterpret_cast< std::add_pointer_t<TagLinkingInfoPkt>>(_a[1]))); break;
+        case 25: _t->SlotInsertDBStnRegTrackCondDataSubPkt((*reinterpret_cast< std::add_pointer_t<TrackConditionPkt>>(_a[1]))); break;
+        case 26: _t->SlotInsertDBStnRegTSRSubPkt((*reinterpret_cast< std::add_pointer_t<TempSpeedRestrictionPkt>>(_a[1]))); break;
+        case 27: { quint64 _r = _t->SlotInsertDBStationRegHeader((*reinterpret_cast< std::add_pointer_t<stAccessRequestPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<StationRegularHeader>>(_a[2])));
             if (_a[0]) *reinterpret_cast< quint64*>(_a[0]) = std::move(_r); }  break;
-        case 33: _t->SlotInsertDBStationhealthPkt((*reinterpret_cast< std::add_pointer_t<stStationHealthPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4]))); break;
-        case 34: _t->SlotInsertDBOnBoardhealthPkt((*reinterpret_cast< std::add_pointer_t<stOnBoardHealthPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4]))); break;
-        case 35: _t->SlotInsertDBS2SPDIVerCmd((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stPDIVerCheckCmdPkt>>(_a[2]))); break;
-        case 36: _t->SlotInsertDBS2SPDIVerMsg((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stPDIVerCheckMsgPkt>>(_a[2]))); break;
-        case 37: _t->SlotInsertDBS2SHeartBeat((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stHeartBeatPkt>>(_a[2]))); break;
-        case 38: _t->SlotInsertDBS2STrainHandOverReq((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTrainHandOverReqPkt>>(_a[2]))); break;
-        case 39: _t->SlotInsertDBS2STrainTakenOverMsg((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTrainTakenOverPkt>>(_a[2]))); break;
-        case 40: _t->SlotInsertDBS2STrainHandOverCancellationReq((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTrainHandOverCancellationPkt>>(_a[2]))); break;
-        case 41: _t->SlotInsertDBS2STrainLengthInformationReq((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTrainLengthInfoPkt>>(_a[2]))); break;
-        case 42: _t->SlotInsertDBS2SLengthInformationAck((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTrainLengthInfoAck>>(_a[2]))); break;
-        case 43: _t->SlotInsertDBS2STSLRouteRequest((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTSLReqPkt>>(_a[2]))); break;
-        case 44: _t->SlotInsertDBS2STSLAuthorityInformationPkt((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTSLInformationPkt>>(_a[2]))); break;
-        case 45: _t->SlotInsertDBS2SFieldElementsStatusReq((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stFieldElementsStatusReqPkt>>(_a[2]))); break;
-        case 46: _t->SlotInsertDBS2STrainHandoverCancellationAck((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTrainHandOverCancellationAckPkt>>(_a[2]))); break;
-        case 47: _t->SlotInsertDBLocoRSSIMessage((*reinterpret_cast< std::add_pointer_t<stLocoRSSIMsg>>(_a[1]))); break;
-        case 48: _t->SlotInsertDBStationRSSIMessage((*reinterpret_cast< std::add_pointer_t<stStationRSSIMsg>>(_a[1]))); break;
-        case 49: _t->SlotInsertDBStatioKavachSysSts((*reinterpret_cast< std::add_pointer_t<stStationaryKavachSysInfo>>(_a[1]))); break;
-        case 50: _t->SlotInsertDBOnBoardEventMsg((*reinterpret_cast< std::add_pointer_t<stOnboardKavachEventMsg>>(_a[1]))); break;
-        case 51: _t->SlotInsertDBOnBoardBrakeEventMsg((*reinterpret_cast< std::add_pointer_t<stOnboardKavachBrakeEventMsg>>(_a[1]))); break;
-        case 52: _t->SlotInsertDBOnboardBOKSHealthMsg((*reinterpret_cast< std::add_pointer_t<stOnboardKavachBOKSHealthMsg>>(_a[1]))); break;
-        case 53: _t->SlotInsertDBFieldInputStatus((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint16_t>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4]))); break;
-        case 54: _t->SlotInsertDBFieldInputEventData((*reinterpret_cast< std::add_pointer_t<stFieldEventData>>(_a[1]))); break;
-        case 55: _t->SlotInserttoDBFieldStatus((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint8_t>>(_a[2]))); break;
-        case 56: _t->SlotInsertRemoteUser((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[4]))); break;
-        case 57: _t->SlotFetchRemoteUsers(); break;
-        case 58: _t->SlotDeleteRemoteUser((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 59: _t->SlotUpdateRemoteUser((*reinterpret_cast< std::add_pointer_t<QList<QList<QString>>>>(_a[1]))); break;
+        case 28: _t->SlotInsertDBStationhealthPkt((*reinterpret_cast< std::add_pointer_t<stStationHealthPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4]))); break;
+        case 29: _t->SlotInsertDBOnBoardhealthPkt((*reinterpret_cast< std::add_pointer_t<stOnBoardHealthPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4]))); break;
+        case 30: _t->SlotInsertDBS2SPDIVerCmd((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stPDIVerCheckCmdPkt>>(_a[2]))); break;
+        case 31: _t->SlotInsertDBS2SPDIVerMsg((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stPDIVerCheckMsgPkt>>(_a[2]))); break;
+        case 32: _t->SlotInsertDBS2SHeartBeat((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stHeartBeatPkt>>(_a[2]))); break;
+        case 33: _t->SlotInsertDBS2STrainHandOverReq((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTrainHandOverReqPkt>>(_a[2]))); break;
+        case 34: _t->SlotInsertDBS2STrainTakenOverMsg((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTrainTakenOverPkt>>(_a[2]))); break;
+        case 35: _t->SlotInsertDBS2STrainHandOverCancellationReq((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTrainHandOverCancellationPkt>>(_a[2]))); break;
+        case 36: _t->SlotInsertDBS2STrainLengthInformationReq((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTrainLengthInfoPkt>>(_a[2]))); break;
+        case 37: _t->SlotInsertDBS2SLengthInformationAck((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTrainLengthInfoAck>>(_a[2]))); break;
+        case 38: _t->SlotInsertDBS2STSLRouteRequest((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTSLReqPkt>>(_a[2]))); break;
+        case 39: _t->SlotInsertDBS2STSLAuthorityInformationPkt((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTSLInformationPkt>>(_a[2]))); break;
+        case 40: _t->SlotInsertDBS2SFieldElementsStatusReq((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stFieldElementsStatusReqPkt>>(_a[2]))); break;
+        case 41: _t->SlotInsertDBS2STrainHandoverCancellationAck((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stTrainHandOverCancellationAckPkt>>(_a[2]))); break;
+        case 42: _t->SlotInsertDBLocoRSSIMessage((*reinterpret_cast< std::add_pointer_t<stLocoRSSIMsg>>(_a[1]))); break;
+        case 43: _t->SlotInsertDBStationRSSIMessage((*reinterpret_cast< std::add_pointer_t<stStationRSSIMsg>>(_a[1]))); break;
+        case 44: _t->SlotInsertDBStatioKavachSysSts((*reinterpret_cast< std::add_pointer_t<stStationaryKavachSysInfo>>(_a[1]))); break;
+        case 45: _t->SlotInsertDBOnBoardEventMsg((*reinterpret_cast< std::add_pointer_t<stOnboardKavachEventMsg>>(_a[1]))); break;
+        case 46: _t->SlotInsertDBOnBoardBrakeEventMsg((*reinterpret_cast< std::add_pointer_t<stOnboardKavachBrakeEventMsg>>(_a[1]))); break;
+        case 47: _t->SlotInsertDBOnboardBOKSHealthMsg((*reinterpret_cast< std::add_pointer_t<stOnboardKavachBOKSHealthMsg>>(_a[1]))); break;
+        case 48: _t->SlotInsertDBFieldInputStatus((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint16_t>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4]))); break;
+        case 49: _t->SlotInsertDBFieldInputEventData((*reinterpret_cast< std::add_pointer_t<stFieldEventData>>(_a[1]))); break;
+        case 50: _t->SlotInserttoDBFieldStatus((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint8_t>>(_a[2]))); break;
+        case 51: _t->SlotInsertRemoteUser((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[4]))); break;
+        case 52: _t->SlotFetchRemoteUsers(); break;
+        case 53: _t->SlotDeleteRemoteUser((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 54: _t->SlotUpdateRemoteUser((*reinterpret_cast< std::add_pointer_t<QList<QList<QString>>>>(_a[1]))); break;
         default: ;
         }
     }
@@ -813,63 +774,56 @@ void nmsDBQuerys::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QList<QStringList> >(); break;
             }
             break;
-        case 10:
-            switch (*reinterpret_cast<int*>(_a[1])) {
-            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
-            case 0:
-                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QList<QList<QString>> >(); break;
-            }
-            break;
-        case 20:
+        case 15:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stAccessRequestPkt >(); break;
             }
             break;
-        case 21:
+        case 16:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stAccessRequestPkt >(); break;
             }
             break;
-        case 22:
+        case 17:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stAccessRequestPkt >(); break;
             }
             break;
-        case 23:
+        case 18:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stAccessRequestPkt >(); break;
             }
             break;
-        case 32:
+        case 27:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stAccessRequestPkt >(); break;
             }
             break;
-        case 33:
+        case 28:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stStationHealthPkt >(); break;
             }
             break;
-        case 34:
+        case 29:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stOnBoardHealthPkt >(); break;
             }
             break;
-        case 35:
+        case 30:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 1:
@@ -878,7 +832,7 @@ void nmsDBQuerys::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stPacketHeader >(); break;
             }
             break;
-        case 36:
+        case 31:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 1:
@@ -887,7 +841,7 @@ void nmsDBQuerys::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stPacketHeader >(); break;
             }
             break;
-        case 37:
+        case 32:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 1:
@@ -896,7 +850,7 @@ void nmsDBQuerys::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stPacketHeader >(); break;
             }
             break;
-        case 38:
+        case 33:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -905,7 +859,7 @@ void nmsDBQuerys::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stTrainHandOverReqPkt >(); break;
             }
             break;
-        case 39:
+        case 34:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -914,7 +868,7 @@ void nmsDBQuerys::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stTrainTakenOverPkt >(); break;
             }
             break;
-        case 40:
+        case 35:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -923,7 +877,7 @@ void nmsDBQuerys::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stTrainHandOverCancellationPkt >(); break;
             }
             break;
-        case 41:
+        case 36:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -932,7 +886,7 @@ void nmsDBQuerys::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stTrainLengthInfoPkt >(); break;
             }
             break;
-        case 42:
+        case 37:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -941,7 +895,7 @@ void nmsDBQuerys::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stTrainLengthInfoAck >(); break;
             }
             break;
-        case 43:
+        case 38:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -950,7 +904,7 @@ void nmsDBQuerys::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stTSLReqPkt >(); break;
             }
             break;
-        case 44:
+        case 39:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -959,7 +913,7 @@ void nmsDBQuerys::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stTSLInformationPkt >(); break;
             }
             break;
-        case 45:
+        case 40:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 1:
@@ -968,7 +922,7 @@ void nmsDBQuerys::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stPacketHeader >(); break;
             }
             break;
-        case 46:
+        case 41:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -977,56 +931,56 @@ void nmsDBQuerys::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stTrainHandOverCancellationAckPkt >(); break;
             }
             break;
-        case 47:
+        case 42:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stLocoRSSIMsg >(); break;
             }
             break;
-        case 48:
+        case 43:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stStationRSSIMsg >(); break;
             }
             break;
-        case 49:
+        case 44:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stStationaryKavachSysInfo >(); break;
             }
             break;
-        case 50:
+        case 45:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stOnboardKavachEventMsg >(); break;
             }
             break;
-        case 52:
+        case 47:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stOnboardKavachBOKSHealthMsg >(); break;
             }
             break;
-        case 53:
+        case 48:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stPacketHeader >(); break;
             }
             break;
-        case 54:
+        case 49:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< stFieldEventData >(); break;
             }
             break;
-        case 59:
+        case 54:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -1101,14 +1055,14 @@ int nmsDBQuerys::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 60)
+        if (_id < 55)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 60;
+        _id -= 55;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 60)
+        if (_id < 55)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 60;
+        _id -= 55;
     }
     return _id;
 }

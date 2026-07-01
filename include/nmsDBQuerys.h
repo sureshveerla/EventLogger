@@ -27,12 +27,6 @@ public:
 
 public slots:
 
-    void SlotInsertSMSNumbers(QString strUName, QString strMobNo, bool bStatus);
-    void SlotFetchSMSNumbers();
-    void SlotDeleteSMSNumber(QString strMobNo);
-    void SlotUpdateSMSNumber (QString strName,QString strMobNo,bool bstatus);
-    void SlotUpdateSMSNumber (QList<QList<QString>> lstvalues);
-
     void SlotFaultPktInserttoDB(stKavachtoNMS *pstKavachtoNMS,QString strFaultsCode,QString strFaultMsg);
 
     void SlotStnFaultPktInserttoDB(stStationFaults *pstStnFaults, QStringList strLstModuleID,
