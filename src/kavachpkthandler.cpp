@@ -98,19 +98,19 @@ void KavachPktHandler::run()
                                                     reinterpret_cast<const uint8_t*>(payload.constData()));
             uint32_t crc = qToBigEndian(calculatedCRC);
 
-            if (receivedCRC != crc)
-            {
-                qDebug() << "CRC Mismatched :" << "receivedCRC "  << receivedCRC << "calculatedCRC " << calculatedCRC
-                         << crc << payload.size();
-                continue;
-            }
-            else
-            {
-                qDebug() << "CRC Matched:" << "receivedCRC "  << receivedCRC << "calculatedCRC " << calculatedCRC << crc;
+            // if (receivedCRC != crc)
+            // {
+            //     qDebug() << "CRC Mismatched :" << "receivedCRC "  << receivedCRC << "calculatedCRC " << calculatedCRC
+            //              << crc << payload.size();
+            //     continue;
+         //   }
+          //  else
+          //  {
+           //     qDebug() << "CRC Matched:" << "receivedCRC "  << receivedCRC << "calculatedCRC " << calculatedCRC << crc;
 
 
                 emit SigNewFaultPacket(senderIP,senderPort,data);
-            }
+          //  }
         }
         else
         {

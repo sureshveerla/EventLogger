@@ -46,6 +46,8 @@ public:
     void ProcessOnBoardHealthStsMsg(QByteArray datagram);
     void ProcessS2SPackets(QByteArray datagram);
 
+    void InitGSMRelay();
+
 
 private slots:
 
@@ -74,6 +76,8 @@ private slots:
 
     // Called when GPS parses a new position fix.
     void SlotGPSPosition(double dLat, double dLon, bool bValid);
+
+    void SendHeartbeat();
 
 signals:
 
@@ -183,6 +187,14 @@ private:
     QUdpSocket *m_pcNMSSocket;
     QString     m_strNMSIP;
     quint16     m_usNMSPort;
+
+    QString    m_strStnSenderIP;
+    quint16    m_usStnSenderPort;
+
+    QUdpSocket  *m_pcRelaySocket;
+    QTimer      *m_pcHeartbeatTimer;
+    QString      m_strRelayIP;
+    quint16      m_usRelayPort;
 
     // ── NMS Ping (runs in m_pcPingThread) ────────────────────
     // A QTimer in a separate thread fires SlotDoPing() every 5 s.

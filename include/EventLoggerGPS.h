@@ -14,7 +14,7 @@ public:
     explicit EventLogger(QObject *parent = nullptr);
 
 signals:
-    void gpsBufferReady(QByteArray buffer);
+   // void gpsBufferReady(QByteArray buffer);
     void gpsUTCReady(QDateTime utcTime);
 
     // Emitted when a valid $GPRMC fix is parsed.

@@ -269,7 +269,7 @@ void nmsUDPServer::SlotUpdateGPSTime(const QDateTime &gpsTime)
              << "TimeSpec:" << gpsTime.timeSpec()
              << "isValid:" << gpsTime.isValid();
 
-    m_gpsDateTime = gpsTime.toUTC();
+    m_gpsDateTime = gpsTime.toTimeZone(QTimeZone("Asia/Kolkata"));
 
     qDebug() << "[NTP] Stored m_gpsDateTime (UTC):" << m_gpsDateTime
              << "isValid:" << m_gpsDateTime.isValid()
@@ -332,28 +332,28 @@ void nmsUDPServer::SlotOnReadyRead(QUdpSocket *pcsocket)
 }
 
 
-void nmsUDPServer::SlotSendAckNMStoKavach(QByteArray byteArr)
-{
-    QHostAddress stationIP(m_strSenderIP);
+// void nmsUDPServer::SlotSendAckNMStoKavach(QByteArray byteArr)
+// {
+//     QHostAddress stationIP(m_strSenderIP);
 
-    qint64 sent = m_pcClntSock->writeDatagram(
-        byteArr,
-        stationIP,
-        m_usSenderPort);
+//     qint64 sent = m_pcClntSock->writeDatagram(
+//         byteArr,
+//         stationIP,
+//         m_usSenderPort);
 
-    if(sent == -1)
-    {
-        qDebug() << "UDP Send Failed:" << m_pcClntSock->errorString();
-    }
-    else
-    {
-        qDebug() << "UDP Sent to"
-                 << stationIP
-                 << ":" << m_usSenderPort
-                 << "Size:" << sent
-                 << "Data:" << byteArr.toHex().toUpper();
-    }
-}
+//     if(sent == -1)
+//     {
+//         qDebug() << "UDP Send Failed:" << m_pcClntSock->errorString();
+//     }
+//     else
+//     {
+//         qDebug() << "UDP Sent to"
+//                  << stationIP
+//                  << ":" << m_usSenderPort
+//                  << "Size:" << sent
+//                  << "Data:" << byteArr.toHex().toUpper();
+//     }
+// }
 
 void nmsUDPServer::SlotSendAckEventLoggertoKavach(QHostAddress senderIP, quint16 senderPort,stNMStoKavach *pstAck)
 {
@@ -463,15 +463,17 @@ void nmsUDPServer::InitKMS()
     // ICD §D.1: KMS traffic on port 4447.
     // Bind to QHostAddress::Any so it works on any NIC/IP.
     m_pcKMSSocket = new QUdpSocket(this);
-    if (!m_pcKMSSocket->bind(QHostAddress::Any, vcPort,
+    if (!m_pcKMSSocket->bind(QHostAddress::Any,
+                             vcPort,
                              QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint))
-        qDebug()<<" KMS Port : "<<vcPort;
     {
-        qCritical() << "Vital Controller FAILED to bind port" << vcPort
-                    << "—" << m_pcKMSSocket->errorString();
+        qCritical() << "Vital Controller FAILED to bind port"
+                    << vcPort
+                    << "-" << m_pcKMSSocket->errorString();
         return;
     }
-    qInfo() << "Vital Controller UDP socket bound — port:" << vcPort;
+
+    qInfo() << "Vital Controller UDP socket bound on port" << vcPort;
     qInfo() << "Vital Controller IP address and Port : " << kmsServerIP << ":" << kmsServerPort;
 
     // ── RECEIVE: VC → ELU (0x90 / 0x92 / 0x94) ─────────────

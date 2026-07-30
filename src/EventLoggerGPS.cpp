@@ -30,6 +30,10 @@ EventLogger::EventLogger(QObject *parent)
 
     qDebug() << "UART GPS connected successfully on /dev/ttyS0";
 
+    connect(m_serial, &QSerialPort::readyRead,
+            this, &EventLogger::readGPSData,
+            Qt::QueuedConnection);
+
 
 }
 
@@ -83,7 +87,7 @@ void EventLogger::readGPSData()
                         qDebug() << "GPS UTC:" << utcTime.toString("yyyy-MM-dd HH:mm:ss")
                                  << "GPS IST:" << formattedIST;
 
-                        emit gpsBufferReady(formattedIST.toUtf8());
+                      //  emit gpsBufferReady(formattedIST.toUtf8());
                         emit gpsUTCReady(utcTime);
 
                         // ── Parse Lat/Lon for 0x28 message ─────────────

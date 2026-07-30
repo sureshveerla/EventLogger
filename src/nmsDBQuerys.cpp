@@ -58,92 +58,118 @@ void nmsDBQuerys::SlotFaultPktInserttoDB(stKavachtoNMS *pstKavachtoNMS, QString 
 
 }
 
-void nmsDBQuerys::SlotStnFaultPktInserttoDB(stStationFaults *pstStnFaults, QStringList strLstModuleID,
-                                            QStringList strLstFaultCodeTyp, QStringList strFaultsCode, QStringList strFaultMsg)
+void nmsDBQuerys::SlotStnFaultPktInserttoDB(stStationFaults *pstStnFaults,
+                                            QStringList strLstModuleID,
+                                            QStringList strLstFaultCodeTyp,
+                                            QStringList strFaultsCode,
+                                            QStringList strFaultMsg)
 {
+    if (!pstStnFaults)
+    {
+        qWarning() << "[SlotStnFaultPktInserttoDB] Null pointer — skipping";
+        return;
+    }
+
     QSqlQuery *pcQuery = new QSqlQuery(m_pcDB->Get());
 
     QDateTime datetime = QDateTime::currentDateTime();
 
-    QString strStrtFrm = QString("0x%1").arg(pstStnFaults->usStartFrame,0,16).toUpper();
-    QString strmsgtyp = QString("0x%1").arg(pstStnFaults->ucMsgType,0,16).toUpper();
-    QString strKavachTyp = QString("0x%1").arg(pstStnFaults->ucKavachType,0,16).toUpper();
-    QString strCrc = QString("0x%1").arg(pstStnFaults->uiCRC,0,16).toUpper();
+    QString strStrtFrm   = QString("0x%1").arg(pstStnFaults->usStartFrame, 0, 16).toUpper();
+    QString strmsgtyp    = QString("0x%1").arg(pstStnFaults->ucMsgType,    0, 16).toUpper();
+    QString strKavachTyp = QString("0x%1").arg(pstStnFaults->ucKavachType, 0, 16).toUpper();
+    QString strCrc       = QString("0x%1").arg(pstStnFaults->uiCRC,        0, 16).toUpper();
+
     QString strDate = QString("20%1-%2-%3")
                           .arg(pstStnFaults->ucDate[2], 2, 10, QChar('0'))
                           .arg(pstStnFaults->ucDate[1], 2, 10, QChar('0'))
                           .arg(pstStnFaults->ucDate[0], 2, 10, QChar('0'));
+
     QString strtime = QString("%1:%2:%3")
                           .arg(pstStnFaults->ucTime[0])
                           .arg(pstStnFaults->ucTime[1])
                           .arg(pstStnFaults->ucTime[2]);
-    m_uiStationID = (pstStnFaults->ucKavachSubsysID[0] << 16) |
-                    (pstStnFaults->ucKavachSubsysID[1] << 8)  |
-                    pstStnFaults->ucKavachSubsysID[2];
+
+    m_uiStationID = pstStnFaults->ucKavachSubsysID;
+
+    // ── Fill arrays safely — ft[] bug fixed ───────────────────
+    // Previously ft[] was inside a comment and never filled.
+    // All 4 arrays now correctly assigned.
     QString fc[10];
     QString mc[10];
     QString fm[10];
     QString ft[10];
 
-    for(int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++)
     {
-        mc[i] = (i < strLstModuleID.size()) ? QString("%1").arg(strLstModuleID[i]) : "NULL";   // keep as-        ft[i] = (i < strLstFaultCodeTyp.size()) ? QString("%1").arg(strLstFaultCodeTyp[i]) : "NULL";   // keep as-is
-        fm[i] = (i < strFaultMsg.size()) ? QString("%1").arg(strFaultMsg[i]) : "NULL";
-        fc[i] = (i < strFaultsCode.size()) ? QString("%1").arg(strFaultsCode[i]) : "NULL";   // keep as-is
+        mc[i] = (i < strLstModuleID.size())     ? strLstModuleID[i]     : "NULL";
+        ft[i] = (i < strLstFaultCodeTyp.size()) ? strLstFaultCodeTyp[i] : "NULL";
+        fm[i] = (i < strFaultMsg.size())         ? strFaultMsg[i]        : "NULL";
+        fc[i] = (i < strFaultsCode.size())       ? strFaultsCode[i]      : "NULL";
     }
-    QString strQuery = QString("INSERT INTO public.stationfaultspkt("
-                               "\"SOF\", \"MSG_TYPE\", \"MSG_LEN\", \"MSG_SEQ\", \"KAVACH_SUBSYSTEM_ID\","
-                               "\"NMS_SYSTEM_ID\", \"SYSTEM_VER\", \"DATE\", \"TIME\", \"KAVACH_TYPE\", "
-                               "\"TOTAL_FAULTS_CODES\", \"MODULE_ID_1\", \"MODULE_ID_2\", "
-                               "\"MODULE_ID_3\", \"MODULE_ID_4\", \"MODULE_ID_5\", \"MODULE_ID_6\", "
-                               "\"MODULE_ID_7\", \"MODULE_ID_8\", \"MODULE_ID_9\", \"MODULE_ID_10\", "
-                               "\"FAULT_CODE_TYPE_1\", \"FAULT_CODE_TYPE_2\", \"FAULT_CODE_TYPE_3\", "
-                               "\"FAULT_CODE_TYPE_4\", \"FAULT_CODE_TYPE_5\", \"FAULT_CODE_TYPE_6\", "
-                               "\"FAULT_CODE_TYPE_7\", \"FAULT_CODE_TYPE_8\", \"FAULT_CODE_TYPE_9\", "
-                               "\"FAULT_CODE_TYPE_10\", \"FAULT_CODE_1\", \"FAULT_CODE_2\", "
-                               "\"FAULT_CODE_3\", \"FAULT_CODE_4\", \"FAULT_CODE_5\", \"FAULT_CODE_6\", "
-                               "\"FAULT_CODE_7\", \"FAULT_CODE_8\", \"FAULT_CODE_9\", \"FAULT_CODE_10\", "
-                               "\"MSG_1\", \"MSG_2\", \"MSG_3\", \"MSG_4\", \"MSG_5\", \"MSG_6\", "
-                               "\"MSG_7\", \"MSG_8\", \"MSG_9\", \"MSG_10\", \"CRC\")"
-                               "VALUES ('%1','%2','%3', %4, %5,%6, %7,'%8','%9','%10',%11,"
-                               "'%12','%13','%14','%15','%16','%17','%18','%19','%20','%21','%22','%23','%24','%25',"
-                               "'%26','%27','%28','%29','%30','%31','%32','%33','%34','%35','%36','%37','%38','%39',"
-                               "'%40','%41','%42','%43','%44','%45','%46','%47','%48','%49','%50','%51','%52')")
-                           .arg(strStrtFrm)
-                           .arg(strmsgtyp)
-                           .arg(pstStnFaults->usmsgLength)
-                           .arg(pstStnFaults->usMsgSeq)
-                           .arg(m_uiStationID)
-                           .arg(pstStnFaults->usNMSID)
-                           .arg(pstStnFaults->ucVersion)
-                           .arg(strDate)
-                           .arg(strtime)
-                           .arg(strKavachTyp)
-                           .arg(pstStnFaults->ucTotalFaultsCode)
-                           .arg(mc[0]).arg(mc[1]).arg(mc[2]).arg(mc[3]).arg(mc[4])
-                           .arg(mc[5]).arg(mc[6]).arg(mc[7]).arg(mc[8]).arg(mc[9])
-                           .arg(ft[0]).arg(ft[1]).arg(ft[2]).arg(ft[3]).arg(ft[4])
-                           .arg(ft[5]).arg(ft[6]).arg(ft[7]).arg(ft[8]).arg(ft[9])
-                           .arg(fc[0]).arg(fc[1]).arg(fc[2]).arg(fc[3]).arg(fc[4])
-                           .arg(fc[5]).arg(fc[6]).arg(fc[7]).arg(fc[8]).arg(fc[9])
-                           .arg(fm[0]).arg(fm[1]).arg(fm[2]).arg(fm[3]).arg(fm[4])
-                           .arg(fm[5]).arg(fm[6]).arg(fm[7]).arg(fm[8]).arg(fm[9])
-                           .arg(strCrc);
+
+    QString strQuery = QString(
+                           "INSERT INTO public.stationfaultspkt("
+                           "\"SOF\", \"MSG_TYPE\", \"MSG_LEN\", \"MSG_SEQ\", \"KAVACH_SUBSYSTEM_ID\","
+                           "\"NMS_SYSTEM_ID\", \"SYSTEM_VER\", \"DATE\", \"TIME\", \"KAVACH_TYPE\", "
+                           "\"TOTAL_FAULTS_CODES\", "
+                           "\"MODULE_ID_1\",  \"MODULE_ID_2\",  \"MODULE_ID_3\",  \"MODULE_ID_4\",  \"MODULE_ID_5\",  "
+                           "\"MODULE_ID_6\",  \"MODULE_ID_7\",  \"MODULE_ID_8\",  \"MODULE_ID_9\",  \"MODULE_ID_10\", "
+                           "\"FAULT_CODE_TYPE_1\",  \"FAULT_CODE_TYPE_2\",  \"FAULT_CODE_TYPE_3\",  "
+                           "\"FAULT_CODE_TYPE_4\",  \"FAULT_CODE_TYPE_5\",  \"FAULT_CODE_TYPE_6\",  "
+                           "\"FAULT_CODE_TYPE_7\",  \"FAULT_CODE_TYPE_8\",  \"FAULT_CODE_TYPE_9\",  "
+                           "\"FAULT_CODE_TYPE_10\", "
+                           "\"FAULT_CODE_1\",  \"FAULT_CODE_2\",  \"FAULT_CODE_3\",  \"FAULT_CODE_4\",  "
+                           "\"FAULT_CODE_5\",  \"FAULT_CODE_6\",  \"FAULT_CODE_7\",  \"FAULT_CODE_8\",  "
+                           "\"FAULT_CODE_9\",  \"FAULT_CODE_10\", "
+                           "\"MSG_1\",  \"MSG_2\",  \"MSG_3\",  \"MSG_4\",  \"MSG_5\",  "
+                           "\"MSG_6\",  \"MSG_7\",  \"MSG_8\",  \"MSG_9\",  \"MSG_10\", "
+                           "\"CRC\")"
+                           "VALUES ("
+                           "'%1',  '%2',  '%3',  %4,   %5,  "   // SOF, MSG_TYPE, MSG_LEN, MSG_SEQ, KAVACH_SUBSYSTEM_ID
+                           " %6,   %7,   '%8', '%9', '%10', "   // NMS_SYSTEM_ID, SYSTEM_VER, DATE, TIME, KAVACH_TYPE
+                           " %11,  "                             // TOTAL_FAULTS_CODES
+                           "'%12','%13','%14','%15','%16','%17','%18','%19','%20','%21',"  // MODULE_ID 1-10
+                           "'%22','%23','%24','%25','%26','%27','%28','%29','%30','%31',"  // FAULT_CODE_TYPE 1-10
+                           "'%32','%33','%34','%35','%36','%37','%38','%39','%40','%41',"  // FAULT_CODE 1-10
+                           "'%42','%43','%44','%45','%46','%47','%48','%49','%50','%51',"  // MSG 1-10
+                           "'%52')"                                                         // CRC
+                           )
+                           .arg(strStrtFrm)                       // %1  SOF
+                           .arg(strmsgtyp)                        // %2  MSG_TYPE
+                           .arg(pstStnFaults->usmsgLength)        // %3  MSG_LEN
+                           .arg(pstStnFaults->usMsgSeq)           // %4  MSG_SEQ
+                           .arg(m_uiStationID)                    // %5  KAVACH_SUBSYSTEM_ID
+                           .arg(pstStnFaults->usNMSID)            // %6  NMS_SYSTEM_ID
+                           .arg(pstStnFaults->ucVersion)          // %7  SYSTEM_VER
+                           .arg(strDate)                          // %8  DATE
+                           .arg(strtime)                          // %9  TIME
+                           .arg(strKavachTyp)                     // %10 KAVACH_TYPE
+                           .arg(pstStnFaults->ucTotalFaultsCode)  // %11 TOTAL_FAULTS_CODES
+                           .arg(mc[0]).arg(mc[1]).arg(mc[2]).arg(mc[3]).arg(mc[4])   // %12-16
+                           .arg(mc[5]).arg(mc[6]).arg(mc[7]).arg(mc[8]).arg(mc[9])   // %17-21
+                           .arg(ft[0]).arg(ft[1]).arg(ft[2]).arg(ft[3]).arg(ft[4])   // %22-26
+                           .arg(ft[5]).arg(ft[6]).arg(ft[7]).arg(ft[8]).arg(ft[9])   // %27-31
+                           .arg(fc[0]).arg(fc[1]).arg(fc[2]).arg(fc[3]).arg(fc[4])   // %32-36
+                           .arg(fc[5]).arg(fc[6]).arg(fc[7]).arg(fc[8]).arg(fc[9])   // %37-41
+                           .arg(fm[0]).arg(fm[1]).arg(fm[2]).arg(fm[3]).arg(fm[4])   // %42-46
+                           .arg(fm[5]).arg(fm[6]).arg(fm[7]).arg(fm[8]).arg(fm[9])   // %47-51
+                           .arg(strCrc);                                              // %52 CRC
 
     bool bQryResult = pcQuery->exec(strQuery);
 
-    /* Execute the Query */
-    if(bQryResult == true)
+    if (bQryResult)
     {
-        qDebug () << "successfully insert the fault packet into database";
+        qDebug() << "[FaultPkt] DB insert OK — StationID:" << m_uiStationID
+                 << "FaultCount:" << pstStnFaults->ucTotalFaultsCode;
     }
     else
     {
-        qDebug () << "Failed to insert the fault packet into database";
-        qDebug() << "DB ERROR:" << pcQuery->lastError().text();
-        qDebug() << "QUERY:" << strQuery;
+        qWarning() << "[FaultPkt] DB insert FAILED";
+        qWarning() << "DB ERROR:" << pcQuery->lastError().text();
+        qDebug()   << "QUERY:"    << strQuery;
     }
 
+    delete pcQuery;
 }
 
 void nmsDBQuerys::SlotStationInfo()
@@ -2463,41 +2489,40 @@ void nmsDBQuerys::SlotInsertDBOnBoardEventMsg(stOnboardKavachEventMsg stOnBoardE
 
     QString strSOF =
         QString("0x%1")
-            .arg(stOnBoardEvntMsg.usStartFrame, 4, 16, QChar('0'))
+            .arg(stOnBoardEvntMsg.usStartFrame,4,16,QChar('0'))
             .toUpper();
 
     QString strType =
         QString("0x%1")
-            .arg(stOnBoardEvntMsg.ucMsgType, 2, 16, QChar('0'))
+            .arg(stOnBoardEvntMsg.ucMsgType,2,16,QChar('0'))
             .toUpper();
 
     QString strCRC =
         QString("0x%1")
-            .arg(stOnBoardEvntMsg.uiCRC, 8, 16, QChar('0'))
+            .arg(stOnBoardEvntMsg.uiCRC,8,16,QChar('0'))
             .toUpper();
 
     // Onboard Kavach ID (3 bytes)
     QString strKavachID =
         QString("%1 %2 %3")
-            .arg(stOnBoardEvntMsg.ucOnboardKavachID[0], 2, 16, QChar('0'))
-            .arg(stOnBoardEvntMsg.ucOnboardKavachID[1], 2, 16, QChar('0'))
-            .arg(stOnBoardEvntMsg.ucOnboardKavachID[2], 2, 16, QChar('0'))
+            .arg(stOnBoardEvntMsg.ucOnboardKavachID[0],2,16,QChar('0'))
+            .arg(stOnBoardEvntMsg.ucOnboardKavachID[1],2,16,QChar('0'))
+            .arg(stOnBoardEvntMsg.ucOnboardKavachID[2],2,16,QChar('0'))
             .toUpper();
 
-    // ----------------------------------------------------
-    // Date & Time from message (NOT system time)
-    // ----------------------------------------------------
+    // Date (YYYY-MM-DD)
     QString strDate =
         QString("20%1-%2-%3")
-            .arg(stOnBoardEvntMsg.ucDate[2], 2, 10, QChar('0')) // Year
-            .arg(stOnBoardEvntMsg.ucDate[1], 2, 10, QChar('0')) // Month
-            .arg(stOnBoardEvntMsg.ucDate[0], 2, 10, QChar('0')); // Day
+            .arg(stOnBoardEvntMsg.ucDate[2],2,10,QChar('0'))
+            .arg(stOnBoardEvntMsg.ucDate[1],2,10,QChar('0'))
+            .arg(stOnBoardEvntMsg.ucDate[0],2,10,QChar('0'));
 
+    // Time (HH:MM:SS)
     QString strTime =
         QString("%1:%2:%3")
-            .arg(stOnBoardEvntMsg.ucTime[0], 2, 10, QChar('0')) // Hour
-            .arg(stOnBoardEvntMsg.ucTime[1], 2, 10, QChar('0')) // Minute
-            .arg(stOnBoardEvntMsg.ucTime[2], 2, 10, QChar('0')); // Second
+            .arg(stOnBoardEvntMsg.ucTime[0],2,10,QChar('0'))
+            .arg(stOnBoardEvntMsg.ucTime[1],2,10,QChar('0'))
+            .arg(stOnBoardEvntMsg.ucTime[2],2,10,QChar('0'));
 
     QString strQuery = QString(
                            "INSERT INTO public.onboardkavacheventmsg("
@@ -2550,8 +2575,8 @@ void nmsDBQuerys::SlotInsertDBOnBoardEventMsg(stOnboardKavachEventMsg stOnBoardE
                            .arg(strDate)
                            .arg(strTime)
                            .arg(stOnBoardEvntMsg.usEventID)
-                           .arg(stOnBoardEvntMsg.usMode)              // Mode of Operation
-                           .arg(stOnBoardEvntMsg.usSpeed)             // Current Speed
+                           .arg(stOnBoardEvntMsg.usMode)
+                           .arg(stOnBoardEvntMsg.usCurrentSpeed)
                            .arg(stOnBoardEvntMsg.usTargetDistance)
                            .arg(stOnBoardEvntMsg.ucEventCount)
                            .arg(stOnBoardEvntMsg.usIncidentID)
@@ -2561,19 +2586,19 @@ void nmsDBQuerys::SlotInsertDBOnBoardEventMsg(stOnboardKavachEventMsg stOnBoardE
 
     bool bQryResult = pcQuery->exec(strQuery);
 
-    if (bQryResult)
+    if(bQryResult)
     {
         qDebug() << "Successfully inserted Onboard Kavach Event Message";
     }
     else
     {
         qDebug() << "Failed to insert Onboard Kavach Event Message";
-        qDebug() << "SQL Error:" << pcQuery->lastError().text();
-        qDebug() << "Query:" << strQuery;
+        qDebug() << "SQL Error :" << pcQuery->lastError().text();
+        qDebug() << "Executed Query :" << strQuery;
     }
 
     delete pcQuery;
-    pcQuery = NULL;
+    pcQuery = nullptr;
 }
 
 void nmsDBQuerys::SlotInsertDBOnBoardBrakeEventMsg(

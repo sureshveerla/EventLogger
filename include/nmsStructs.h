@@ -46,25 +46,35 @@ typedef struct stfaultentry
 
 Q_DECLARE_METATYPE(stFaultEntry)
 
-typedef struct ststationfaults {
+typedef struct
+{
+    quint16 usStartFrame;          // AAAA
 
-    quint16  usStartFrame;     // 0xAAAA, 0xC3
-    quint8   ucMsgType;             // e.g., 0x19
-    quint16  usmsgLength;
+    quint8  ucMsgType;             // 19
+
+    quint16 usmsgLength;
+
     quint16 usMsgSeq;
-    quint8  ucKavachSubsysID[3];
-    quint16 usNMSID;
-    quint8  ucVersion;
-    quint8  ucDate[3];        // dd mm yy
-    quint8  ucTime[3];        // hh mm ss
 
-    quint8   ucKavachType;
-    quint8   ucTotalFaultsCode;
+    quint16 ucKavachSubsysID;  // <-- 2 bytes
+
+    quint16 usNMSID;
+
+    quint8  ucVersion;
+
+    quint8  ucDate[3];
+
+    quint8  ucTime[3];
+
+    quint8  ucKavachType;
+
+    quint8  ucTotalFaultsCode;
 
     stFaultEntry stFaults[10];
-    quint32  uiCRC;
 
-}__attribute((packed)) stStationFaults;
+    quint32 uiCRC;
+
+} __attribute__((packed)) stStationFaults;
 
 Q_DECLARE_METATYPE(stStationFaults);
 
@@ -314,7 +324,7 @@ typedef struct stOnboardKavachEventMsg
     quint16 usEventID;
 
     quint16 usMode;                // Mode of Operation bitmap
-    quint16 usSpeed;               // Current Speed
+    quint16 usCurrentSpeed;               // Current Speed
     quint16 usTargetDistance;      // Target Distance
 
     quint8  ucEventCount;          // Event Count

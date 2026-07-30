@@ -958,364 +958,378 @@ void EventLoggerKMS::ForwardToKMS(
     const QByteArray &rawPacket,
     quint8 msgType)
 {
-    if (!m_pGSMSerial ||
-        !m_pGSMSerial->isOpen())
+    if (!m_pGSMSerial || !m_pGSMSerial->isOpen())
     {
-        qCritical()
-        << "[KMS] GSM not open";
-
-        ReportFailureToVC(
-            KMS_FAIL_MODEM_GSM,
-            0);
+        qCritical() << "[KMS] GSM not open";
+        ReportFailureToVC(KMS_FAIL_MODEM_GSM, 0);
         return;
     }
 
-    QString kmsIP =
-        ActiveChannel()
-            .strKMSServerIP;
+    QString kmsIP   = ActiveChannel().strKMSServerIP;
+    quint16 kmsPort = ActiveChannel().usKMSServerPort;
 
-    quint16 kmsPort =
-        ActiveChannel()
-            .usKMSServerPort;
+    qInfo() << "\n================================";
+    qInfo() << "[KMS FORWARD TO KMS SERVER]";
+    qInfo() << "MSG TYPE :" << Qt::hex << msgType;
+    qInfo() << "DEST IP  :" << kmsIP;
+    qInfo() << "DEST PORT:" << kmsPort;
+    qInfo() << "SIZE     :" << rawPacket.size();
+    qInfo() << "HEX      :" << rawPacket.toHex(' ').toUpper();
+    qInfo() << "================================";
 
-    qInfo()
-        << "\n================================";
-
-    qInfo()
-        << "[KMS FORWARD TO KMS SERVER]";
-
-    qInfo()
-        << "MSG TYPE :"
-        << Qt::hex
-        << msgType;
-
-    qInfo()
-        << "DEST IP  :"
-        << kmsIP;
-
-    qInfo()
-        << "DEST PORT:"
-        << kmsPort;
-
-    qInfo()
-        << "SIZE     :"
-        << rawPacket.size();
-
-    qInfo()
-        << "HEX      :"
-        << rawPacket.toHex(' ')
-               .toUpper();
-
-    qInfo()
-        << "================================";
-
-    // ==================================================
-    // Ensure GPRS active
-    // ==================================================
+    // ── Ensure GPRS active ────────────────────────────────────
     if (!EnsureGPRSActive())
     {
-        qCritical()
-        << "[KMS] GPRS unavailable";
-
-        ReportFailureToVC(
-            KMS_FAIL_GPRS_NETWORK,
-            0);
+        qCritical() << "[KMS] GPRS unavailable";
+        ReportFailureToVC(KMS_FAIL_GPRS_NETWORK, 0);
         return;
     }
 
-    // ==================================================
-    // Create UDP socket
-    // ==================================================
-    QString usocrResp =
-        SendATCommand(
-            "AT+USOCR=17",
-            5000);
+    // ── Create UDP socket ─────────────────────────────────────
+    QString usocrResp = SendATCommand("AT+USOCR=17", 5000);
+    qDebug() << "[KMS] USOCR:" << usocrResp;
 
-    qDebug()
-        << "[KMS] USOCR:"
-        << usocrResp;
-
-    QRegularExpression reSocket(
-        R"(\+USOCR:\s*(\d+))");
-
-    QRegularExpressionMatch socketMatch =
-        reSocket.match(usocrResp);
+    QRegularExpression reSocket(R"(\+USOCR:\s*(\d+))");
+    QRegularExpressionMatch socketMatch = reSocket.match(usocrResp);
 
     if (!socketMatch.hasMatch())
     {
-        qCritical()
-        << "[KMS] Socket create FAILED:"
-        << usocrResp;
-
-        ReportFailureToVC(
-            KMS_FAIL_GPRS_NETWORK,
-            0);
+        qCritical() << "[KMS] Socket create FAILED:" << usocrResp;
+        ReportFailureToVC(KMS_FAIL_GPRS_NETWORK, 0);
         return;
     }
 
-    int socketHandle =
-        socketMatch
-            .captured(1)
-            .toInt();
+    int socketHandle = socketMatch.captured(1).toInt();
+    qInfo() << "[KMS] Socket handle:" << socketHandle;
 
-    qInfo()
-        << "[KMS] Socket handle:"
-        << socketHandle;
+    // ── Send UDP packet via AT+USOST ──────────────────────────
+    QString hexData = QString::fromLatin1(rawPacket.toHex()).toUpper();
+    QString sendCmd = QString("AT+USOST=%1,\"%2\",%3,%4,\"%5\"")
+                          .arg(socketHandle)
+                          .arg(kmsIP)
+                          .arg(kmsPort)
+                          .arg(rawPacket.size())
+                          .arg(hexData);
 
-    // ==================================================
-    // Send UDP packet
-    // ==================================================
-    QString hexData =
-        QString::fromLatin1(
-            rawPacket.toHex())
-            .toUpper();
-
-    QString sendCmd =
-        QString(
-            "AT+USOST=%1,\"%2\",%3,%4,\"%5\"")
-            .arg(socketHandle)
-            .arg(kmsIP)
-            .arg(kmsPort)
-            .arg(rawPacket.size())
-            .arg(hexData);
-
-    qDebug()
-        << "[KMS] USOST cmd:"
-        << sendCmd;
-
-    QString sendResp =
-        SendATCommand(
-            sendCmd,
-            10000);
-
-    qDebug()
-        << "[KMS] USOST resp:"
-        << sendResp;
+    qDebug() << "[KMS] USOST cmd:" << sendCmd;
+    QString sendResp = SendATCommand(sendCmd, 10000);
+    qDebug() << "[KMS] USOST resp:" << sendResp;
 
     if (!sendResp.contains("+USOST"))
     {
-        qCritical()
-        << "[KMS] UDP send failed:"
-        << sendResp;
-
-        ReportFailureToVC(
-            KMS_FAIL_GPRS_NETWORK,
-            0);
-
-        SendATCommand(
-            QString(
-                "AT+USOCL=%1")
-                .arg(socketHandle),
-            3000);
-
+        qCritical() << "[KMS] UDP send failed:" << sendResp;
+        ReportFailureToVC(KMS_FAIL_GPRS_NETWORK, 0);
+        SendATCommand(QString("AT+USOCL=%1").arg(socketHandle), 3000);
         return;
     }
 
-    qInfo()
-        << "[KMS] UDP packet transmitted ✅";
+    qInfo() << "[KMS] UDP packet transmitted ✅";
 
-    // ==================================================
-    // WAIT FOR UDP ACK + OTP SMS
-    // ==================================================
+    // ── Phase 1: Wait for 0x91/0x93/0x95 via UDP ─────────────
+    // ── Phase 2: If 0x91 with OTP flag, wait for OTP SMS ─────
+    // Socket stays open through BOTH phases
+
     QElapsedTimer timer;
     timer.start();
 
-    bool gotReply = false;
+    bool gotUDPReply  = false;   // 0x91/0x93/0x95 received
+    bool otpExpected  = false;   // KMS confirmed OTP will come via SMS
+    bool gotOTP       = false;   // OTP SMS received and processed
 
-    while (timer.elapsed() < 120000)
+    QElapsedTimer otpTimer;
+
+    // Phase 1 timeout: 120s for UDP reply
+    // Phase 2 timeout: 60s for OTP SMS after 0x91
+    const int PHASE1_TIMEOUT_MS = 120000;
+    const int PHASE2_TIMEOUT_MS = 60000;
+
+    while (true)
     {
+        // ── Timeout checks ────────────────────────────────────
+        if (!gotUDPReply && timer.elapsed() > PHASE1_TIMEOUT_MS)
+        {
+            qWarning() << "[KMS] Phase1: No UDP reply in 120s";
+            ReportFailureToVC(KMS_FAIL_NO_KMS_RESPONSE, 0);
+            break;
+        }
+
+        if (gotUDPReply && otpExpected && !gotOTP
+            && otpTimer.elapsed() > PHASE2_TIMEOUT_MS)
+        {
+            qWarning() << "[KMS] Phase2: OTP SMS not received in 60s";
+            ReportFailureToVC(KMS_FAIL_SMS_OTP, 0);
+            break;
+        }
+
+        // ── If we got reply and OTP not expected — done ───────
+        if (gotUDPReply && !otpExpected)
+            break;
+
+        // ── If we got reply and OTP received — done ───────────
+        if (gotUDPReply && otpExpected && gotOTP)
+            break;
+
         QThread::msleep(500);
 
-        // ==========================================
-        // CHECK SOCKET EVENTS
-        // ==========================================
-        QString usoerResp =
-            SendATCommand(
-                "AT+USOER",
-                2000);
-
-        qDebug()
-            << "[KMS] Socket error:"
-            << usoerResp;
-
-        // ==========================================
-        // SMS ARRIVED?
-        // Example:
-        // +CMTI: "ME",0
-        // ==========================================
-        if (usoerResp.contains("+CMTI"))
+        // ═════════════════════════════════════════════════════
+        // PHASE 1: Poll UDP socket for KMS response (0x91/0x93/0x95)
+        // Only poll until we have the UDP reply
+        // ═════════════════════════════════════════════════════
+        if (!gotUDPReply)
         {
-            qInfo()
-            << "[KMS] OTP SMS detected";
+            QString pollResp = SendATCommand(
+                QString("AT+USORF=%1,1024").arg(socketHandle), 3000);
+            qDebug() << "[KMS] USORF:" << pollResp;
 
-            QRegularExpression reSms(
-                R"(\+CMTI:\s*"ME",(\d+))");
+            QRegularExpression reData(
+                "\\+USORF:\\s*(\\d+),\"([^\"]+)\",(\\d+),(\\d+),\"([0-9A-Fa-f]+)\"");
+            QRegularExpressionMatch match = reData.match(pollResp);
 
-            QRegularExpressionMatch smsMatch =
-                reSms.match(usoerResp);
-
-            if (smsMatch.hasMatch())
+            if (match.hasMatch())
             {
-                int smsIndex =
-                    smsMatch
-                        .captured(1)
-                        .toInt();
+                int rxLen = match.captured(4).toInt();
+                if (rxLen > 0)
+                {
+                    QByteArray response =
+                        QByteArray::fromHex(match.captured(5).toLatin1());
 
-                qInfo()
-                    << "[KMS] Reading SMS index:"
-                    << smsIndex;
+                    qInfo() << "[KMS] UDP RX:" << response.toHex(' ').toUpper();
 
-                QString smsResp =
-                    SendATCommand(
-                        QString(
-                            "AT+CMGR=%1")
-                            .arg(smsIndex),
-                        5000);
+                    if (response.size() >= 3)
+                    {
+                        quint8 respType = static_cast<quint8>(response[2]);
+                        qInfo() << "[KMS] Response MsgType:" << Qt::hex << respType;
 
-                qInfo()
-                    << "[KMS] SMS RAW:"
-                    << smsResp;
+                        switch (respType)
+                        {
+                        case KMS_MSG_IDENTIFICATION_ACK:   // 0x91
+                        {
+                            qInfo() << "[KMS] 0x91 ACK received ✅";
 
-                ProcessOTPSms(
-                    smsResp);
+                            // Forward to VC immediately
+                            ForwardToVC(response);
+                            emit SigKMSPacketReceived(respType, response);
+                            gotUDPReply = true;
 
-                QString delResp =
-                    SendATCommand(
-                        QString(
-                            "AT+CMGD=%1")
-                            .arg(smsIndex),
-                        3000);
+                            // Check if KMS confirmed OTP will be sent via SMS
+                            // ICD §D.8.3: byte[15] = 0x01 means OTP is being sent
+                            quint8 ackStatus = (response.size() >= 16)
+                                                   ? static_cast<quint8>(response[15])
+                                                   : 0x00;
 
-                qInfo()
-                    << "[KMS] SMS deleted:"
-                    << delResp;
+                            qInfo() << "[KMS] 0x91 AckStatus:" << Qt::hex << ackStatus;
+
+                            if (ackStatus == 0x01)
+                            {
+                                // OTP will arrive via SMS — enter Phase 2
+                                otpExpected = true;
+                                otpTimer.start();
+                                qInfo() << "[KMS] OTP expected via SMS — entering Phase 2 (60s wait)";
+                            }
+                            else
+                            {
+                                // No OTP expected — session complete
+                                otpExpected = false;
+                                qInfo() << "[KMS] No OTP expected — session complete";
+                            }
+                            break;
+                        }
+
+                        case KMS_MSG_AUTH_KEY:           // 0x93
+                        case KMS_MSG_AUTH_KEY_STATUS:    // 0x95
+                        {
+                            qInfo() << "[KMS] Forwarding"
+                                    << Qt::hex << respType << "to VC ✅";
+                            ForwardToVC(response);
+                            emit SigKMSPacketReceived(respType, response);
+                            gotUDPReply = true;
+                            otpExpected = false;  // 0x93/0x95 never have OTP
+                            break;
+                        }
+
+                        default:
+                        {
+                            qWarning() << "[KMS] Unknown MsgType from KMS:"
+                                       << Qt::hex << respType;
+                            break;
+                        }
+                        }
+                    }
+                }
             }
         }
 
-        // ==========================================
-        // POLL UDP RESPONSE
-        // ==========================================
-        QString pollResp =
-            SendATCommand(
-                QString(
-                    "AT+USORF=%1,1024")
-                    .arg(socketHandle),
-                3000);
-
-        qDebug()
-            << "[KMS] USORF:"
-            << pollResp;
-
-        QRegularExpression reData(
-            "\\+USORF:\\s*(\\d+),\"([^\"]+)\",(\\d+),(\\d+),\"([0-9A-Fa-f]+)\""
-            );
-
-QRegularExpressionMatch match =
-    reData.match(pollResp);
-
-if (!match.hasMatch())
-{
-    continue;
-}
-
-int rxLen =
-    match.captured(4).toInt();
-
-QString hexPayload =
-    match.captured(5);
-
-if (rxLen <= 0)
-{
-    continue;
-}
-
-QByteArray response =
-    QByteArray::fromHex(
-        hexPayload.toLatin1());
-
-qInfo()
-    << "[KMS] RESPONSE RX:"
-    << response.toHex(' ')
-           .toUpper();
-
-        qInfo()
-            << "[KMS] RESPONSE RX:"
-            << response.toHex(' ')
-                   .toUpper();
-
-        if (response.size() < 3)
+        // ═════════════════════════════════════════════════════
+        // PHASE 2: Poll for OTP SMS
+        // Runs AFTER 0x91 received, while socket is still open
+        // Two methods: AT+CMGL (poll) + AT+USOER (+CMTI detection)
+        // ═════════════════════════════════════════════════════
+        if (gotUDPReply && otpExpected && !gotOTP)
         {
-            continue;
+            qDebug() << "[KMS] Phase2: polling for OTP SMS"
+                     << "| elapsed:" << otpTimer.elapsed() << "ms";
+
+            // ── Method 1: Check for +CMTI via AT+USOER ───────
+            // AT+USOER can surface unsolicited +CMTI indications
+            // that arrived while we were in blocking AT mode
+            QString usoerResp = SendATCommand("AT+USOER", 2000);
+            qDebug() << "[KMS] USOER:" << usoerResp;
+
+            if (usoerResp.contains("+CMTI"))
+            {
+                qInfo() << "[KMS] +CMTI detected in USOER response";
+
+                QRegularExpression reCmti(R"(\+CMTI:\s*"[^"]+",(\d+))");
+                QRegularExpressionMatch cmtiMatch = reCmti.match(usoerResp);
+
+                if (cmtiMatch.hasMatch())
+                {
+                    int smsIndex = cmtiMatch.captured(1).toInt();
+                    qInfo() << "[KMS] Reading SMS at index:" << smsIndex;
+
+                    QString smsResp = SendATCommand(
+                        QString("AT+CMGR=%1").arg(smsIndex), 5000);
+                    qInfo() << "[KMS] SMS RAW:" << smsResp;
+
+                    // Extract SMS body from AT+CMGR response
+                    // Format:
+                    // +CMGR: "REC READ","<sender>",,"<timestamp>"
+                    // <SMS body text>
+                    // OK
+                    QString smsBody;
+                    QStringList cmgrLines = smsResp.split('\n', Qt::SkipEmptyParts);
+                    for (int i = 0; i < cmgrLines.size(); i++)
+                    {
+                        QString line = cmgrLines[i].trimmed();
+                        if (line.startsWith("+CMGR"))
+                            continue;
+                        if (line == "OK" || line.isEmpty())
+                            continue;
+                        smsBody = line;
+                        break;
+                    }
+
+                    if (!smsBody.isEmpty())
+                    {
+                        qInfo() << "[KMS] SMS body from CMGR:" << smsBody;
+                        ProcessOTPSms(smsBody);
+                        gotOTP = true;
+                    }
+                    else
+                    {
+                        qWarning() << "[KMS] CMGR body empty — will retry via CMGL";
+                    }
+
+                    // Delete SMS after reading
+                    QString delResp = SendATCommand(
+                        QString("AT+CMGD=%1").arg(smsIndex), 3000);
+                    qInfo() << "[KMS] SMS deleted (CMGR path):" << delResp;
+                }
+            }
+
+            // ── Method 2: Poll AT+CMGL="REC UNREAD" ──────────
+            // Direct poll — doesn't rely on +CMTI being surfaced
+            // Runs every iteration regardless of Method 1 result
+            if (!gotOTP)
+            {
+                QString cmglResp = SendATCommand(
+                    "AT+CMGL=\"REC UNREAD\"", 5000);
+                qDebug() << "[KMS] CMGL UNREAD:" << cmglResp;
+
+                if (cmglResp.contains("+CMGL:"))
+                {
+                    // Find the SMS entry with highest index (most recent)
+                    QStringList lines = cmglResp.split('\n', Qt::SkipEmptyParts);
+                    QString latestBody;
+                    int     latestIdx = -1;
+
+                    for (int i = 0; i < lines.size(); i++)
+                    {
+                        QString line = lines[i].trimmed();
+                        if (!line.startsWith("+CMGL:"))
+                            continue;
+
+                        // Extract index from +CMGL: <idx>,...
+                        QRegularExpression idxRe(R"(\+CMGL:\s*(\d+))");
+                        QRegularExpressionMatch idxMatch = idxRe.match(line);
+                        int idx = idxMatch.hasMatch()
+                                      ? idxMatch.captured(1).toInt()
+                                      : -1;
+
+                        // Next non-empty line = SMS body
+                        QString body;
+                        for (int j = i + 1; j < lines.size(); j++)
+                        {
+                            QString candidate = lines[j].trimmed();
+                            if (candidate.isEmpty() || candidate == "OK")
+                                continue;
+                            body = candidate;
+                            break;
+                        }
+
+                        qDebug() << "[KMS] CMGL entry idx=" << idx
+                                 << "body:" << body;
+
+                        if (body.isEmpty())
+                            continue;
+
+                        // Must contain OTP keyword
+                        if (!body.contains("OTP", Qt::CaseInsensitive))
+                        {
+                            qDebug() << "[KMS] CMGL body has no OTP keyword — skip";
+                            continue;
+                        }
+
+                        if (idx > latestIdx)
+                        {
+                            latestIdx  = idx;
+                            latestBody = body;
+                        }
+                    }
+
+                    if (!latestBody.isEmpty())
+                    {
+                        qInfo() << "[KMS] OTP SMS found via CMGL idx="
+                                << latestIdx
+                                << "body:" << latestBody;
+
+                        // ── Process OTP — full flow ───────────
+                        ProcessOTPSms(latestBody);
+                        gotOTP = true;
+
+                        // Delete ALL SMS after extraction
+                        QString delResp = SendATCommand("AT+CMGD=1,4", 3000);
+                        qInfo() << "[KMS] All SMS deleted (CMGL path):"
+                                << (delResp.contains("OK") ? "OK ✅" : "FAILED ⚠");
+                    }
+                    else
+                    {
+                        qDebug() << "[KMS] CMGL: unread SMS found but no OTP content yet"
+                                 << "— will retry";
+                    }
+                }
+                else
+                {
+                    qDebug() << "[KMS] CMGL: no unread SMS yet"
+                             << "| OTP wait elapsed:" << otpTimer.elapsed() << "ms";
+                }
+            }
         }
 
-        quint8 respType =
-            static_cast<quint8>(
-                response[2]);
+    } // end while(true)
 
-        qInfo()
-            << "[KMS] Response MsgType:"
-            << Qt::hex
-            << respType;
+    // ── Close socket — only reaches here after both phases done ─
+    QString closeResp = SendATCommand(
+        QString("AT+USOCL=%1").arg(socketHandle), 3000);
+    qInfo() << "[KMS] Socket closed:" << closeResp;
 
-        switch (respType)
-        {
-        case KMS_MSG_IDENTIFICATION_ACK:
-        case KMS_MSG_AUTH_KEY:
-        case KMS_MSG_AUTH_KEY_STATUS:
-        {
-            ForwardToVC(
-                response);
+    // ── Final status log ──────────────────────────────────────
+    qInfo() << "[KMS] ForwardToKMS complete:"
+            << "UDP reply=" << gotUDPReply
+            << "OTP expected=" << otpExpected
+            << "OTP received=" << gotOTP;
 
-            gotReply = true;
-            break;
-        }
-
-        default:
-        {
-            qWarning()
-            << "[KMS] Unknown msg:"
-            << Qt::hex
-            << respType;
-            break;
-        }
-        }
-
-        if (gotReply)
-        {
-            break;
-        }
-    }
-
-    // ==================================================
-    // Timeout
-    // ==================================================
-    if (!gotReply)
-    {
-        qWarning()
-        << "[KMS] No KMS response in 120s";
-
-        ReportFailureToVC(
-            KMS_FAIL_NO_KMS_RESPONSE,
-            0);
-    }
-
-    // ==================================================
-    // CLOSE SOCKET
-    // ==================================================
-    QString closeResp =
-        SendATCommand(
-            QString(
-                "AT+USOCL=%1")
-                .arg(socketHandle),
-            3000);
-
-    qInfo()
-        << "[KMS] Socket closed:"
-        << closeResp;
-
-    emit SigKMSPacketSent(
-        msgType,
-        rawPacket);
+    emit SigKMSPacketSent(msgType, rawPacket);
 }
 
 // ============================================================
@@ -1347,111 +1361,6 @@ void EventLoggerKMS::ForwardToVC(const QByteArray &rawPacket)
 //    → Extract OTP → Build 0x96 → Send to VC within 2000ms
 // ============================================================
 
-// void EventLoggerKMS::SlotHandleGSMData()
-// {
-//     if (!m_pGSMSerial) return;
-
-//     m_gsmBuffer.append(m_pGSMSerial->readAll());
-
-//     // ── CASE A: Binary KMS GPRS packet detection ────────────
-//     // KMS packets start with SOF 0xA5 0xC3
-//     // We scan the buffer for this signature
-//     while (m_gsmBuffer.size() >= 7)
-//     {
-//         int sofIdx = -1;
-//         for (int i = 0; i < m_gsmBuffer.size() - 1; i++)
-//         {
-//             if (static_cast<uint8_t>(m_gsmBuffer[i])   == KMS_SOF1 &&
-//                 static_cast<uint8_t>(m_gsmBuffer[i+1]) == KMS_SOF2)
-//             {
-//                 sofIdx = i;
-//                 break;
-//             }
-//         }
-
-//         // Discard garbage before SOF
-//         if (sofIdx < 0)
-//         {
-//             // No SOF found — check if there's text (+CMT) to process
-//             break;
-//         }
-
-//         if (sofIdx > 0)
-//         {
-//             qDebug() << "[KMS] Discarding" << sofIdx << "bytes before SOF";
-//             m_gsmBuffer.remove(0, sofIdx);
-//         }
-
-//         // Need at least SOF(2)+MsgType(1)+MsgLen(2) = 5 bytes to read length
-//         if (m_gsmBuffer.size() < 5) break;
-
-//         // Read message length from bytes [3..4] (big-endian)
-//         quint16 msgLen = (static_cast<quint16>(static_cast<uint8_t>(m_gsmBuffer[3])) << 8) |
-//                          static_cast<quint16>(static_cast<uint8_t>(m_gsmBuffer[4]));
-
-//         // Total packet = SOF(2) + MsgType(1) + MsgLen(2) + msgLen bytes
-//         // (msgLen field covers Date through CRC inclusive)
-//         int totalLen = 2 + 1 + 2 + msgLen;
-
-//         if (m_gsmBuffer.size() < totalLen)
-//             break;  // Wait for more data
-
-//         QByteArray packet = m_gsmBuffer.left(totalLen);
-//         m_gsmBuffer.remove(0, totalLen);
-
-//         // if (!IsValidKMSPacket(packet))
-//         // {
-//         //     qWarning() << "[KMS] Received invalid KMS packet from GSM — discarding";
-//         //     ReportFailureToVC(KMS_FAIL_ELU_INTERNAL, 0);
-//         //     continue;
-//         // }
-
-//         quint8 msgType = GetKMSMsgType(packet);
-
-//         switch (msgType)
-//         {
-//         case KMS_MSG_IDENTIFICATION_ACK:   // 0x91 → forward to VC unchanged
-//         case KMS_MSG_AUTH_KEY:             // 0x93 → forward to VC unchanged
-//         case KMS_MSG_AUTH_KEY_STATUS:      // 0x95 → forward to VC unchanged
-//         {
-//             qInfo() << "[KMS] ← KMS MsgType:" << Qt::hex << msgType
-//                     << "size:" << packet.size();
-//             emit SigKMSPacketReceived(msgType, packet);
-//             // Forward within 2000ms — we call immediately (well within limit)
-//             ForwardToVC(packet);
-//             break;
-//         }
-
-//         default:
-//             qWarning() << "[KMS] Unknown KMS MsgType from GSM:"
-//                        << Qt::hex << msgType << "— discarding";
-//             break;
-//         }
-//     }
-
-//     // ── CASE B: SMS Text (+CMT unsolicited) ─────────────────
-//     // AT+CNMI=2,2 delivers SMS inline as:
-//     //   +CMT: "<sender>","","timestamp"\r\n
-//     //   <sms text>\r\n
-//     while (m_gsmBuffer.contains("+CMT:"))
-//     {
-//         int cmtIdx = m_gsmBuffer.indexOf("+CMT:");
-//         int firstNL = m_gsmBuffer.indexOf('\n', cmtIdx);
-//         if (firstNL < 0) break;  // wait for more data
-
-//         int secondNL = m_gsmBuffer.indexOf('\n', firstNL + 1);
-//         if (secondNL < 0) break;  // wait for SMS text line
-
-//         // Extract the SMS body (second line after +CMT:)
-//         QByteArray smsLine = m_gsmBuffer.mid(firstNL + 1, secondNL - firstNL - 1).trimmed();
-//         m_gsmBuffer.remove(cmtIdx, secondNL - cmtIdx + 1);
-
-//         QString smsText = QString::fromLatin1(smsLine);
-//         qInfo() << "[KMS] SMS received:" << smsText;
-
-//         ProcessOTPSms(smsText);
-//     }
-// }
 void EventLoggerKMS::SlotHandleGSMData()
 {
     if (!m_pGSMSerial)
