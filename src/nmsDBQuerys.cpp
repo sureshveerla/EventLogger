@@ -89,7 +89,10 @@ void nmsDBQuerys::SlotStnFaultPktInserttoDB(stStationFaults *pstStnFaults,
                           .arg(pstStnFaults->ucTime[1])
                           .arg(pstStnFaults->ucTime[2]);
 
-    m_uiStationID = pstStnFaults->ucKavachSubsysID;
+    m_uiStationID =
+        (quint32(pstStnFaults->ucKavachSubsysID[0]) << 16) |
+        (quint32(pstStnFaults->ucKavachSubsysID[1]) << 8)  |
+        quint32(pstStnFaults->ucKavachSubsysID[2]);
 
     // ── Fill arrays safely — ft[] bug fixed ───────────────────
     // Previously ft[] was inside a comment and never filled.

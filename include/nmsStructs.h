@@ -48,15 +48,15 @@ Q_DECLARE_METATYPE(stFaultEntry)
 
 typedef struct
 {
-    quint16 usStartFrame;          // AAAA
+    quint16 usStartFrame;          // SOF (0xAAAA / 0xBBBB)
 
-    quint8  ucMsgType;             // 19
+    quint8  ucMsgType;             // 0x19
 
     quint16 usmsgLength;
 
     quint16 usMsgSeq;
 
-    quint16 ucKavachSubsysID;  // <-- 2 bytes
+    quint8  ucKavachSubsysID[3];   // 3 Bytes
 
     quint16 usNMSID;
 

@@ -66,7 +66,7 @@ void nmsUDPServer::Init()
     if(nmsPort > 0)
     {
         portSet.append(nmsPort);
-
+        m_usNMSListenPort = nmsPort;      // NEW — remember it for SlotOnReadyRead
         qDebug() << "[CONFIG] NMS Port:"
                  << nmsPort;
     }
@@ -312,6 +312,42 @@ void nmsUDPServer::SlotOnReadyRead(QUdpSocket *pcsocket)
                 m_pcKMS->SlotHandleUDPFromVC(
                     datagram, sender, senderPort);
             continue;   // ← do NOT fall through to Kavach handler
+        }
+
+        if (pcsocket->localPort() == m_usNMSListenPort)
+        {
+            qDebug() << "[NMS RX] Data received FROM NMS"
+                     << sender.toString() << ":" << senderPort
+                     << "size:" << datagram.size()
+                     << "raw hex:" << datagram.toHex(' ').toUpper();
+
+            // If it's at least header-sized, parse and print the fields
+            if (datagram.size() >= static_cast<int>(sizeof(stPacketHeader)))
+            {
+                stPacketHeader hdr;
+                memcpy(&hdr, datagram.constData(), sizeof(stPacketHeader));
+
+                hdr.usStartFrame   = qFromBigEndian(hdr.usStartFrame);
+                hdr.usMsgLength    = qFromBigEndian(hdr.usMsgLength);
+                hdr.usStatKavachID = qFromBigEndian(hdr.usStatKavachID);
+                hdr.usNMSID        = qFromBigEndian(hdr.usNMSID);
+
+                qDebug() << "[NMS RX] Parsed ->"
+                         << "StartFrame:" << QString("0x%1").arg(hdr.usStartFrame,4,16,QChar('0')).toUpper()
+                         << "MsgType:"    << QString("0x%1").arg(hdr.ucMsgType,2,16,QChar('0')).toUpper()
+                         << "MsgSeq:"     << hdr.usMsgSeq
+                         << "KavachID:"   << hdr.usStatKavachID
+                         << "NMSID:"      << hdr.usNMSID;
+            }
+            else
+            {
+                qDebug() << "[NMS RX] Datagram too small to parse as stPacketHeader";
+            }
+
+            // NOTE: this is where you'd forward ackedSeq/hdr up to
+            // nmsMainWindow (e.g. via a new signal SigNMSDataReceived(...))
+            // if the ack-matching logic from before should live there.
+            continue;
         }
 
         // ── All other ports → normal Kavach handling ─────────

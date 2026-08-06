@@ -74,6 +74,8 @@ private:
 
     quint16 m_usSenderPort ;
 
+    quint16 m_usNMSListenPort = 0;
+
     QDateTime m_gpsDateTime;  //SNTP
 
     void Init();
