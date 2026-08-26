@@ -1462,9 +1462,7 @@ void EventLoggerKMS::SlotHandleGSMData()
             << "size:"
             << packet.size();
 
-            emit SigKMSPacketReceived(
-                msgType,
-                packet);
+            emit SigKMSPacketReceived(msgType,packet);
 
             ForwardToVC(packet);
 
