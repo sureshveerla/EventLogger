@@ -1948,12 +1948,11 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
         qDebug()<<" Invalid Message Type : ";
     }
 
-    else if(ucMsgTyp == 0x18)
+    else if (ucMsgTyp == 0x18)                 // OnBoard Packet
     {
-        ForwardViaGSM(datagram);
+        ForwardToNMS(datagram);
         SendAckNMStoSKavach(senderIP, senderPort);
         ProcessOnBoardHealthPkt(datagram);
-
     }
     else if(ucMsgTyp == 0x17)
     {
@@ -1963,7 +1962,8 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     }
     else if(ucMsgTyp == 0x19)
     {
-        ForwardViaGSM(datagram);
+        ForwardToNMS(datagram);
+        SendAckNMStoSKavach(senderIP, senderPort);
         ProcessStationFaultPkt(datagram);
     }
     else if(ucMsgTyp == 0x13)

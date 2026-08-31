@@ -423,6 +423,26 @@ void nmsUDPServer::InitKMS()
         return;
     }
 
+    // ── GSM Relay destination ───────────────────────────────
+    m_strGSMRelayIP =
+        cfg.value("GSM/RelayIP").toString();
+
+    m_usGSMRelayPort =
+        static_cast<quint16>(
+            cfg.value("GSM/RelayPort", 0).toUInt());
+
+    if (m_strGSMRelayIP.isEmpty() ||
+        m_usGSMRelayPort == 0)
+    {
+        qCritical() << "[GSM Relay] Missing GSM/RelayIP or GSM/RelayPort";
+        return;
+    }
+
+    qInfo() << "[GSM Relay] Destination:"
+            << m_strGSMRelayIP
+            << ":"
+            << m_usGSMRelayPort;
+
     // ── KAVACH unit identity ─────────────────────────────────
     bool ok;
     quint8 unitType = static_cast<quint8>(

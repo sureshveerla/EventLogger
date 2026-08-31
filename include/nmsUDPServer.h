@@ -76,6 +76,9 @@ private:
 
     QDateTime m_gpsDateTime;  //SNTP
 
+    QString m_strGSMRelayIP;
+    quint16 m_usGSMRelayPort = 0;
+
     void Init();
     void InitKMS(); // ICD §D — bind port 4447, create EventLoggerKMS, wire signals
 };

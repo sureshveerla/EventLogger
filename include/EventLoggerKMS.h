@@ -210,6 +210,10 @@ public:
 
     QString SendATCommand(const QString &cmd, int timeoutMs = 2000);
 
+    bool SendUDPViaGSM(const QByteArray &rawPacket,
+                       const QString &destIP,
+                       quint16 destPort);
+
 
 
 signals:
@@ -248,6 +252,8 @@ private:
 
     // Forward raw KMS packet from VC to KMS via GSM (transparent)
     void    ForwardToKMS(const QByteArray &rawPacket, quint8 msgType);
+
+
 
     // Forward raw KMS packet from KMS to VC via UDP (transparent, within 2000ms)
     void    ForwardToVC(const QByteArray &rawPacket);

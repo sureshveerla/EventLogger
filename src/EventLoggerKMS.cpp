@@ -176,6 +176,7 @@ bool EventLoggerKMS::Init(const KMSChannelConfig &chanA,
 
                     default:
                         qWarning() << "[KMS] Unknown MsgType from KMS server:"
+
                                    << Qt::hex << msgType;
                         break;
                     }
@@ -742,79 +743,226 @@ bool EventLoggerKMS::InitGSMModem(const QString &portName,
 
 QString EventLoggerKMS::SendATCommand(const QString &cmd, int timeoutMs)
 {
-    if (!m_pGSMSerial || !m_pGSMSerial->isOpen())
+    // ============================================================
+    // Validate GSM serial port
+    // ============================================================
+    if (!m_pGSMSerial)
     {
-        qWarning() << "[KMS] GSM Serial not open for cmd:" << cmd;
+        qWarning() << "[KMS AT] Serial object is NULL";
         return QString();
     }
 
-    // ── Disconnect async slot during blocking AT read ─────────
-    // CRITICAL: SlotHandleGSMData must NOT consume bytes while
-    // SendATCommand is doing a blocking read. If both run on the
-    // same serial port simultaneously, AT responses are stolen
-    // and this function always returns empty string.
-    disconnect(m_pGSMSerial, &QSerialPort::readyRead,
-               this, &EventLoggerKMS::SlotHandleGSMData);
+    if (!m_pGSMSerial->isOpen())
+    {
+        qWarning() << "[KMS AT] GSM Serial not open for cmd:"
+                   << cmd;
+        return QString();
+    }
 
-    // ── Assert DTR ────────────────────────────────────────────
-    m_pGSMSerial->setDataTerminalReady(true);
-    QThread::msleep(30);
+    // ============================================================
+    // Debug: Print thread information
+    // This is important for checking VC heartbeat blocking.
+    // ============================================================
+    qInfo() << "[KMS AT] Thread:"
+            << QThread::currentThreadId();
 
-    // ── Build command ─────────────────────────────────────────
-    QByteArray cmdBytes = cmd.toUtf8() + "\r";
-    qDebug() << "[KMS AT TX]" << cmd;
+    qInfo() << "[KMS AT] Command:"
+            << cmd;
 
-    // ── Discard stale RX bytes before sending ─────────────────
+    // ============================================================
+    // Disable asynchronous readyRead temporarily
+    //
+    // SlotHandleGSMData() must not read the same bytes while
+    // this function is waiting synchronously for the response.
+    // ============================================================
+    disconnect(m_pGSMSerial,
+               &QSerialPort::readyRead,
+               this,
+               &EventLoggerKMS::SlotHandleGSMData);
+
+    // ============================================================
+    // Make sure readyRead is restored when leaving this function
+    // ============================================================
+    auto reconnectReadyRead = [this]()
+    {
+        if (!m_pGSMSerial)
+            return;
+
+        connect(m_pGSMSerial,
+                &QSerialPort::readyRead,
+                this,
+                &EventLoggerKMS::SlotHandleGSMData,
+                Qt::UniqueConnection);
+    };
+
+    // ============================================================
+    // Clear stale RX data
+    // ============================================================
     m_pGSMSerial->readAll();
 
-    // ── Write ─────────────────────────────────────────────────
-    qint64 written = m_pGSMSerial->write(cmdBytes);
-    if (written != cmdBytes.size())
+    // ============================================================
+    // Assert DTR
+    // ============================================================
+    if (!m_pGSMSerial->setDataTerminalReady(true))
     {
-        m_pGSMSerial->flush();
-        QThread::msleep(100);
-        written = m_pGSMSerial->write(cmdBytes);
+        qWarning() << "[KMS AT] Failed to set DTR";
     }
 
-    if (written <= 0)
+    QThread::msleep(30);
+
+    // ============================================================
+    // Build AT command
+    // ============================================================
+    QByteArray cmdBytes = cmd.toUtf8();
+    cmdBytes.append('\r');
+
+    qDebug() << "[KMS AT TX]"
+             << cmd;
+
+    // ============================================================
+    // Write command
+    // ============================================================
+    qint64 written = m_pGSMSerial->write(cmdBytes);
+
+    if (written < 0)
     {
-        qWarning() << "[KMS] Write FAILED:" << m_pGSMSerial->errorString();
-        connect(m_pGSMSerial, &QSerialPort::readyRead,
-                this, &EventLoggerKMS::SlotHandleGSMData);
+        qWarning() << "[KMS AT] Write failed:"
+                   << m_pGSMSerial->errorString();
+
+        reconnectReadyRead();
         return QString();
     }
 
-    m_pGSMSerial->waitForBytesWritten(500);
+    // ============================================================
+    // Handle partial write
+    // ============================================================
+    if (written != cmdBytes.size())
+    {
+        qWarning() << "[KMS AT] Partial write:"
+                   << written
+                   << "/"
+                   << cmdBytes.size();
 
-    // ── Read response ─────────────────────────────────────────
+        if (!m_pGSMSerial->waitForBytesWritten(500))
+        {
+            qWarning() << "[KMS AT] First write did not complete:"
+                       << m_pGSMSerial->errorString();
+
+            reconnectReadyRead();
+            return QString();
+        }
+
+        qint64 remaining =
+            m_pGSMSerial->write(
+                cmdBytes.constData() + written,
+                cmdBytes.size() - written);
+
+        if (remaining <= 0)
+        {
+            qWarning() << "[KMS AT] Remaining write failed:"
+                       << m_pGSMSerial->errorString();
+
+            reconnectReadyRead();
+            return QString();
+        }
+    }
+
+    // ============================================================
+    // Wait until command is written
+    // ============================================================
+    if (!m_pGSMSerial->waitForBytesWritten(500))
+    {
+        qWarning() << "[KMS AT] waitForBytesWritten failed:"
+                   << m_pGSMSerial->errorString();
+
+        reconnectReadyRead();
+        return QString();
+    }
+
+    // ============================================================
+    // Read modem response
+    // ============================================================
     QByteArray response;
+
     QElapsedTimer timer;
     timer.start();
 
     while (timer.elapsed() < timeoutMs)
     {
+        // --------------------------------------------------------
+        // Wait for incoming modem data
+        // --------------------------------------------------------
         if (m_pGSMSerial->waitForReadyRead(200))
         {
-            response += m_pGSMSerial->readAll();
-            while (m_pGSMSerial->waitForReadyRead(50))
-                response += m_pGSMSerial->readAll();
+            QByteArray data =
+                m_pGSMSerial->readAll();
 
-            if (response.contains("OK")    ||
-                response.contains("ERROR") ||
+            if (!data.isEmpty())
+            {
+                response.append(data);
+
+                qDebug() << "[KMS AT RX CHUNK]"
+                         << data.toHex(' ').toUpper();
+            }
+
+            // ----------------------------------------------------
+            // Read any additional bytes already waiting
+            // ----------------------------------------------------
+            while (m_pGSMSerial->waitForReadyRead(50))
+            {
+                QByteArray moreData =
+                    m_pGSMSerial->readAll();
+
+                if (moreData.isEmpty())
+                    break;
+
+                response.append(moreData);
+
+                qDebug() << "[KMS AT RX MORE]"
+                         << moreData.toHex(' ').toUpper();
+            }
+
+            // ----------------------------------------------------
+            // Normal AT command completion
+            // ----------------------------------------------------
+            if (response.contains("\r\nOK\r\n") ||
+                response.contains("\nOK\n")     ||
+                response.contains("ERROR")      ||
                 response.contains(">"))
+            {
                 break;
+            }
         }
     }
 
-    QString result = QString::fromLatin1(response).trimmed();
-    qDebug() << "[KMS AT RX]" << result;
+    // ============================================================
+    // Convert response to QString
+    // ============================================================
+    QString result =
+        QString::fromLatin1(response).trimmed();
 
+    // ============================================================
+    // Print final response
+    // ============================================================
+    qDebug() << "[KMS AT RX]"
+             << result;
+
+    // ============================================================
+    // Timeout / empty response
+    // ============================================================
     if (result.isEmpty())
-        qWarning() << "[KMS] No response for cmd:" << cmd;
+    {
+        qWarning() << "[KMS AT] No response for cmd:"
+                   << cmd
+                   << "timeout:"
+                   << timeoutMs
+                   << "ms";
+    }
 
-    // ── Reconnect async slot ──────────────────────────────────
-    connect(m_pGSMSerial, &QSerialPort::readyRead,
-            this, &EventLoggerKMS::SlotHandleGSMData);
+    // ============================================================
+    // Restore asynchronous readyRead handler
+    // ============================================================
+    reconnectReadyRead();
 
     return result;
 }
@@ -1330,6 +1478,80 @@ void EventLoggerKMS::ForwardToKMS(
             << "OTP received=" << gotOTP;
 
     emit SigKMSPacketSent(msgType, rawPacket);
+}
+
+bool EventLoggerKMS::SendUDPViaGSM(const QByteArray &rawPacket, const QString &destIP, quint16 destPort)
+{
+    if (!m_pGSMSerial || !m_pGSMSerial->isOpen())
+    {
+        qCritical() << "[GSM UDP] GSM serial not open";
+        return false;
+    }
+
+    if (!EnsureGPRSActive())
+    {
+        qCritical() << "[GSM UDP] GPRS unavailable";
+        return false;
+    }
+
+    // Create UDP socket
+    QString usocrResp = SendATCommand("AT+USOCR=17", 5000);
+
+    QRegularExpression reSocket(R"(\+USOCR:\s*(\d+))");
+    QRegularExpressionMatch socketMatch =
+        reSocket.match(usocrResp);
+
+    if (!socketMatch.hasMatch())
+    {
+        qCritical() << "[GSM UDP] Socket create FAILED:"
+                    << usocrResp;
+        return false;
+    }
+
+    int socketHandle = socketMatch.captured(1).toInt();
+
+    QString hexData =
+        QString::fromLatin1(rawPacket.toHex()).toUpper();
+
+    QString sendCmd =
+        QString("AT+USOST=%1,\"%2\",%3,%4,\"%5\"")
+            .arg(socketHandle)
+            .arg(destIP)
+            .arg(destPort)
+            .arg(rawPacket.size())
+            .arg(hexData);
+
+    qInfo() << "[GSM UDP] Sending:"
+            << rawPacket.size()
+            << "bytes to"
+            << destIP << ":" << destPort;
+
+    qDebug() << "[GSM UDP] USOST:"
+             << sendCmd;
+
+    QString sendResp =
+        SendATCommand(sendCmd, 10000);
+
+    qDebug() << "[GSM UDP] USOST response:"
+             << sendResp;
+
+    bool success = sendResp.contains("+USOST");
+
+    if (success)
+    {
+        qInfo() << "[GSM UDP] Packet transmitted ✅";
+    }
+    else
+    {
+        qCritical() << "[GSM UDP] Packet transmission FAILED";
+    }
+
+    // Close socket
+    SendATCommand(
+        QString("AT+USOCL=%1").arg(socketHandle),
+        3000);
+
+    return success;
 }
 
 // ============================================================
