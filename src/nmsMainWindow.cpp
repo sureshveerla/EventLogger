@@ -1968,13 +1968,13 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     }
     else if(ucMsgTyp == 0x13)
     {
-        ForwardViaGSM(datagram);
+        ForwardToNMS(datagram);
         SendAckNMStoSKavach(senderIP,senderPort);
         ProcessTSRMSMessagePkt(datagram);
     }
     else if(ucMsgTyp == 0x20)
     {
-        ForwardViaGSM(datagram);
+        ForwardToNMS(datagram);
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessLocoRSSIMessagePkt(datagram);
 
@@ -2001,6 +2001,7 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
 
     else if(ucMsgTyp == 0x21)
     {
+        ForwardToNMS(datagram);
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessStationRSSIMessagePkt(datagram);
     }
@@ -2014,6 +2015,7 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     else if(ucMsgTyp == 0x11)
     {
 
+        ForwardToNMS(datagram);
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessAccessAuthorityPacket(datagram);
         qDebug()<<"Send Ack IP  and Port : "<<senderIP<<senderPort;
@@ -2029,23 +2031,27 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     }
     else if(ucMsgTyp == 0x12)
     {
+        ForwardToNMS(datagram);
         SendAckNMStoKavach(senderIP,senderPort);
         SlotUpadateSchematic(senderIP,senderPort,datagram);
 
     }
     else if (ucMsgTyp == 0x14)
     {
+        ForwardToNMS(datagram);
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessS2SPackets(datagram);
 
     }
     else if (ucMsgTyp == 0x15)
     {
+        ForwardToNMS(datagram);
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessFieldInputmessage(senderIP,datagram);
     }
     else if (ucMsgTyp == 0x16)
     {
+        ForwardToNMS(datagram);
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessFieldEventMessage(datagram);
     }
