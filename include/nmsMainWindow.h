@@ -79,6 +79,10 @@ private slots:
 
     void SendHeartbeat();
 
+    void OnGPSUTCReady(QDateTime utcTime);
+    void OnGPSSpeedReady(qint32 speedMMps);
+    void OnGPSFixStatusReady(quint8 fixStatus);
+
 signals:
 
     void SigSendAckNMStoKavach(QHostAddress senderIP, quint16 senderPort,stNMStoKavach *pstAck);
@@ -237,6 +241,18 @@ private:
     double     m_dLastLon  = 0.0;
     bool       m_bGNSSValid = false;
     bool       m_bPPSValid  = false;
+
+
+    bool m_bPowerHealthy = true;
+    quint32 m_uiEVLAppCRC = 0;
+
+    QDateTime m_utcDateTime;
+    qint32    m_iLastGroundSpeed = 0;   // mm/s, approximated from GPRMC
+    quint8    m_ucLastFixStatus  = 0x00;
+    // m_dLastLat, m_dLastLon, m_bGNSSValid — assumed already present
+
+
+    void ComputeEVLAppCRC();
 
     // Packet builders — no new class; all logic inline in nmsMainWindow.cpp
     QByteArray Build0x28Packet();

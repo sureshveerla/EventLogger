@@ -20,6 +20,8 @@ signals:
     // Emitted when a valid $GPRMC fix is parsed.
     // lat/lon in decimal degrees.  bValid = false when sentence status is 'V'.
     void gpsPositionReady(double dLat, double dLon, bool bValid);
+    void gpsSpeedReady(qint32 speedMMps);              // NEW — approximated from GPRMC field 7 (knots)
+    void gpsFixStatusReady(quint8 fixStatus);          // NEW — approximated from GPGGA field 6
 
 private slots:
     void readGPSData();

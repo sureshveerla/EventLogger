@@ -22,6 +22,8 @@ public:
     EventLoggerKMS   *m_pcKMS;        // created in InitKMS()
     QUdpSocket       *m_pcKMSSocket;  // bound to port 4447
 
+    bool SendPacketViaGSM(const QByteArray &datagram);
+
 signals:
 
     void SigNewFaultPacket(QHostAddress senderIP, quint16 senderPort, QByteArray datagram);
@@ -75,6 +77,9 @@ private:
     quint16 m_usSenderPort ;
 
     QDateTime m_gpsDateTime;  //SNTP
+
+    QString m_strGSMRelayIP;
+    quint16 m_usGSMRelayPort = 0;
 
     void Init();
     void InitKMS(); // ICD §D — bind port 4447, create EventLoggerKMS, wire signals

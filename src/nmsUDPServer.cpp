@@ -30,7 +30,19 @@ nmsUDPServer::~nmsUDPServer()
     if (m_pcKMSSocket) { m_pcKMSSocket->close(); delete m_pcKMSSocket; }
 }
 
+bool nmsUDPServer::SendPacketViaGSM(const QByteArray &datagram)
+{
+    if (!m_pcKMS)
+    {
+        qCritical() << "[GSM Relay] m_pcKMS is NULL";
+        return false;
+    }
 
+    return m_pcKMS->SendUDPViaGSM(
+        datagram,
+        m_strGSMRelayIP,
+        m_usGSMRelayPort);
+}
 
 void nmsUDPServer::Init()
 {
@@ -386,125 +398,324 @@ void nmsUDPServer::InitKMS()
 {
     QSettings cfg(m_strCfgFilPath, QSettings::IniFormat);
 
+    qInfo() << "========================================";
+    qInfo() << "[KMS] InitKMS() STARTED";
+    qInfo() << "[KMS] Config file:" << m_strCfgFilPath;
+    qInfo() << "========================================";
+
     // ── ELU channel IPs (reference, ICD §D.5) ───────────────
-    // All values MUST be present in Config.cfg [KMS] — no hardcoded fallbacks.
     QString eluAIP = cfg.value("KMS/ELU_A_IP").toString();
     QString eluBIP = cfg.value("KMS/ELU_B_IP").toString();
     QString vcIP   = cfg.value("KMS/VC_IP").toString();
-    quint16 vcPort = static_cast<quint16>(cfg.value("KMS/VC_PORT", 0).toUInt());
-    qDebug()<<" VC Port : "<<vcPort;
-    if (eluAIP.isEmpty() || eluBIP.isEmpty() || vcIP.isEmpty() || vcPort == 0)
+
+    quint16 vcPort = static_cast<quint16>(
+        cfg.value("KMS/VC_PORT", 0).toUInt());
+
+    qDebug() << "[KMS] VC IP   :" << vcIP;
+    qDebug() << "[KMS] VC Port :" << vcPort;
+
+    if (eluAIP.isEmpty() ||
+        eluBIP.isEmpty() ||
+        vcIP.isEmpty() ||
+        vcPort == 0)
     {
-        qCritical() << "[KMS] Config.cfg missing required [KMS] entries:"
-                    << "ELU_A_IP, ELU_B_IP, VC_IP, VC_PORT";
+        qCritical()
+        << "[KMS] Config.cfg missing required [KMS] entries:"
+        << "ELU_A_IP, ELU_B_IP, VC_IP, VC_PORT";
+
         return;
     }
 
     // ── RDSO confirmed KMS Server destination ───────────────
-    QString kmsServerIP   = cfg.value("KMS/KMS_SERVER_IP").toString();
-    quint16 kmsServerPort = static_cast<quint16>(
-        cfg.value("KMS/KMS_SERVER_PORT", 0).toUInt());
+    QString kmsServerIP =
+        cfg.value("KMS/KMS_SERVER_IP").toString();
 
-    if (kmsServerIP.isEmpty() || kmsServerPort == 0)
+    quint16 kmsServerPort =
+        static_cast<quint16>(
+            cfg.value("KMS/KMS_SERVER_PORT", 0).toUInt());
+
+    qDebug() << "[KMS] KMS Server:"
+             << kmsServerIP
+             << ":"
+             << kmsServerPort;
+
+    if (kmsServerIP.isEmpty() ||
+        kmsServerPort == 0)
     {
-        qCritical() << "[KMS] Config.cfg missing required [KMS] entries:"
-                    << "KMS_SERVER_IP, KMS_SERVER_PORT";
+        qCritical()
+        << "[KMS] Config.cfg missing required [KMS] entries:"
+        << "KMS_SERVER_IP, KMS_SERVER_PORT";
+
         return;
     }
 
     // ── GSM modem ────────────────────────────────────────────
-    QString gsmPort = cfg.value("KMS/GSM_Port").toString();
-    int     gsmBaud = cfg.value("KMS/GSM_Baud", 0).toInt();
+    QString gsmPort =
+        cfg.value("KMS/GSM_Port").toString();
 
-    if (gsmPort.isEmpty() || gsmBaud == 0)
+    int gsmBaud =
+        cfg.value("KMS/GSM_Baud", 0).toInt();
+
+    qDebug() << "[KMS] GSM Port:"
+             << gsmPort;
+
+    qDebug() << "[KMS] GSM Baud:"
+             << gsmBaud;
+
+    if (gsmPort.isEmpty() ||
+        gsmBaud == 0)
     {
-        qCritical() << "[KMS] Config.cfg missing required [KMS] entries:"
-                    << "GSM_Port, GSM_Baud";
+        qCritical()
+        << "[KMS] Config.cfg missing required [KMS] entries:"
+        << "GSM_Port, GSM_Baud";
+
+        return;
+    }
+
+    // ── GSM Relay destination ───────────────────────────────
+    //
+    // This is the Windows public IP + UDP port.
+    //
+    // EventLogger:
+    //     /dev/ttyS2
+    //          ↓
+    //     LARA-R6801
+    //          ↓
+    //     GSM/GPRS
+    //          ↓
+    //     Windows Relay
+    //
+    m_strGSMRelayIP =
+        cfg.value("GSM/RelayIP").toString();
+
+    m_usGSMRelayPort =
+        static_cast<quint16>(
+            cfg.value("GSM/RelayPort", 0).toUInt());
+
+    qInfo() << "[GSM Relay] Destination:"
+            << m_strGSMRelayIP
+            << ":"
+            << m_usGSMRelayPort;
+
+    if (m_strGSMRelayIP.isEmpty() ||
+        m_usGSMRelayPort == 0)
+    {
+        qCritical()
+        << "[GSM Relay] Missing GSM/RelayIP or GSM/RelayPort";
+
         return;
     }
 
     // ── KAVACH unit identity ─────────────────────────────────
-    bool ok;
-    quint8 unitType = static_cast<quint8>(
-        cfg.value("KMS/KAVACH_Unit_Type", "0x11")
-            .toString().toUInt(&ok, 16));
-    QByteArray idBytes = QByteArray::fromHex(
-        cfg.value("KMS/KAVACH_Unit_ID", "000001")
-            .toString().toLatin1());
-    while (idBytes.size() < 3) idBytes.prepend('\0');
+    bool ok = false;
+
+    quint8 unitType =
+        static_cast<quint8>(
+            cfg.value("KMS/KAVACH_Unit_Type", "0x11")
+                .toString()
+                .toUInt(&ok, 16));
+
+    QByteArray idBytes =
+        QByteArray::fromHex(
+            cfg.value("KMS/KAVACH_Unit_ID", "000001")
+                .toString()
+                .toLatin1());
+
+    while (idBytes.size() < 3)
+        idBytes.prepend('\0');
+
     quint8 unitID[3];
-    memcpy(unitID, idBytes.constData(), 3);
 
-    // ── Build channel configs (ICD §D.5–D.6) ────────────────
+    memcpy(unitID,
+           idBytes.constData(),
+           3);
+
+    // ── Build channel A configuration ───────────────────────
     KMSChannelConfig chanA;
-    chanA.strLocalIP      = eluAIP;
-    chanA.strVCIP         = vcIP;
-    chanA.usPort          = vcPort;
-    chanA.strKMSServerIP  = kmsServerIP;    // RDSO KMS server — send TO this
-    chanA.usKMSServerPort = kmsServerPort;  // RDSO KMS server port
-    chanA.ucSimID         = KMS_SIM_PRIMARY;
-    chanA.bActive         = true;           // ELU-A default active (ICD §D.4)
 
+    chanA.strLocalIP =
+        eluAIP;
+
+    chanA.strVCIP =
+        vcIP;
+
+    chanA.usPort =
+        vcPort;
+
+    chanA.strKMSServerIP =
+        kmsServerIP;
+
+    chanA.usKMSServerPort =
+        kmsServerPort;
+
+    chanA.ucSimID =
+        KMS_SIM_PRIMARY;
+
+    chanA.bActive =
+        true;
+
+    // ── Build channel B configuration ───────────────────────
     KMSChannelConfig chanB;
-    chanB.strLocalIP      = eluBIP;
-    chanB.strVCIP         = vcIP;
-    chanB.usPort          = vcPort;
-    chanB.strKMSServerIP  = kmsServerIP;   // same KMS server, standby SIM
-    chanB.usKMSServerPort = kmsServerPort;
-    chanB.ucSimID         = KMS_SIM_SECONDARY;
-    chanB.bActive         = false;
+
+    chanB.strLocalIP =
+        eluBIP;
+
+    chanB.strVCIP =
+        vcIP;
+
+    chanB.usPort =
+        vcPort;
+
+    chanB.strKMSServerIP =
+        kmsServerIP;
+
+    chanB.usKMSServerPort =
+        kmsServerPort;
+
+    chanB.ucSimID =
+        KMS_SIM_SECONDARY;
+
+    chanB.bActive =
+        false;
 
     // ── Create EventLoggerKMS ────────────────────────────────
-    m_pcKMS = new EventLoggerKMS(this);
-    m_pcKMS->SetKavachUnitInfo(unitType, unitID);
-    m_pcKMS->Init(chanA, chanB, gsmPort, gsmBaud);
+    qInfo() << "[KMS] All configuration checks passed";
+    qInfo() << "[KMS] Creating EventLoggerKMS...";
 
-    // ── Bind UDP socket to 0.0.0.0:vcPort ───────────────────
-    // ICD §D.1: KMS traffic on port 4447.
-    // Bind to QHostAddress::Any so it works on any NIC/IP.
-    m_pcKMSSocket = new QUdpSocket(this);
-    if (!m_pcKMSSocket->bind(QHostAddress::Any,
-                             vcPort,
-                             QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint))
+    m_pcKMS =
+        new EventLoggerKMS(this);
+
+    if (!m_pcKMS)
     {
-        qCritical() << "Vital Controller FAILED to bind port"
-                    << vcPort
-                    << "-" << m_pcKMSSocket->errorString();
+        qCritical()
+        << "[KMS] FAILED to create EventLoggerKMS";
+
         return;
     }
 
-    qInfo() << "Vital Controller UDP socket bound on port" << vcPort;
-    qInfo() << "Vital Controller IP address and Port : " << kmsServerIP << ":" << kmsServerPort;
+    qInfo() << "[KMS] EventLoggerKMS created:"
+            << static_cast<void *>(m_pcKMS);
 
-    // ── RECEIVE: VC → ELU (0x90 / 0x92 / 0x94) ─────────────
-    connect(m_pcKMSSocket, &QUdpSocket::readyRead, this, [this]()
+    // ── Configure KAVACH identity ───────────────────────────
+    m_pcKMS->SetKavachUnitInfo(
+        unitType,
+        unitID);
+
+    // ── Initialize GSM/KMS module ───────────────────────────
+    qInfo() << "[KMS] Initializing EventLoggerKMS...";
+    qInfo() << "[KMS] GSM:"
+            << gsmPort
+            << "@"
+            << gsmBaud;
+
+    m_pcKMS->Init(
+        chanA,
+        chanB,
+        gsmPort,
+        gsmBaud);
+
+    qInfo() << "[KMS] EventLoggerKMS initialization complete";
+
+    // ── Bind UDP socket to 0.0.0.0:vcPort ───────────────────
+    m_pcKMSSocket =
+        new QUdpSocket(this);
+
+    if (!m_pcKMSSocket->bind(
+            QHostAddress::Any,
+            vcPort,
+            QUdpSocket::ShareAddress |
+                QUdpSocket::ReuseAddressHint))
+    {
+        qCritical()
+        << "[KMS] Vital Controller FAILED to bind port"
+        << vcPort
+        << "-"
+        << m_pcKMSSocket->errorString();
+
+        return;
+    }
+
+    qInfo()
+        << "[KMS] Vital Controller UDP socket bound on port"
+        << vcPort;
+
+    qInfo()
+        << "[KMS] KMS Server configured:"
+        << kmsServerIP
+        << ":"
+        << kmsServerPort;
+
+    // ── RECEIVE: VC → ELU ───────────────────────────────────
+    connect(
+        m_pcKMSSocket,
+        &QUdpSocket::readyRead,
+        this,
+        [this]()
+        {
+            while (m_pcKMSSocket->hasPendingDatagrams())
             {
-                while (m_pcKMSSocket->hasPendingDatagrams())
+                QByteArray dg;
+
+                QHostAddress senderAddr;
+                quint16 senderPort = 0;
+
+                dg.resize(
+                    static_cast<int>(
+                        m_pcKMSSocket->pendingDatagramSize()));
+
+                m_pcKMSSocket->readDatagram(
+                    dg.data(),
+                    dg.size(),
+                    &senderAddr,
+                    &senderPort);
+
+                qDebug()
+                    << "[KMS] RX from VC"
+                    << senderAddr.toString()
+                    << ":"
+                    << senderPort
+                    << "size:"
+                    << dg.size()
+                    << "data:"
+                    << dg.toHex().toUpper();
+
+                if (m_pcKMS)
                 {
-                    QByteArray   dg;
-                    QHostAddress senderAddr;
-                    quint16      senderPort;
-                    dg.resize(static_cast<int>(m_pcKMSSocket->pendingDatagramSize()));
-                    m_pcKMSSocket->readDatagram(dg.data(), dg.size(), &senderAddr, &senderPort);
-
-                    qDebug() << "[KMS] RX from VC" << senderAddr.toString()
-                             << ":" << senderPort
-                             << "size:" << dg.size()
-                             << "data:" << dg.toHex().toUpper();
-
-                    m_pcKMS->SlotHandleUDPFromVC(dg, senderAddr, senderPort);
+                    m_pcKMS->SlotHandleUDPFromVC(
+                        dg,
+                        senderAddr,
+                        senderPort);
                 }
-            });
+                else
+                {
+                    qCritical()
+                    << "[KMS] m_pcKMS is NULL while receiving VC packet";
+                }
+            }
+        });
 
-    // ── SEND: ELU → VC (0x91/0x93/0x95/0x96/0x97) ──────────
-    connect(m_pcKMS, &EventLoggerKMS::SigSendToVC,
-            this,    &nmsUDPServer::SlotKMSSendToVC);
+    // ── SEND: ELU → VC ──────────────────────────────────────
+    connect(
+        m_pcKMS,
+        &EventLoggerKMS::SigSendToVC,
+        this,
+        &nmsUDPServer::SlotKMSSendToVC);
 
-    qInfo() << "[KMS] Init complete — ELU-A:" << eluAIP
-            << "| ELU-B:" << eluBIP
-            << "| KMS Server:" << kmsServerIP << ":" << kmsServerPort;
+    qInfo()
+        << "[KMS] Init complete"
+        << "| ELU-A:" << eluAIP
+        << "| ELU-B:" << eluBIP
+        << "| VC:" << vcIP << ":" << vcPort
+        << "| KMS Server:" << kmsServerIP << ":" << kmsServerPort
+        << "| GSM Relay:" << m_strGSMRelayIP << ":" << m_usGSMRelayPort;
 
-    qDebug()<<" KMS Sender IP and Port : "<<kmsServerIP<<kmsServerPort;
+    qInfo()
+        << "[KMS] FINAL m_pcKMS:"
+        << static_cast<void *>(m_pcKMS);
+
+    qInfo() << "========================================";
+    qInfo() << "[KMS] InitKMS() FINISHED";
+    qInfo() << "========================================";
 }
 
 // ============================================================

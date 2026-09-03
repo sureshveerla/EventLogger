@@ -210,6 +210,10 @@ public:
 
     QString SendATCommand(const QString &cmd, int timeoutMs = 2000);
 
+    bool SendUDPViaGSM(const QByteArray &rawPacket,
+                       const QString &destIP,
+                       quint16 destPort);
+
 
 
 signals:

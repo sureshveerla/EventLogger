@@ -23,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_nmsMainWindow_t {
-    const uint offsetsAndSize[402];
-    char stringdata0[3417];
+    const uint offsetsAndSize[414];
+    char stringdata0[3495];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_nmsMainWindow_t, stringdata0) + ofs), len 
@@ -230,7 +230,13 @@ QT_MOC_LITERAL(3370, 15), // "SlotGPSPosition"
 QT_MOC_LITERAL(3386, 4), // "dLat"
 QT_MOC_LITERAL(3391, 4), // "dLon"
 QT_MOC_LITERAL(3396, 6), // "bValid"
-QT_MOC_LITERAL(3403, 13) // "SendHeartbeat"
+QT_MOC_LITERAL(3403, 13), // "SendHeartbeat"
+QT_MOC_LITERAL(3417, 13), // "OnGPSUTCReady"
+QT_MOC_LITERAL(3431, 7), // "utcTime"
+QT_MOC_LITERAL(3439, 15), // "OnGPSSpeedReady"
+QT_MOC_LITERAL(3455, 9), // "speedMMps"
+QT_MOC_LITERAL(3465, 19), // "OnGPSFixStatusReady"
+QT_MOC_LITERAL(3485, 9) // "fixStatus"
 
     },
     "nmsMainWindow\0SigSendAckNMStoKavach\0"
@@ -330,7 +336,9 @@ QT_MOC_LITERAL(3403, 13) // "SendHeartbeat"
     "packet\0SlotKMSPacketSent\0SlotDoPing\0"
     "SlotSendNextReplayPacket\0SlotVCHeartbeat\0"
     "SlotGPSPosition\0dLat\0dLon\0bValid\0"
-    "SendHeartbeat"
+    "SendHeartbeat\0OnGPSUTCReady\0utcTime\0"
+    "OnGPSSpeedReady\0speedMMps\0OnGPSFixStatusReady\0"
+    "fixStatus"
 };
 #undef QT_MOC_LITERAL
 
@@ -340,7 +348,7 @@ static const uint qt_meta_data_nmsMainWindow[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-      55,   14, // methods
+      58,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -348,63 +356,66 @@ static const uint qt_meta_data_nmsMainWindow[] = {
       40,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    3,  344,    2, 0x06,    1 /* Public */,
-       8,    3,  351,    2, 0x06,    5 /* Public */,
-      13,    5,  358,    2, 0x06,    9 /* Public */,
-      18,    0,  369,    2, 0x06,   15 /* Public */,
-      19,    0,  370,    2, 0x06,   16 /* Public */,
-      20,    5,  371,    2, 0x06,   17 /* Public */,
-      28,    5,  382,    2, 0x06,   23 /* Public */,
-      31,    4,  393,    2, 0x06,   29 /* Public */,
-      33,    4,  402,    2, 0x06,   34 /* Public */,
-      35,    2,  411,    2, 0x06,   39 /* Public */,
-      37,    4,  416,    2, 0x06,   42 /* Public */,
-      40,   23,  425,    2, 0x06,   47 /* Public */,
-      66,   31,  472,    2, 0x06,   71 /* Public */,
-      79,   16,  535,    2, 0x06,  103 /* Public */,
-      91,    9,  568,    2, 0x06,  120 /* Public */,
-      93,    2,  587,    2, 0x06,  130 /* Public */,
-      97,    4,  592,    2, 0x06,  133 /* Public */,
-     103,    4,  601,    2, 0x06,  138 /* Public */,
-     106,    2,  610,    2, 0x06,  143 /* Public */,
-     111,    2,  615,    2, 0x06,  146 /* Public */,
-     114,    2,  620,    2, 0x06,  149 /* Public */,
-     117,    2,  625,    2, 0x06,  152 /* Public */,
-     120,    2,  630,    2, 0x06,  155 /* Public */,
-     123,    2,  635,    2, 0x06,  158 /* Public */,
-     126,    2,  640,    2, 0x06,  161 /* Public */,
-     129,    2,  645,    2, 0x06,  164 /* Public */,
-     132,    2,  650,    2, 0x06,  167 /* Public */,
-     135,    2,  655,    2, 0x06,  170 /* Public */,
-     138,    2,  660,    2, 0x06,  173 /* Public */,
-     141,    2,  665,    2, 0x06,  176 /* Public */,
-     144,    1,  670,    2, 0x06,  179 /* Public */,
-     147,    1,  673,    2, 0x06,  181 /* Public */,
-     150,    1,  676,    2, 0x06,  183 /* Public */,
-     153,    1,  679,    2, 0x06,  185 /* Public */,
-     156,    1,  682,    2, 0x06,  187 /* Public */,
-     159,    1,  685,    2, 0x06,  189 /* Public */,
-     162,    4,  688,    2, 0x06,  191 /* Public */,
-     165,    1,  697,    2, 0x06,  196 /* Public */,
-     168,    0,  700,    2, 0x06,  198 /* Public */,
-     169,    2,  701,    2, 0x06,  199 /* Public */,
+       1,    3,  362,    2, 0x06,    1 /* Public */,
+       8,    3,  369,    2, 0x06,    5 /* Public */,
+      13,    5,  376,    2, 0x06,    9 /* Public */,
+      18,    0,  387,    2, 0x06,   15 /* Public */,
+      19,    0,  388,    2, 0x06,   16 /* Public */,
+      20,    5,  389,    2, 0x06,   17 /* Public */,
+      28,    5,  400,    2, 0x06,   23 /* Public */,
+      31,    4,  411,    2, 0x06,   29 /* Public */,
+      33,    4,  420,    2, 0x06,   34 /* Public */,
+      35,    2,  429,    2, 0x06,   39 /* Public */,
+      37,    4,  434,    2, 0x06,   42 /* Public */,
+      40,   23,  443,    2, 0x06,   47 /* Public */,
+      66,   31,  490,    2, 0x06,   71 /* Public */,
+      79,   16,  553,    2, 0x06,  103 /* Public */,
+      91,    9,  586,    2, 0x06,  120 /* Public */,
+      93,    2,  605,    2, 0x06,  130 /* Public */,
+      97,    4,  610,    2, 0x06,  133 /* Public */,
+     103,    4,  619,    2, 0x06,  138 /* Public */,
+     106,    2,  628,    2, 0x06,  143 /* Public */,
+     111,    2,  633,    2, 0x06,  146 /* Public */,
+     114,    2,  638,    2, 0x06,  149 /* Public */,
+     117,    2,  643,    2, 0x06,  152 /* Public */,
+     120,    2,  648,    2, 0x06,  155 /* Public */,
+     123,    2,  653,    2, 0x06,  158 /* Public */,
+     126,    2,  658,    2, 0x06,  161 /* Public */,
+     129,    2,  663,    2, 0x06,  164 /* Public */,
+     132,    2,  668,    2, 0x06,  167 /* Public */,
+     135,    2,  673,    2, 0x06,  170 /* Public */,
+     138,    2,  678,    2, 0x06,  173 /* Public */,
+     141,    2,  683,    2, 0x06,  176 /* Public */,
+     144,    1,  688,    2, 0x06,  179 /* Public */,
+     147,    1,  691,    2, 0x06,  181 /* Public */,
+     150,    1,  694,    2, 0x06,  183 /* Public */,
+     153,    1,  697,    2, 0x06,  185 /* Public */,
+     156,    1,  700,    2, 0x06,  187 /* Public */,
+     159,    1,  703,    2, 0x06,  189 /* Public */,
+     162,    4,  706,    2, 0x06,  191 /* Public */,
+     165,    1,  715,    2, 0x06,  196 /* Public */,
+     168,    0,  718,    2, 0x06,  198 /* Public */,
+     169,    2,  719,    2, 0x06,  199 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-     172,    3,  706,    2, 0x08,  202 /* Private */,
-     174,    0,  713,    2, 0x08,  206 /* Private */,
-     175,    1,  714,    2, 0x08,  207 /* Private */,
-     177,    3,  717,    2, 0x08,  209 /* Private */,
-     178,    4,  724,    2, 0x08,  213 /* Private */,
-     183,    1,  733,    2, 0x08,  218 /* Private */,
-     184,    2,  736,    2, 0x08,  220 /* Private */,
-     187,    1,  741,    2, 0x08,  223 /* Private */,
-     189,    2,  744,    2, 0x08,  225 /* Private */,
-     192,    2,  749,    2, 0x08,  228 /* Private */,
-     193,    0,  754,    2, 0x08,  231 /* Private */,
-     194,    0,  755,    2, 0x08,  232 /* Private */,
-     195,    0,  756,    2, 0x08,  233 /* Private */,
-     196,    3,  757,    2, 0x08,  234 /* Private */,
-     200,    0,  764,    2, 0x08,  238 /* Private */,
+     172,    3,  724,    2, 0x08,  202 /* Private */,
+     174,    0,  731,    2, 0x08,  206 /* Private */,
+     175,    1,  732,    2, 0x08,  207 /* Private */,
+     177,    3,  735,    2, 0x08,  209 /* Private */,
+     178,    4,  742,    2, 0x08,  213 /* Private */,
+     183,    1,  751,    2, 0x08,  218 /* Private */,
+     184,    2,  754,    2, 0x08,  220 /* Private */,
+     187,    1,  759,    2, 0x08,  223 /* Private */,
+     189,    2,  762,    2, 0x08,  225 /* Private */,
+     192,    2,  767,    2, 0x08,  228 /* Private */,
+     193,    0,  772,    2, 0x08,  231 /* Private */,
+     194,    0,  773,    2, 0x08,  232 /* Private */,
+     195,    0,  774,    2, 0x08,  233 /* Private */,
+     196,    3,  775,    2, 0x08,  234 /* Private */,
+     200,    0,  782,    2, 0x08,  238 /* Private */,
+     201,    1,  783,    2, 0x08,  239 /* Private */,
+     203,    1,  786,    2, 0x08,  241 /* Private */,
+     205,    1,  789,    2, 0x08,  243 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, 0x80000000 | 6,    4,    5,    7,
@@ -464,6 +475,9 @@ static const uint qt_meta_data_nmsMainWindow[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::Double, QMetaType::Double, QMetaType::Bool,  197,  198,  199,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QDateTime,  202,
+    QMetaType::Void, QMetaType::Int,  204,
+    QMetaType::Void, QMetaType::UChar,  206,
 
        0        // eod
 };
@@ -529,6 +543,9 @@ void nmsMainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 52: _t->SlotVCHeartbeat(); break;
         case 53: _t->SlotGPSPosition((*reinterpret_cast< std::add_pointer_t<double>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
         case 54: _t->SendHeartbeat(); break;
+        case 55: _t->OnGPSUTCReady((*reinterpret_cast< std::add_pointer_t<QDateTime>>(_a[1]))); break;
+        case 56: _t->OnGPSSpeedReady((*reinterpret_cast< std::add_pointer_t<qint32>>(_a[1]))); break;
+        case 57: _t->OnGPSFixStatusReady((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -1034,7 +1051,7 @@ const QMetaObject nmsMainWindow::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_nmsMainWindow_t
 , QtPrivate::TypeAndForceComplete<nmsMainWindow, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<stNMStoKavach *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stKavachtoNMS *, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stStationFaults *, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QList<uint16_t>, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QList<uint16_t>, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint8_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint8_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stAccessRequestPkt, std::false_type>, QtPrivate::TypeAndForceComplete<StationRegularHeader, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stStationHealthPkt, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stOnBoardHealthPkt, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stPDIVerCheckCmdPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stPDIVerCheckMsgPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stHeartBeatPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainHandOverReqPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainTakenOverPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainHandOverCancellationPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainLengthInfoPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainLengthInfoAck, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTSLReqPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTSLInformationPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stFieldElementsStatusReqPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<stTrainHandOverCancellationAckPkt, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stLocoRSSIMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stStationRSSIMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stStationaryKavachSysInfo, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stOnboardKavachEventMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stOnboardKavachBrakeEventMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stOnboardKavachBOKSHealthMsg, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stPacketHeader, std::false_type>, QtPrivate::TypeAndForceComplete<uint16_t, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<stFieldEventData, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<StationRegularHeader, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QStringList, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<StationRegularHeader, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QDateTime, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<qint32, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>
 
 
 >,
@@ -1061,13 +1078,13 @@ int nmsMainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 55)
+        if (_id < 58)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 55;
+        _id -= 58;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 55)
+        if (_id < 58)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 55;
+        _id -= 58;
     }
     return _id;
 }

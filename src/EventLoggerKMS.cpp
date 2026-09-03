@@ -819,6 +819,86 @@ QString EventLoggerKMS::SendATCommand(const QString &cmd, int timeoutMs)
     return result;
 }
 
+bool EventLoggerKMS::SendUDPViaGSM(const QByteArray &rawPacket,
+                                   const QString &destIP,
+                                   quint16 destPort)
+{
+    if (!m_pGSMSerial || !m_pGSMSerial->isOpen())
+    {
+        qCritical() << "[GSM Relay] GSM serial not open";
+        return false;
+    }
+
+    qInfo() << "[GSM Relay] Sending packet via GSM"
+            << "DEST:" << destIP << ":" << destPort
+            << "SIZE:" << rawPacket.size()
+            << "HEX:" << rawPacket.toHex(' ').toUpper();
+
+    // Make sure GPRS is active
+    if (!EnsureGPRSActive())
+    {
+        qCritical() << "[GSM Relay] GPRS is not active";
+        return false;
+    }
+
+    // Create UDP socket
+    QString response = SendATCommand("AT+USOCR=17", 5000);
+
+    qDebug() << "[GSM Relay] USOCR:" << response;
+
+    QRegularExpression re(R"(\+USOCR:\s*(\d+))");
+    QRegularExpressionMatch match = re.match(response);
+
+    if (!match.hasMatch())
+    {
+        qCritical() << "[GSM Relay] UDP socket creation failed:"
+                    << response;
+        return false;
+    }
+
+    int socketHandle = match.captured(1).toInt();
+
+    qDebug() << "[GSM Relay] Socket handle:"
+             << socketHandle;
+
+    // Convert raw packet to HEX
+    QString hexData =
+        QString::fromLatin1(rawPacket.toHex()).toUpper();
+
+    QString cmd =
+        QString("AT+USOST=%1,\"%2\",%3,%4,\"%5\"")
+            .arg(socketHandle)
+            .arg(destIP)
+            .arg(destPort)
+            .arg(rawPacket.size())
+            .arg(hexData);
+
+    qDebug() << "[GSM Relay] AT TX:" << cmd;
+
+    QString txResponse =
+        SendATCommand(cmd, 10000);
+
+    qDebug() << "[GSM Relay] AT RX:" << txResponse;
+
+    bool success = txResponse.contains("+USOST");
+
+    if (success)
+    {
+        qInfo() << "[GSM Relay] UDP packet transmitted"
+                << rawPacket.size() << "bytes";
+    }
+    else
+    {
+        qCritical() << "[GSM Relay] UDP packet transmission FAILED";
+    }
+
+    // Close modem UDP socket
+    SendATCommand(
+        QString("AT+USOCL=%1").arg(socketHandle),
+        3000);
+
+    return success;
+}
 
 // ============================================================
 //  CRC32 Utilities

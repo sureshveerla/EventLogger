@@ -19,6 +19,7 @@ nmsMainWindow::nmsMainWindow(QString strCFGFilePath, QObject *pcParent)
     InitUDP();
     InitDB();
     InitnmsDBConnections();
+    ComputeEVLAppCRC();
     InitLogFile();
     InitKavachParsePkt();
     InitNMSForwarder();
@@ -1083,6 +1084,10 @@ void nmsMainWindow::InitUDP()
     connect(m_pcDataloggps, SIGNAL(gpsUTCReady(QDateTime)),
             pcUdpServer, SLOT(SlotUpdateGPSTime(QDateTime)));
 
+    connect(m_pcDataloggps, &EventLogger::gpsUTCReady, this, &nmsMainWindow::OnGPSUTCReady);
+    connect(m_pcDataloggps, &EventLogger::gpsSpeedReady, this, &nmsMainWindow::OnGPSSpeedReady);
+    connect(m_pcDataloggps, &EventLogger::gpsFixStatusReady, this, &nmsMainWindow::OnGPSFixStatusReady);
+
     // Wire GPS position for 0x28 packet building
     connect(m_pcDataloggps, SIGNAL(gpsPositionReady(double,double,bool)),
             this,           SLOT(SlotGPSPosition(double,double,bool)));
@@ -1839,122 +1844,44 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
 
     quint8 ucMsgTyp = static_cast<quint8>(datagram[2]);
 
-    // if(ucMsgTyp == 0xFC)
-    // {
-    //     m_pstKavachtoNMS = new stKavachtoNMS;
-    //     memcpy(m_pstKavachtoNMS,datagram.constData(),sizeof(stKavachtoNMS));
 
-    //     uint32_t uiID = (m_pstKavachtoNMS->ucKavachSubsysID[0] << 16) |
-    //                     (m_pstKavachtoNMS->ucKavachSubsysID[1] << 8)  |
-    //                     m_pstKavachtoNMS->ucKavachSubsysID[2];
-
-    //     QString timestamp = QDateTime::currentDateTime().toString("dd-MMM-yy hh:mm:ss");
-
-    //     qDebug() << "ID" << uiID << datagram ;
-
-    //     QString strMsgType,strFirmname;
-
-    //     if(m_pstKavachtoNMS->ucKavachType == 0x11)
-    //     {
-    //         strFirmname = m_pcDBQuery->GetStationFirmName(uiID);
-    //     }
-    //     else
-    //     {
-    //         strFirmname = m_pcDBQuery->GetLocoFirmName(uiID);
-    //     }
-
-    //     if(m_pstKavachtoNMS->ucMsgType == 0xFC)
-    //     {
-    //         strMsgType = "Prompts";
-    //     }
-
-    //     QList<uint16_t> lstFaults;
-    //     const uchar *ucFaults = reinterpret_cast<const uchar*>(m_pstKavachtoNMS->usFaultCodes);
-    //     for (int i = 0; i < m_pstKavachtoNMS->ucTotalFaultsCode; ++i)
-    //     {
-    //         uint16_t code = (ucFaults[2*i] << 8) | ucFaults[2*i + 1]; // high byte << 8 | low byte
-    //         lstFaults.append(code);
-    //     }
-
-    //     QStringList strList;
-    //     for (uint16_t code : lstFaults)
-    //     {
-    //         strList.append(QString("0x%1").arg(code, 2, 16, QLatin1Char('0')).toUpper());
-    //     }
-
-    //     QString strFaultsCode = strList.join(",");   // comma-separated
-
-    //     emit SigFaultMsginserttoDB(strMsgType,timestamp,lstFaults,strFirmname,uiID);
-
-    //     QStringList faults;
-    //     for (quint16 code : lstFaults)
-    //     {
-    //         QString desc = GetFaultsCodeDescription(code);
-
-    //         // Only append if description is not empty
-    //         if (!desc.isEmpty())
-    //         {
-    //             faults.append(desc);
-    //         }
-    //     }
-
-    //     QString faultDesc = faults.join(",");
-
-    //     QString mobileNumber = m_pcDBQuery->GetMobileNumberForName(strFirmname);
-
-    //     QString strFirmID = strFirmname + ":" + QString::number(uiID);
-
-
-    //     emit SigSendFaultmessage(strMsgType,timestamp,strFirmID,faultDesc);
-
-    //     strMsgType = "SMS";
-
-    //     emit SigSMSFaultMsginserttoDB(strMsgType,timestamp, lstFaults,strFirmID);
-    //     if(m_strFaultMsg != faultDesc)
-    //     {
-    //         m_strFaultMsg = "\0";
-    //         m_strFaultMsg.append(faultDesc);
-    //         SendSMS(mobileNumber,faultDesc);
-    //     }
-
-    //     emit SigFaultPktInserttoDB(m_pstKavachtoNMS,strFaultsCode,faultDesc);
-
-    //     if (m_pcStationLogFile.isOpen())
-    //     {
-    //         QTextStream write(&m_pcStationLogFile);
-
-    //         write << "---- Authority Packet Received:------ " << "\n";
-
-    //         write << "  StartFrame: " << QString("0x%1").arg(m_pstKavachtoNMS->usStartFrame, 4, 16, QChar('0')).toUpper()<< "\n"
-    //               << "  MsgType: " << QString("0x%1").arg(m_pstKavachtoNMS->ucMsgType, 2, 16, QChar('0')).toUpper()<< "\n"
-    //               << "  MsgLength: " << m_pstKavachtoNMS->usmsgLength<< "\n"
-    //               << "  KavachID: " << m_pstKavachtoNMS->ucKavachSubsysID<< "\n"
-    //               << "  kavach types: " << m_pstKavachtoNMS->ucKavachType << "\n"
-    //               << "  Total Faults Codes: " << m_pstKavachtoNMS->ucTotalFaultsCode << "\n"
-    //               << "  Fault Code: " << m_pstKavachtoNMS->usFaultCodes << "\n"
-    //               << "  CRC: " << m_pstKavachtoNMS->uiCRC << "\n";
-
-    //         write << "----------------------------------------------------------\n";
-
-    //         write.flush();   // ensures it’s written immediately
-    //     }
-    //     else
-    //     {
-    //         qWarning() << "Station log file not open!";
-    //     }
-    // }
     if(ucMsgTyp == 0x00)
     {
         qDebug()<<" Invalid Message Type : ";
     }
 
-    else if(ucMsgTyp == 0x18)
+    else if (ucMsgTyp == 0x18)                 // OnBoard Packet
     {
-        ForwardViaGSM(datagram);
-        SendAckNMStoSKavach(senderIP, senderPort);
-        ProcessOnBoardHealthPkt(datagram);
+        qInfo() << "[GSM Relay] 0x18 OnBoard packet received"
+                << "SIZE:" << datagram.size()
+                << "HEX:" << datagram.toHex(' ').toUpper();
 
+        qInfo() << "[GSM Relay] m_pcKMS pointer:"
+                << static_cast<void *>(m_pcKMS);
+
+        if (m_pcKMS == nullptr)
+        {
+            qCritical() << "[GSM Relay] ERROR: m_pcKMS is NULL";
+        }
+        else
+        {
+            qInfo() << "[GSM Relay] Calling SendUDPViaGSM()";
+
+            bool sent = m_pcKMS->SendUDPViaGSM(
+                datagram,
+                m_strRelayIP,
+                m_usRelayPort);
+
+            qInfo() << "[GSM Relay] SendUDPViaGSM returned:"
+                    << sent;
+        }
+
+
+        SendAckNMStoSKavach(senderIP, senderPort);
+
+        ProcessOnBoardHealthPkt(datagram);
     }
+
     else if(ucMsgTyp == 0x17)
     {
         ForwardToNMS(datagram);
@@ -1963,18 +1890,64 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     }
     else if(ucMsgTyp == 0x19)
     {
-        ForwardViaGSM(datagram);
+        qInfo() << "[GSM Relay] 0x19 OnBoard Fault PAcket received"
+                << "SIZE:" << datagram.size()
+                << "HEX:" << datagram.toHex(' ').toUpper();
+
+        qInfo() << "[GSM Relay] m_pcKMS pointer:"
+                << static_cast<void *>(m_pcKMS);
+
+        if (m_pcKMS == nullptr)
+        {
+            qCritical() << "[GSM Relay] ERROR: m_pcKMS is NULL";
+        }
+        else
+        {
+            qInfo() << "[GSM Relay] Calling SendUDPViaGSM()";
+
+            bool sent = m_pcKMS->SendUDPViaGSM(
+                datagram,
+                m_strRelayIP,
+                m_usRelayPort);
+
+            qInfo() << "[GSM Relay] SendUDPViaGSM returned:"
+                    << sent;
+        }
+        ForwardToNMS(datagram);
         ProcessStationFaultPkt(datagram);
     }
     else if(ucMsgTyp == 0x13)
     {
-        ForwardViaGSM(datagram);
+        ForwardToNMS(datagram);
         SendAckNMStoSKavach(senderIP,senderPort);
         ProcessTSRMSMessagePkt(datagram);
     }
     else if(ucMsgTyp == 0x20)
     {
-        ForwardViaGSM(datagram);
+
+        qInfo() << "[GSM Relay] 0x20 OnBoard packet received"
+                << "SIZE:" << datagram.size()
+                << "HEX:" << datagram.toHex(' ').toUpper();
+
+        qInfo() << "[GSM Relay] m_pcKMS pointer:"
+                << static_cast<void *>(m_pcKMS);
+
+        if (m_pcKMS == nullptr)
+        {
+            qCritical() << "[GSM Relay] ERROR: m_pcKMS is NULL";
+        }
+        else
+        {
+            qInfo() << "[GSM Relay] Calling SendUDPViaGSM()";
+
+            bool sent = m_pcKMS->SendUDPViaGSM(
+                datagram,
+                m_strRelayIP,
+                m_usRelayPort);
+
+            qInfo() << "[GSM Relay] SendUDPViaGSM returned:"
+                    << sent;
+        }
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessLocoRSSIMessagePkt(datagram);
 
@@ -2001,6 +1974,7 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
 
     else if(ucMsgTyp == 0x21)
     {
+        ForwardToNMS(datagram);
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessStationRSSIMessagePkt(datagram);
     }
@@ -2013,7 +1987,7 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
 
     else if(ucMsgTyp == 0x11)
     {
-
+        ForwardToNMS(datagram);
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessAccessAuthorityPacket(datagram);
         qDebug()<<"Send Ack IP  and Port : "<<senderIP<<senderPort;
@@ -2029,23 +2003,27 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     }
     else if(ucMsgTyp == 0x12)
     {
+        ForwardToNMS(datagram);
         SendAckNMStoKavach(senderIP,senderPort);
         SlotUpadateSchematic(senderIP,senderPort,datagram);
 
     }
     else if (ucMsgTyp == 0x14)
     {
+        ForwardToNMS(datagram);
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessS2SPackets(datagram);
 
     }
     else if (ucMsgTyp == 0x15)
     {
+        ForwardToNMS(datagram);
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessFieldInputmessage(senderIP,datagram);
     }
     else if (ucMsgTyp == 0x16)
     {
+        ForwardToNMS(datagram);
         SendAckNMStoKavach(senderIP, senderPort);
         ProcessFieldEventMessage(datagram);
     }
@@ -2365,6 +2343,25 @@ uint32_t nmsMainWindow::ExtractBits(const QVector<bool> &bits, int &index, int b
     return result;
 }
 
+void nmsMainWindow::ComputeEVLAppCRC()
+{
+    QString exePath = QCoreApplication::applicationFilePath();
+    QFile f(exePath);
+    if (!f.open(QIODevice::ReadOnly))
+    {
+        qWarning() << "ComputeEVLAppCRC: failed to open" << exePath << f.errorString();
+        m_uiEVLAppCRC = 0;
+        return;
+    }
+
+    QByteArray data = f.readAll();
+    f.close();
+
+    m_uiEVLAppCRC = CalcCRC32(data);
+    qDebug() << "EVL Application CRC32:" << Qt::hex << m_uiEVLAppCRC
+             << "computed over" << data.size() << "bytes from" << exePath;
+}
+
 void nmsMainWindow::InitnmsDBConnections()
 {
 
@@ -2632,7 +2629,7 @@ void nmsMainWindow::ForwardToNMS(QByteArray datagram)
                  << "size:" << sent;
 
     // ── GSM path: via relay server ────────────────────────────
-  //  ForwardViaGSM(datagram);
+
 }
 
 void nmsMainWindow::ForwardViaGSM(const QByteArray &datagram)
@@ -3465,6 +3462,22 @@ quint32 nmsMainWindow::CalcCRC32(const QByteArray &data)
     return crc ^ 0xFFFFFFFF;
 }
 
+
+void nmsMainWindow::OnGPSUTCReady(QDateTime utcTime)
+{
+    m_utcDateTime = utcTime;
+}
+
+void nmsMainWindow::OnGPSSpeedReady(qint32 speedMMps)
+{
+    m_iLastGroundSpeed = speedMMps;
+}
+
+void nmsMainWindow::OnGPSFixStatusReady(quint8 fixStatus)
+{
+    m_ucLastFixStatus = fixStatus;
+}
+
 // ============================================================
 //  Build0x28Packet  — ICD §2.2
 //
@@ -3486,57 +3499,87 @@ quint32 nmsMainWindow::CalcCRC32(const QByteArray &data)
 QByteArray nmsMainWindow::Build0x28Packet()
 {
     QByteArray pkt;
-    pkt.reserve(26);
+    pkt.reserve(44);
+    pkt.append(static_cast<char>(0xA5));
+    pkt.append(static_cast<char>(0xC3));
+    pkt.append(static_cast<char>(0x01));
+    pkt.append(static_cast<char>(0x28));
 
-    // ── Header (SOF excluded from CRC) ───────────────────────
-    pkt.append(static_cast<char>(0xA5));   // SOF[0]
-    pkt.append(static_cast<char>(0xC3));   // SOF[1]
-
-    // ── CRC-covered region starts at index 2 ─────────────────
-    pkt.append(static_cast<char>(0x01));   // Protocol Version
-    pkt.append(static_cast<char>(0x28));   // Command Type
-
-    // Message Length = bytes from Seq Num to CRC32 inclusive
-    // SeqNum(2) + SenderID(2) + ReceiverID(2) + ChannelID(1) +
-    // Lat(4) + Lon(4) + CRC32(4) = 19 bytes
-    quint16 msgLen = 19;
+    quint16 msgLen = 38;
     pkt.append(static_cast<char>((msgLen >> 8) & 0xFF));
     pkt.append(static_cast<char>( msgLen       & 0xFF));
 
     quint16 seq = m_usSeq0x28++;
     pkt.append(static_cast<char>((seq >> 8) & 0xFF));
     pkt.append(static_cast<char>( seq       & 0xFF));
-
     pkt.append(static_cast<char>((m_usELUSenderID  >> 8) & 0xFF));
     pkt.append(static_cast<char>( m_usELUSenderID        & 0xFF));
-
     pkt.append(static_cast<char>((m_usVCReceiverID >> 8) & 0xFF));
     pkt.append(static_cast<char>( m_usVCReceiverID       & 0xFF));
-
     pkt.append(static_cast<char>(m_ucELUChannelID));
 
-    // Latitude — ICD: sign(1)+deg(8)+min(6)+sec(6) = 21 bits, MSB-aligned in 32 bits
+    // UTC time — cached from last gpsUTCReady signal
+    QDate d = m_utcDateTime.date();
+    QTime t = m_utcDateTime.time();
+    quint16 utcYear  = static_cast<quint16>(d.year());
+    quint8  utcMonth = static_cast<quint8>(d.month());
+    quint8  utcDay   = static_cast<quint8>(d.day());
+    quint8  utcHour  = static_cast<quint8>(t.hour());
+    quint8  utcMin   = static_cast<quint8>(t.minute());
+    quint8  utcSec   = static_cast<quint8>(t.second());
+    // NOTE: GPRMC time field has whole-second resolution only — ms always 0
+    quint16 utcMs    = 0;
+    pkt.append(static_cast<char>((utcYear >> 8) & 0xFF));
+    pkt.append(static_cast<char>( utcYear       & 0xFF));
+    pkt.append(static_cast<char>(utcMonth));
+    pkt.append(static_cast<char>(utcDay));
+    pkt.append(static_cast<char>(utcHour));
+    pkt.append(static_cast<char>(utcMin));
+    pkt.append(static_cast<char>(utcSec));
+    pkt.append(static_cast<char>((utcMs >> 8) & 0xFF));
+    pkt.append(static_cast<char>( utcMs       & 0xFF));
+
+    // GPS Frame Number / TOW — NOT available without UBX binary protocol.
+    // Sending 0 as a placeholder; flag this to your ICD reviewer as a
+    // known gap on NMEA-only hardware.
+    quint32 gpsFrameNum = 0;
+    pkt.append(static_cast<char>((gpsFrameNum >> 24) & 0xFF));
+    pkt.append(static_cast<char>((gpsFrameNum >> 16) & 0xFF));
+    pkt.append(static_cast<char>((gpsFrameNum >>  8) & 0xFF));
+    pkt.append(static_cast<char>( gpsFrameNum        & 0xFF));
+
     quint32 latEnc = EncodeLatLon(m_dLastLat, 8, 6, 6);
     pkt.append(static_cast<char>((latEnc >> 24) & 0xFF));
     pkt.append(static_cast<char>((latEnc >> 16) & 0xFF));
     pkt.append(static_cast<char>((latEnc >>  8) & 0xFF));
     pkt.append(static_cast<char>( latEnc        & 0xFF));
 
-    // Longitude — ICD: sign(1)+deg(9)+min(6)+sec(6) = 22 bits, MSB-aligned in 32 bits
     quint32 lonEnc = EncodeLatLon(m_dLastLon, 9, 6, 6);
     pkt.append(static_cast<char>((lonEnc >> 24) & 0xFF));
     pkt.append(static_cast<char>((lonEnc >> 16) & 0xFF));
     pkt.append(static_cast<char>((lonEnc >>  8) & 0xFF));
     pkt.append(static_cast<char>( lonEnc        & 0xFF));
 
-    // ── CRC32 over bytes[2..end] (SOF excluded) ──────────────
+    // Ground Speed — approximated from GPRMC knots, cached via gpsSpeedReady
+    qint32 groundSpeed = m_iLastGroundSpeed;
+    pkt.append(static_cast<char>((groundSpeed >> 24) & 0xFF));
+    pkt.append(static_cast<char>((groundSpeed >> 16) & 0xFF));
+    pkt.append(static_cast<char>((groundSpeed >>  8) & 0xFF));
+    pkt.append(static_cast<char>( groundSpeed        & 0xFF));
+
+    // GPS Fix Status — approximated from GPGGA fix quality
+    pkt.append(static_cast<char>(m_ucLastFixStatus));
+
+    // GPS Valid Flag
+    pkt.append(static_cast<char>(m_bGNSSValid ? 1 : 0));
+
     quint32 crc = CalcCRC32(pkt.mid(2));
     pkt.append(static_cast<char>((crc >> 24) & 0xFF));
     pkt.append(static_cast<char>((crc >> 16) & 0xFF));
     pkt.append(static_cast<char>((crc >>  8) & 0xFF));
     pkt.append(static_cast<char>( crc        & 0xFF));
 
-    return pkt;  // 26 bytes
+    return pkt;  // 44 bytes
 }
 
 // ============================================================
@@ -3561,40 +3604,32 @@ QByteArray nmsMainWindow::Build0x28Packet()
 // ============================================================
 QByteArray nmsMainWindow::Build0xA2Packet()
 {
-
     QByteArray pkt;
-    pkt.reserve(23);
-
+    pkt.reserve(30);
     // SOF
     pkt.append(static_cast<char>(0xA5));
     pkt.append(static_cast<char>(0xC3));
-
     // Protocol + Command Type
     pkt.append(static_cast<char>(0x01));
     pkt.append(static_cast<char>(0xA2));
-
     // Message Length = SeqNum(2)+SenderID(2)+RecvID(2)+ChanID(1)+
-    //                  NMS(1)+GNSS(1)+PPS(1)+GSMSts(1)+RSSI(1)+Storage(1)+CRC(4) = 17
-    quint16 msgLen = 17;
+    //                  NMS(1)+GNSS(1)+PPS(1)+GSMSts(1)+RSSI(1)+Storage(1)+
+    //                  PowerSupply(1)+KMS(1)+EVLAppCRC(4)+CRC32(4) = 23
+    quint16 msgLen = 23;
     pkt.append(static_cast<char>((msgLen >> 8) & 0xFF));
     pkt.append(static_cast<char>( msgLen       & 0xFF));
-
     quint16 seq = m_usSeq0xA2++;
     pkt.append(static_cast<char>((seq >> 8) & 0xFF));
     pkt.append(static_cast<char>( seq       & 0xFF));
-
     pkt.append(static_cast<char>((m_usELUSenderID  >> 8) & 0xFF));
     pkt.append(static_cast<char>( m_usELUSenderID        & 0xFF));
-
     pkt.append(static_cast<char>((m_usVCReceiverID >> 8) & 0xFF));
     pkt.append(static_cast<char>( m_usVCReceiverID       & 0xFF));
-
     pkt.append(static_cast<char>(m_ucELUChannelID));
 
     // NMS Communication Status: 1=OK, 0=Fail
     quint8 nmsOK = (!m_bNMSOffline && !m_bNMSAppDown) ? 1 : 0;
     pkt.append(static_cast<char>(nmsOK));
-
     qDebug() << "NMS Status:" << (nmsOK ? "Reachable" : "NOT Reachable");
 
     // GNSS Link Status: 1=OK, 0=Fail
@@ -3631,6 +3666,23 @@ QByteArray nmsMainWindow::Build0xA2Packet()
     }
     pkt.append(static_cast<char>(storageOK ? 1 : 0));
 
+    // ELU Power Supply Status: 0=Power Fault, 1=Power Healthy
+    pkt.append(static_cast<char>(m_bPowerHealthy ? 1 : 0));
+
+    quint8 kmsOK = (m_pcKMS) ? 1 : 0;
+    pkt.append(static_cast<char>(kmsOK));
+
+
+
+    // EVL Application CRC: CRC32 of the currently running Event Logger
+    // application software. Constant per release, changes only when the
+    // application software itself changes.
+    quint32 evlAppCrc = m_uiEVLAppCRC;
+    pkt.append(static_cast<char>((evlAppCrc >> 24) & 0xFF));
+    pkt.append(static_cast<char>((evlAppCrc >> 16) & 0xFF));
+    pkt.append(static_cast<char>((evlAppCrc >>  8) & 0xFF));
+    pkt.append(static_cast<char>( evlAppCrc        & 0xFF));
+
     // CRC32 over bytes[2..end] (SOF excluded)
     quint32 crc = CalcCRC32(pkt.mid(2));
     pkt.append(static_cast<char>((crc >> 24) & 0xFF));
@@ -3638,5 +3690,5 @@ QByteArray nmsMainWindow::Build0xA2Packet()
     pkt.append(static_cast<char>((crc >>  8) & 0xFF));
     pkt.append(static_cast<char>( crc        & 0xFF));
 
-    return pkt;  // 23 bytes
+    return pkt;  // 30 bytes
 }
