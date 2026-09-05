@@ -1073,13 +1073,8 @@ void nmsMainWindow::InitUDP()
     connect(pcUdpServer->m_pcKavachPktHndlr,SIGNAL(SigPreviousFaultInfo()),
             this,SLOT(SlotPreviousFaultInfo()));
 
-    // connect(this,SIGNAL(SigSendAckNMStoKavach(QHostAddress, quint16,stNMStoKavach*)),
-    //         pcUdpServer,SLOT(SlotSendAck(QHostAddress, quint16,stNMStoKavach*)));
-
     connect(this,SIGNAL(SigSendAckNMStoKavach(QHostAddress, quint16,stNMStoKavach*)),
             pcUdpServer,SLOT(SlotSendAckEventLoggertoKavach(QHostAddress, quint16,stNMStoKavach*)));
-
-
 
     connect(m_pcDataloggps, SIGNAL(gpsUTCReady(QDateTime)),
             pcUdpServer, SLOT(SlotUpdateGPSTime(QDateTime)));
@@ -1913,7 +1908,7 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
             qInfo() << "[GSM Relay] SendUDPViaGSM returned:"
                     << sent;
         }
-        ForwardToNMS(datagram);
+        SendAckNMStoSKavach(senderIP,senderPort);
         ProcessStationFaultPkt(datagram);
     }
     else if(ucMsgTyp == 0x13)

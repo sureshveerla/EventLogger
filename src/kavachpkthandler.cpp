@@ -38,12 +38,9 @@ void KavachPktHandler::run()
             {
                 qDebug() << "[Thread] Timeout: No data received in 3 seconds.";
             }
-            // else
-            // {
-            //   locker.unlock();
+
             emit SigStationConnStatus();
-            //   locker.relock();
-            // }
+
         }
         if (!m_running && m_queueData.isEmpty())
         {
@@ -62,10 +59,9 @@ void KavachPktHandler::run()
                 continue;
             }
 
-            // QByteArray payload = data.mid(2/* data.size() - 6*/);
+
             QByteArray crcBytes = data.right(4);
-            // quint16 crclength = data.size() -4;
-            // QByteArray payload = data.mid(2);
+
             int startIndex = 2;
             int length = data.size() - startIndex - 4;
 
@@ -77,40 +73,19 @@ void KavachPktHandler::run()
             }
             QByteArray payload = data.mid(startIndex, length);
 
-            // quint32 receivedCRC;
-            // QDataStream stream(crcBytes);
-            // stream.setByteOrder(QDataStream::BigEndian);
-            // stream >> receivedCRC;
-
-            // uint32_t uiRecvCRC;
-            // memcpy(&uiRecvCRC,crcBytes.constData(),sizeof(uiRecvCRC));
-
             uint32_t receivedCRC = static_cast<uint8_t>(crcBytes[0]) << 24|
                                    (static_cast<uint8_t>(crcBytes[1]) << 16) |
                                    (static_cast<uint8_t>(crcBytes[2]) << 8) |
                                    (static_cast<uint8_t>(crcBytes[3]));
 
-            // crc32 crcChecker;
 
-            // quint32 calculatedCRC = crcChecker.get(payload.constData(), payload.size());
 
             uint32_t calculatedCRC = CalculateCRC32(payload.size(),
                                                     reinterpret_cast<const uint8_t*>(payload.constData()));
             uint32_t crc = qToBigEndian(calculatedCRC);
 
-            // if (receivedCRC != crc)
-            // {
-            //     qDebug() << "CRC Mismatched :" << "receivedCRC "  << receivedCRC << "calculatedCRC " << calculatedCRC
-            //              << crc << payload.size();
-            //     continue;
-         //   }
-          //  else
-          //  {
-           //     qDebug() << "CRC Matched:" << "receivedCRC "  << receivedCRC << "calculatedCRC " << calculatedCRC << crc;
+            emit SigNewFaultPacket(senderIP,senderPort,data);
 
-
-                emit SigNewFaultPacket(senderIP,senderPort,data);
-          //  }
         }
         else
         {
@@ -120,7 +95,7 @@ void KavachPktHandler::run()
                 qDebug() << "[Thread] Timeout while idle.";
             }
         }
-        //usleep(500);
+
     }
 }
 
