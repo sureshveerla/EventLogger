@@ -12,7 +12,7 @@ nmsMainWindow::nmsMainWindow(QString strCFGFilePath, QObject *pcParent)
     m_bNMSOffline(false),
     m_bNMSAppDown(false),
     m_pcVCTimer(nullptr),
-    m_pcVCSock(nullptr)
+    m_pcVCSock(nullptr),m_pcFaultpkt(nullptr)
 {
     InitCFGFile();
     Init();
@@ -333,169 +333,168 @@ void nmsMainWindow::ProcessAccessAuthorityPacket(QByteArray datagram)
 
 }
 
-void nmsMainWindow::ProcessStationFaultPkt( QByteArray datagram)
+void nmsMainWindow::ProcessStationFaultPkt(QByteArray datagram)
 {
-    qDebug() << "Station Faults Packet (RX):" << datagram.toHex().toUpper();
+    qDebug() << "================================================";
+    qDebug() << "[FaultPkt] RX:"
+             << datagram.toHex(' ').toUpper();
 
-    constexpr int HEADER_SIZE = offsetof(stStationFaults, stFaults);   // 20 bytes
-    constexpr int MAX_FAULTS  = 10;
+    quint16 startFrame =
+        (static_cast<quint16>(
+             static_cast<quint8>(datagram[0])) << 8) |
+        static_cast<quint16>(
+            static_cast<quint8>(datagram[1]));
 
-    //--------------------------------------------------------------------------
-    // Guard 1 : Minimum packet size
-    //--------------------------------------------------------------------------
-    if (datagram.size() < HEADER_SIZE)
-    {
-        qWarning() << "[FaultPkt] Packet too small. Size =" << datagram.size();
-        return;
-    }
+    // Message Sequence
+    quint16 msgSeq =
+        (static_cast<quint16>(static_cast<quint8>(datagram[5])) << 8) |
+        static_cast<quint16>(static_cast<quint8>(datagram[6]));
 
-    //--------------------------------------------------------------------------
-    // Guard 2 : Verify Message Length
-    // ICD: Message Length is from MessageType to CRC (SOF excluded)
-    // Total UDP bytes = MessageLength + SOF(2 bytes)
-    //--------------------------------------------------------------------------
-    quint16 msgLength =
-        (quint8(datagram[3]) << 8) |
-        quint8(datagram[4]);
+    // KAVACH ID - 3 bytes
+    quint32 kavachID =
+        (static_cast<quint32>(static_cast<quint8>(datagram[7])) << 16) |
+        (static_cast<quint32>(static_cast<quint8>(datagram[8])) << 8) |
+        static_cast<quint32>(static_cast<quint8>(datagram[9]));
 
-    int expectedSize = msgLength + 2;
+    // NMS ID
+    quint16 nmsID =
+        (static_cast<quint16>(static_cast<quint8>(datagram[10])) << 8) |
+        static_cast<quint16>(static_cast<quint8>(datagram[11]));
 
-    if (expectedSize != datagram.size())
-    {
-        qWarning() << "[FaultPkt] Invalid packet length."
-                   << "Expected:" << expectedSize
-                   << "Received:" << datagram.size();
-        return;
-    }
+    // KAVACH Type
+    quint8 kavachType =
+        static_cast<quint8>(datagram[19]);
 
-    //--------------------------------------------------------------------------
-    // Allocate packet
-    //--------------------------------------------------------------------------
+    // Total Faults
+    quint8 totalFaults =
+        static_cast<quint8>(datagram[20]);
+
+    qDebug() << "[FaultPkt] MsgSeq:"
+             << msgSeq;
+
+    qDebug() << "[FaultPkt] KAVACH ID:"
+             << QString("0x%1")
+                    .arg(kavachID, 6, 16, QChar('0'))
+                    .toUpper();
+
+    qDebug() << "[FaultPkt] NMS ID:"
+             << QString("0x%1")
+                    .arg(nmsID, 4, 16, QChar('0'))
+                    .toUpper();
+
+    qDebug() << "[FaultPkt] KavachType:"
+             << QString("0x%1")
+                    .arg(kavachType, 2, 16, QChar('0'))
+                    .toUpper();
+
+    qDebug() << "[FaultPkt] TotalFaults:"
+             << totalFaults;
+
+    //======================================================================
+    // Create / update packet structure
+    //======================================================================
+
     delete m_pcFaultpkt;
     m_pcFaultpkt = new stStationFaults();
+
     memset(m_pcFaultpkt, 0, sizeof(stStationFaults));
 
+    // Copy received packet into structure
     memcpy(m_pcFaultpkt,
            datagram.constData(),
-           qMin(datagram.size(), (int)sizeof(stStationFaults)));
+           qMin(datagram.size(),
+                static_cast<int>(sizeof(stStationFaults))));
 
-    //--------------------------------------------------------------------------
-    // Convert Endian
-    //--------------------------------------------------------------------------
-    m_pcFaultpkt->usmsgLength      = qFromBigEndian(m_pcFaultpkt->usmsgLength);
-    m_pcFaultpkt->usMsgSeq         = qFromBigEndian(m_pcFaultpkt->usMsgSeq);
-    m_pcFaultpkt->ucKavachSubsysID = qFromBigEndian(m_pcFaultpkt->ucKavachSubsysID);
-    m_pcFaultpkt->usNMSID          = qFromBigEndian(m_pcFaultpkt->usNMSID);
+    // Store correctly parsed values
+    m_pcFaultpkt->usMsgSeq = msgSeq;
+    m_pcFaultpkt->ucKavachSubsysID = kavachID;
+    m_pcFaultpkt->usNMSID = nmsID;
+    m_pcFaultpkt->ucKavachType = kavachType;
+    m_pcFaultpkt->ucTotalFaultsCode = totalFaults;
 
-    SendAckNMStoSKavachFaults(QHostAddress(m_strStnSenderIP),m_usStnSenderPort);
-
-    //--------------------------------------------------------------------------
-    // Guard 3 : Validate Fault Count
-    //--------------------------------------------------------------------------
-    if (m_pcFaultpkt->ucTotalFaultsCode > MAX_FAULTS)
-    {
-        qWarning() << "[FaultPkt] Invalid Fault Count:"
-                   << m_pcFaultpkt->ucTotalFaultsCode;
-
-        delete m_pcFaultpkt;
-        m_pcFaultpkt = nullptr;
-        return;
-    }
-
-    //--------------------------------------------------------------------------
-    // Guard 4 : Validate KAVACH Type
-    //--------------------------------------------------------------------------
-    if (m_pcFaultpkt->ucKavachType != 0x11 &&
-        m_pcFaultpkt->ucKavachType != 0x22 &&
-        m_pcFaultpkt->ucKavachType != 0x33)
-    {
-        qWarning() << "[FaultPkt] Invalid KAVACH Type:"
-                   << QString("0x%1")
-                          .arg(m_pcFaultpkt->ucKavachType,2,16,QChar('0'))
-                          .toUpper();
-
-        delete m_pcFaultpkt;
-        m_pcFaultpkt = nullptr;
-        return;
-    }
-
-    //--------------------------------------------------------------------------
-    // Guard 5 : Verify packet contains all faults + CRC
-    //--------------------------------------------------------------------------
-    int requiredSize =
-        HEADER_SIZE +
-        (m_pcFaultpkt->ucTotalFaultsCode * sizeof(stFaultEntry)) +
-        sizeof(quint32);
-
-    if (datagram.size() < requiredSize)
-    {
-        qWarning() << "[FaultPkt] Truncated Packet."
-                   << "Need:" << requiredSize
-                   << "Got:" << datagram.size();
-
-        delete m_pcFaultpkt;
-        m_pcFaultpkt = nullptr;
-        return;
-    }
+    //======================================================================
+    // Fault lists for DB
+    //======================================================================
 
     QStringList strLstFaultPrompt;
     QStringList strLstFaultType;
     QStringList strLstFaultCode;
     QStringList strLstModule;
 
-    //----------------------------------------------------------------------
-    // Parse Faults
-    //----------------------------------------------------------------------
-    for (int i = 0; i < m_pcFaultpkt->ucTotalFaultsCode; ++i)
+    //======================================================================
+    // Parse the received fault data
+    //======================================================================
+
+    const int faultStart = 21;
+    const int crcSize = 4;
+    const int faultDataEnd = datagram.size() - crcSize;
+
+    const int faultEntrySize = 4;
+
+    for (int i = 0;
+         i < totalFaults &&
+         (faultStart + (i * faultEntrySize) + faultEntrySize) <= faultDataEnd;
+         ++i)
     {
-        const stFaultEntry &fault = m_pcFaultpkt->stFaults[i];
+        int offset =
+            faultStart + (i * faultEntrySize);
 
-        quint8 moduleID  = fault.ucModuleID;
-        quint8 faultType = fault.ucFaultType;
-        quint16 faultCode = qFromBigEndian(fault.usFaultCode);
+        quint32 faultValue =
+            (static_cast<quint32>(
+                 static_cast<quint8>(datagram[offset])) << 24) |
+            (static_cast<quint32>(
+                 static_cast<quint8>(datagram[offset + 1])) << 16) |
+            (static_cast<quint32>(
+                 static_cast<quint8>(datagram[offset + 2])) << 8) |
+            static_cast<quint32>(
+                static_cast<quint8>(datagram[offset + 3]));
 
-        strLstModule.append(
-            QString("0x%1")
-                .arg(moduleID,2,16,QLatin1Char('0'))
-                .toUpper());
+        qDebug() << "[FaultPkt] Fault[" << i << "]:"
+                 << QString("0x%1")
+                        .arg(faultValue, 8, 16, QChar('0'))
+                        .toUpper();
 
-        strLstFaultType.append(
-            QString("0x%1")
-                .arg(faultType,2,16,QLatin1Char('0'))
-                .toUpper());
+        strLstModule.append("0x00");
+        strLstFaultType.append("0x00");
 
         strLstFaultCode.append(
             QString("0x%1")
-                .arg(faultCode,4,16,QLatin1Char('0'))
+                .arg(faultValue, 8, 16, QChar('0'))
                 .toUpper());
 
-        qDebug().noquote()
-            << QString("Fault[%1] Module=%2 Type=%3 Code=%4")
-                   .arg(i)
-                   .arg(strLstModule.last())
-                   .arg(strLstFaultType.last())
-                   .arg(strLstFaultCode.last());
+        strLstFaultPrompt.append(
+            QString("Fault 0x%1")
+                .arg(faultValue, 8, 16, QChar('0'))
+                .toUpper());
     }
 
-    //----------------------------------------------------------------------
-    // Read CRC
-    //----------------------------------------------------------------------
-    int crcOffset =
-        HEADER_SIZE +
-        (m_pcFaultpkt->ucTotalFaultsCode * sizeof(stFaultEntry));
+    //======================================================================
+    // ACK
+    //======================================================================
 
-    quint32 crc =
-        (quint8(datagram[crcOffset]) << 24) |
-        (quint8(datagram[crcOffset+1]) << 16) |
-        (quint8(datagram[crcOffset+2]) << 8) |
-        quint8(datagram[crcOffset+3]);
+    qDebug() << "[FaultAck] Preparing ACK"
+             << "Seq:" << msgSeq
+             << "NMSID:" << nmsID
+             << "KavachID:" << kavachID
+             << "KavachType:"
+             << QString("0x%1")
+                    .arg(kavachType, 2, 16, QChar('0'))
+                    .toUpper();
 
-    m_pcFaultpkt->uiCRC = crc;
+    SendFaultPktAck(
+        QHostAddress(m_strStnSenderIP),
+        m_usStnSenderPort,
+        msgSeq,
+        nmsID,
+        kavachID,
+        kavachType,startFrame
+        );
 
-    qDebug() << "[FaultPkt] CRC:"
-             << QString("0x%1").arg(crc,8,16,QChar('0')).toUpper();
+    qDebug() << "[FaultAck] SendFaultPktAck() completed";
 
-
+    //======================================================================
+    // DB
+    //======================================================================
 
     emit SigStnFaultPktInserttoDB(
         m_pcFaultpkt,
@@ -503,6 +502,15 @@ void nmsMainWindow::ProcessStationFaultPkt( QByteArray datagram)
         strLstFaultType,
         strLstFaultCode,
         strLstFaultPrompt);
+
+    qDebug() << "[FaultPkt] Database signal emitted";
+
+    //======================================================================
+    // Completed
+    //======================================================================
+
+    qDebug() << "[FaultPkt] Processing completed";
+    qDebug() << "================================================";
 }
 
 void nmsMainWindow::ProcessStationHealthPkt(QByteArray datagram)
@@ -1872,7 +1880,7 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
         }
 
 
-        SendAckNMStoSKavach(senderIP, senderPort);
+       // SendAckNMStoSKavach(senderIP, senderPort);
 
         ProcessOnBoardHealthPkt(datagram);
     }
@@ -1880,41 +1888,47 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     else if(ucMsgTyp == 0x17)
     {
         ForwardToNMS(datagram);
-        SendAckNMStoSKavach(senderIP, senderPort);
+       // SendAckNMStoSKavach(senderIP, senderPort);
         ProcessStationHealthPkt(datagram);
     }
-    else if(ucMsgTyp == 0x19)
+    else if (ucMsgTyp == 0x19)
     {
-        qInfo() << "[GSM Relay] 0x19 OnBoard Fault PAcket received"
-                << "SIZE:" << datagram.size()
-                << "HEX:" << datagram.toHex(' ').toUpper();
+        // qInfo() << "[GSM Relay] 0x19 OnBoard Fault Packet received"
+        //         << "SIZE:" << datagram.size()
+        //         << "HEX:" << datagram.toHex(' ').toUpper();
 
-        qInfo() << "[GSM Relay] m_pcKMS pointer:"
-                << static_cast<void *>(m_pcKMS);
+        // qInfo() << "[GSM Relay] m_pcKMS pointer:"
+        //         << static_cast<void *>(m_pcKMS);
 
-        if (m_pcKMS == nullptr)
-        {
-            qCritical() << "[GSM Relay] ERROR: m_pcKMS is NULL";
-        }
-        else
-        {
-            qInfo() << "[GSM Relay] Calling SendUDPViaGSM()";
+        // if (m_pcKMS == nullptr)
+        // {
+        //     qCritical() << "[GSM Relay] ERROR: m_pcKMS is NULL";
+        // }
+        // else
+        // {
+        //     qInfo() << "[GSM Relay] Calling SendUDPViaGSM()";
 
-            bool sent = m_pcKMS->SendUDPViaGSM(
-                datagram,
-                m_strRelayIP,
-                m_usRelayPort);
+        //     bool sent = m_pcKMS->SendUDPViaGSM(
+        //         datagram,
+        //         m_strRelayIP,
+        //         m_usRelayPort);
 
-            qInfo() << "[GSM Relay] SendUDPViaGSM returned:"
-                    << sent;
-        }
-        SendAckNMStoSKavach(senderIP,senderPort);
+        //     qInfo() << "[GSM Relay] SendUDPViaGSM returned:"
+        //             << sent;
+        // }
+
+        // IMPORTANT:
+        // Process packet FIRST.
+        // ACK will be generated inside ProcessStationFaultPkt()
+        // only after all validations are successful.
+        ForwardToNMS(datagram);
         ProcessStationFaultPkt(datagram);
     }
+
     else if(ucMsgTyp == 0x13)
     {
         ForwardToNMS(datagram);
-        SendAckNMStoSKavach(senderIP,senderPort);
+      //  SendAckNMStoSKavach(senderIP,senderPort);
         ProcessTSRMSMessagePkt(datagram);
     }
     else if(ucMsgTyp == 0x20)
@@ -1943,26 +1957,26 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
             qInfo() << "[GSM Relay] SendUDPViaGSM returned:"
                     << sent;
         }
-        SendAckNMStoKavach(senderIP, senderPort);
+       // SendAckNMStoKavach(senderIP, senderPort);
         ProcessLocoRSSIMessagePkt(datagram);
 
     }
 
     else if(ucMsgTyp == 0x1D)
     {
-        SendAckNMStoKavach(senderIP, senderPort);
+      //  SendAckNMStoKavach(senderIP, senderPort);
         ProcessOnBoardEventMsg(datagram);
 
     }
     else if(ucMsgTyp == 0x1E)
     {
-        SendAckNMStoKavach(senderIP, senderPort);
+      //  SendAckNMStoKavach(senderIP, senderPort);
         ProcessOnBoardBrakeEventMsg(datagram);
 
     }
     else if(ucMsgTyp == 0x22)
     {
-       SendAckNMStoKavach(senderIP, senderPort);
+    //   SendAckNMStoKavach(senderIP, senderPort);
        ProcessOnBoardHealthStsMsg(datagram);
 
     }
@@ -1970,20 +1984,20 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     else if(ucMsgTyp == 0x21)
     {
         ForwardToNMS(datagram);
-        SendAckNMStoKavach(senderIP, senderPort);
+     //   SendAckNMStoKavach(senderIP, senderPort);
         ProcessStationRSSIMessagePkt(datagram);
     }
 
     else if(ucMsgTyp == 0x1A)
     {
-        SendAckNMStoKavach(senderIP, senderPort);
+    //    SendAckNMStoKavach(senderIP, senderPort);
         ProcessStationKavachSysSts(datagram);
     }
 
     else if(ucMsgTyp == 0x11)
     {
         ForwardToNMS(datagram);
-        SendAckNMStoKavach(senderIP, senderPort);
+    //    SendAckNMStoKavach(senderIP, senderPort);
         ProcessAccessAuthorityPacket(datagram);
         qDebug()<<"Send Ack IP  and Port : "<<senderIP<<senderPort;
 
@@ -1999,27 +2013,27 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     else if(ucMsgTyp == 0x12)
     {
         ForwardToNMS(datagram);
-        SendAckNMStoKavach(senderIP,senderPort);
+    //    SendAckNMStoKavach(senderIP,senderPort);
         SlotUpadateSchematic(senderIP,senderPort,datagram);
 
     }
     else if (ucMsgTyp == 0x14)
     {
         ForwardToNMS(datagram);
-        SendAckNMStoKavach(senderIP, senderPort);
+    //    SendAckNMStoKavach(senderIP, senderPort);
         ProcessS2SPackets(datagram);
 
     }
     else if (ucMsgTyp == 0x15)
     {
         ForwardToNMS(datagram);
-        SendAckNMStoKavach(senderIP, senderPort);
+     //   SendAckNMStoKavach(senderIP, senderPort);
         ProcessFieldInputmessage(senderIP,datagram);
     }
     else if (ucMsgTyp == 0x16)
     {
         ForwardToNMS(datagram);
-        SendAckNMStoKavach(senderIP, senderPort);
+     //   SendAckNMStoKavach(senderIP, senderPort);
         ProcessFieldEventMessage(datagram);
     }
 }
@@ -2789,6 +2803,101 @@ void nmsMainWindow::SendAckNMStoSKavachFaults(QHostAddress senderIP, quint16 sen
 
     emit SigSendAckNMStoKavach(senderIP, senderPort,pstAck);
 
+}
+
+// ============================================================
+//  SendFaultPktAck  —  Builds & sends the 0x1F ACK for a
+//  received Fault Code Packet (Station 0x19 / Onboard 0x19),
+//  per ICD field layout:
+//
+//    [0-1]   SOF                0xBBBB
+//    [2]     Message Type       0x1F
+//    [3-4]   Message Length     MsgType..CRC inclusive (=15)
+//    [5-6]   Message Sequence   last received Kavach seq num
+//    [7-8]   NMS System ID
+//    [9-11]  Onboard/Station KAVACH ID  (3 bytes, 1-65535)
+//    [12]    KAVACH Subsystem Type      (0x11 / 0x22 / 0x33)
+//    [13-16] CRC32 (CCITT 0x04C11DB7), computed over
+//            bytes[2..12] — SOF is excluded from CRC
+//
+//  usKavachID / ucKavachSubsysType must come straight from the
+//  fault packet that is being acknowledged (m_pcFaultpkt), so
+//  the ACK always reflects who it's actually acking.
+// ============================================================
+void nmsMainWindow::SendFaultPktAck(QHostAddress senderIP,
+                                    quint16 senderPort,
+                                    quint16 usMsgSeq,
+                                    quint16 usNMSID,
+                                    quint32 uiKavachID,
+                                    quint8 ucKavachSubsysType,
+                                    quint16 usStartFrame)
+{
+    stNMStoKavach *pstAck = new stNMStoKavach;
+    memset(pstAck, 0, sizeof(stNMStoKavach));
+
+    // Use received packet Start Frame
+    pstAck->usStartFrame = usStartFrame;
+
+    pstAck->ucMsgType = 0x1F;
+
+    pstAck->usMsgSeq = qToBigEndian(usMsgSeq);
+
+    pstAck->usNMSSystemID = qToBigEndian(usNMSID);
+
+    pstAck->ucKavachSubsysID[0] =
+        (uiKavachID >> 16) & 0xFF;
+
+    pstAck->ucKavachSubsysID[1] =
+        (uiKavachID >> 8) & 0xFF;
+
+    pstAck->ucKavachSubsysID[2] =
+        uiKavachID & 0xFF;
+
+    pstAck->ucKavachType = ucKavachSubsysType;
+
+    quint16 msgLength = sizeof(stNMStoKavach) - 2;
+
+    pstAck->usmsgLength = qToBigEndian(msgLength);
+
+    const quint8 *pData =
+        reinterpret_cast<const quint8 *>(pstAck);
+
+    const quint8 *pCrcStart = pData + 2;
+
+    quint32 crcLength = msgLength - 4;
+
+    quint32 crc = CalculateCRC32(crcLength, pCrcStart);
+
+    quint32 crcBE = qToBigEndian(crc);
+
+    memcpy(&pstAck->uiCRC,
+           &crcBE,
+           sizeof(crcBE));
+
+    qDebug() << "[FaultAck 0x1F]"
+             << "StartFrame:"
+             << QString("0x%1")
+                    .arg(usStartFrame, 4, 16, QChar('0'))
+                    .toUpper()
+             << "Seq:" << usMsgSeq
+             << "NMSID:" << usNMSID
+             << "KavachID:" << uiKavachID
+             << "SubsysType:"
+             << QString("0x%1")
+                    .arg(ucKavachSubsysType, 2, 16, QChar('0'))
+                    .toUpper();
+
+    qDebug() << "Tx Data:"
+             << QByteArray(
+                    reinterpret_cast<const char *>(pstAck),
+                    sizeof(stNMStoKavach))
+                    .toHex(' ')
+                    .toUpper();
+
+    emit SigSendAckNMStoKavach(
+        senderIP,
+        senderPort,
+        pstAck);
 }
 
 void nmsMainWindow::SendSMS(QString mobileNumber, QString message)

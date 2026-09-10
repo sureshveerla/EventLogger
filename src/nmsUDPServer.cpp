@@ -376,15 +376,7 @@ void nmsUDPServer::SlotSendAckEventLoggertoKavach(QHostAddress senderIP, quint16
     qDebug() << "Tx Data:" << byteArr.toHex(' ').toUpper() << senderIP << senderPort;
 }
 
-void nmsUDPServer::SlotSendAck(QHostAddress senderIP, quint16 senderPort,stNMStoKavach *pstAck)
-{
 
-    QHostAddress stationIP(m_strSenderIP);
-
-    QByteArray byteArr(reinterpret_cast<const char*>(pstAck), sizeof(stNMStoKavach));
-    m_pcClntSock->writeDatagram(byteArr, stationIP, m_usSenderPort);
-    qDebug() << "Tx Data:" << byteArr.toHex(' ').toUpper() << senderIP << senderPort;
-}
 // ============================================================
 //  InitKMS  —  ICD §D: KMS Gateway Initialization
 //

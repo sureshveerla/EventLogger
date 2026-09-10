@@ -50,10 +50,6 @@ public slots:
 
 public slots:
 
-   // void SlotSendAckNMStoKavach(QByteArray byteArr);
-
-    void SlotSendAck(QHostAddress senderIP, quint16 senderPort, stNMStoKavach *pstAck);
-
     void SlotSendAckEventLoggertoKavach(QHostAddress senderIP, quint16 senderPort,stNMStoKavach *pstAck);
 
 

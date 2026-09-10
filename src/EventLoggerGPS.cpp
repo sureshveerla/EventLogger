@@ -12,7 +12,7 @@ EventLogger::EventLogger(QObject *parent)
     m_serial->setPortName("/dev/ttyS0");
 
     // 🔁 Match stty: 38400 baud
-    m_serial->setBaudRate(QSerialPort::Baud38400);
+    m_serial->setBaudRate(QSerialPort::Baud9600);
 
     // Same defaults as stty
     m_serial->setDataBits(QSerialPort::Data8);

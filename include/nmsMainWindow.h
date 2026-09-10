@@ -299,6 +299,9 @@ private:
     void SendAckNMStoKavach(QHostAddress senderIP, quint16 senderPort);
     void SendAckNMStoSKavach(QHostAddress senderIP, quint16 senderPort);
     void SendAckNMStoSKavachFaults(QHostAddress senderIP, quint16 senderPort);
+    void SendFaultPktAck(QHostAddress senderIP, quint16 senderPort,
+                         quint16 usMsgSeq, quint16 usNMSID,
+                         quint32 uiKavachID, quint8 ucKavachSubsysType,quint16 usStartFrame);
     void SendSMS(QString mobileNumber, QString message);
     QString GetFaultsCodeDescription(uint16_t usFaultCode);
     QString GetOnBoardHlthEvntName(uint16_t usEvntID);

@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_nmsUDPServer_t {
-    const uint offsetsAndSize[62];
-    char stringdata0[378];
+    const uint offsetsAndSize[60];
+    char stringdata0[366];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_nmsUDPServer_t, stringdata0) + ofs), len 
@@ -56,10 +56,9 @@ QT_MOC_LITERAL(272, 10), // "clientAddr"
 QT_MOC_LITERAL(283, 10), // "clientPort"
 QT_MOC_LITERAL(294, 7), // "request"
 QT_MOC_LITERAL(302, 10), // "GetGPSTime"
-QT_MOC_LITERAL(313, 11), // "SlotSendAck"
-QT_MOC_LITERAL(325, 14), // "stNMStoKavach*"
-QT_MOC_LITERAL(340, 6), // "pstAck"
-QT_MOC_LITERAL(347, 30) // "SlotSendAckEventLoggertoKavach"
+QT_MOC_LITERAL(313, 30), // "SlotSendAckEventLoggertoKavach"
+QT_MOC_LITERAL(344, 14), // "stNMStoKavach*"
+QT_MOC_LITERAL(359, 6) // "pstAck"
 
     },
     "nmsUDPServer\0SigNewFaultPacket\0\0"
@@ -71,8 +70,8 @@ QT_MOC_LITERAL(347, 30) // "SlotSendAckEventLoggertoKavach"
     "packet\0vcAddr\0vcPort\0SlotUpdateGPSTime\0"
     "gpsTime\0SendSNTPResponse\0socket\0"
     "clientAddr\0clientPort\0request\0GetGPSTime\0"
-    "SlotSendAck\0stNMStoKavach*\0pstAck\0"
-    "SlotSendAckEventLoggertoKavach"
+    "SlotSendAckEventLoggertoKavach\0"
+    "stNMStoKavach*\0pstAck"
 };
 #undef QT_MOC_LITERAL
 
@@ -82,7 +81,7 @@ static const uint qt_meta_data_nmsUDPServer[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -90,19 +89,18 @@ static const uint qt_meta_data_nmsUDPServer[] = {
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    3,   80,    2, 0x06,    1 /* Public */,
-       7,    2,   87,    2, 0x06,    5 /* Public */,
-      10,    2,   92,    2, 0x06,    8 /* Public */,
+       1,    3,   74,    2, 0x06,    1 /* Public */,
+       7,    2,   81,    2, 0x06,    5 /* Public */,
+      10,    2,   86,    2, 0x06,    8 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      11,    1,   97,    2, 0x08,   11 /* Private */,
-      14,    0,  100,    2, 0x08,   13 /* Private */,
-      15,    3,  101,    2, 0x08,   14 /* Private */,
-      19,    1,  108,    2, 0x0a,   18 /* Public */,
-      21,    4,  111,    2, 0x0a,   20 /* Public */,
-      26,    0,  120,    2, 0x0a,   25 /* Public */,
-      27,    3,  121,    2, 0x0a,   26 /* Public */,
-      30,    3,  128,    2, 0x0a,   30 /* Public */,
+      11,    1,   91,    2, 0x08,   11 /* Private */,
+      14,    0,   94,    2, 0x08,   13 /* Private */,
+      15,    3,   95,    2, 0x08,   14 /* Private */,
+      19,    1,  102,    2, 0x0a,   18 /* Public */,
+      21,    4,  105,    2, 0x0a,   20 /* Public */,
+      26,    0,  114,    2, 0x0a,   25 /* Public */,
+      27,    3,  115,    2, 0x0a,   26 /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, QMetaType::QByteArray,    4,    5,    6,
@@ -116,7 +114,6 @@ static const uint qt_meta_data_nmsUDPServer[] = {
     QMetaType::Void, QMetaType::QDateTime,   20,
     QMetaType::Void, 0x80000000 | 12, 0x80000000 | 3, QMetaType::UShort, QMetaType::QByteArray,   22,   23,   24,   25,
     QMetaType::QDateTime,
-    QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, 0x80000000 | 28,    4,    5,   29,
     QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, 0x80000000 | 28,    4,    5,   29,
 
        0        // eod
@@ -138,8 +135,7 @@ void nmsUDPServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 7: _t->SendSNTPResponse((*reinterpret_cast< std::add_pointer_t<QUdpSocket*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[4]))); break;
         case 8: { QDateTime _r = _t->GetGPSTime();
             if (_a[0]) *reinterpret_cast< QDateTime*>(_a[0]) = std::move(_r); }  break;
-        case 9: _t->SlotSendAck((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<stNMStoKavach*>>(_a[3]))); break;
-        case 10: _t->SlotSendAckEventLoggertoKavach((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<stNMStoKavach*>>(_a[3]))); break;
+        case 9: _t->SlotSendAckEventLoggertoKavach((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<stNMStoKavach*>>(_a[3]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -176,7 +172,7 @@ const QMetaObject nmsUDPServer::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_nmsUDPServer_t
 , QtPrivate::TypeAndForceComplete<nmsUDPServer, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QUdpSocket *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QDateTime &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QUdpSocket *, std::false_type>, QtPrivate::TypeAndForceComplete<const QHostAddress &, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<const QByteArray &, std::false_type>, QtPrivate::TypeAndForceComplete<QDateTime, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<stNMStoKavach *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<stNMStoKavach *, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QUdpSocket *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QDateTime &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QUdpSocket *, std::false_type>, QtPrivate::TypeAndForceComplete<const QHostAddress &, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<const QByteArray &, std::false_type>, QtPrivate::TypeAndForceComplete<QDateTime, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<stNMStoKavach *, std::false_type>
 
 
 >,
@@ -203,13 +199,13 @@ int nmsUDPServer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 10)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 11;
+        _id -= 10;
     }
     return _id;
 }
