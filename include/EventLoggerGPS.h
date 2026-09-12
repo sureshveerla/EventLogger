@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include <QSerialPort>
-#include <QByteArray>
-#include <QDateTime>      // ← ADD THIS LINE
+#include <QDateTime>
+
 
 class EventLogger : public QObject
 {
@@ -14,21 +14,34 @@ public:
     explicit EventLogger(QObject *parent = nullptr);
 
 signals:
-   // void gpsBufferReady(QByteArray buffer);
-    void gpsUTCReady(QDateTime utcTime);
 
-    // Emitted when a valid $GPRMC fix is parsed.
-    // lat/lon in decimal degrees.  bValid = false when sentence status is 'V'.
-    void gpsPositionReady(double dLat, double dLon, bool bValid);
-    void gpsSpeedReady(qint32 speedMMps);              // NEW — approximated from GPRMC field 7 (knots)
-    void gpsFixStatusReady(quint8 fixStatus);          // NEW — approximated from GPGGA field 6
+    void gpsUTCReady(const QDateTime &utcTime);
+
+    void gpsPositionReady(
+        double latitude,
+        double longitude,
+        bool valid
+        );
+
+    void gpsSpeedReady(qint32 speedMMps);
+
+    void gpsFixStatusReady(quint8 fixStatus);
 
 private slots:
+
     void readGPSData();
 
 private:
+
+    void processRMC(const QByteArray &line);
+
+    void processGGA(const QByteArray &line);
+
+private:
+
     QSerialPort *m_serial;
+
     QByteArray m_buffer;
 };
 
-#endif
+#endif // EVENTLOGGERGPS_H

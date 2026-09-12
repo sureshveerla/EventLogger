@@ -42,9 +42,9 @@ static constexpr auto qt_meta_stringdata_ZN11EventLoggerE = QtMocHelpers::string
     "",
     "utcTime",
     "gpsPositionReady",
-    "dLat",
-    "dLon",
-    "bValid",
+    "latitude",
+    "longitude",
+    "valid",
     "gpsSpeedReady",
     "speedMMps",
     "gpsFixStatusReady",
@@ -100,7 +100,7 @@ Q_CONSTINIT const QMetaObject EventLogger::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<EventLogger, std::true_type>,
         // method 'gpsUTCReady'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QDateTime, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QDateTime &, std::false_type>,
         // method 'gpsPositionReady'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<double, std::false_type>,
@@ -134,7 +134,7 @@ void EventLogger::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
     if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _q_method_type = void (EventLogger::*)(QDateTime );
+            using _q_method_type = void (EventLogger::*)(const QDateTime & );
             if (_q_method_type _q_method = &EventLogger::gpsUTCReady; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
@@ -196,7 +196,7 @@ int EventLogger::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void EventLogger::gpsUTCReady(QDateTime _t1)
+void EventLogger::gpsUTCReady(const QDateTime & _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

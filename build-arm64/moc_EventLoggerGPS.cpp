@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_EventLogger_t {
     const uint offsetsAndSize[26];
-    char stringdata0[131];
+    char stringdata0[139];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_EventLogger_t, stringdata0) + ofs), len 
@@ -34,20 +34,20 @@ QT_MOC_LITERAL(12, 11), // "gpsUTCReady"
 QT_MOC_LITERAL(24, 0), // ""
 QT_MOC_LITERAL(25, 7), // "utcTime"
 QT_MOC_LITERAL(33, 16), // "gpsPositionReady"
-QT_MOC_LITERAL(50, 4), // "dLat"
-QT_MOC_LITERAL(55, 4), // "dLon"
-QT_MOC_LITERAL(60, 6), // "bValid"
-QT_MOC_LITERAL(67, 13), // "gpsSpeedReady"
-QT_MOC_LITERAL(81, 9), // "speedMMps"
-QT_MOC_LITERAL(91, 17), // "gpsFixStatusReady"
-QT_MOC_LITERAL(109, 9), // "fixStatus"
-QT_MOC_LITERAL(119, 11) // "readGPSData"
+QT_MOC_LITERAL(50, 8), // "latitude"
+QT_MOC_LITERAL(59, 9), // "longitude"
+QT_MOC_LITERAL(69, 5), // "valid"
+QT_MOC_LITERAL(75, 13), // "gpsSpeedReady"
+QT_MOC_LITERAL(89, 9), // "speedMMps"
+QT_MOC_LITERAL(99, 17), // "gpsFixStatusReady"
+QT_MOC_LITERAL(117, 9), // "fixStatus"
+QT_MOC_LITERAL(127, 11) // "readGPSData"
 
     },
     "EventLogger\0gpsUTCReady\0\0utcTime\0"
-    "gpsPositionReady\0dLat\0dLon\0bValid\0"
-    "gpsSpeedReady\0speedMMps\0gpsFixStatusReady\0"
-    "fixStatus\0readGPSData"
+    "gpsPositionReady\0latitude\0longitude\0"
+    "valid\0gpsSpeedReady\0speedMMps\0"
+    "gpsFixStatusReady\0fixStatus\0readGPSData"
 };
 #undef QT_MOC_LITERAL
 
@@ -101,7 +101,7 @@ void EventLogger::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (EventLogger::*)(QDateTime );
+            using _t = void (EventLogger::*)(const QDateTime & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&EventLogger::gpsUTCReady)) {
                 *result = 0;
                 return;
@@ -138,7 +138,7 @@ const QMetaObject EventLogger::staticMetaObject = { {
     qt_static_metacall,
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_EventLogger_t
-, QtPrivate::TypeAndForceComplete<EventLogger, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QDateTime, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<qint32, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>
+, QtPrivate::TypeAndForceComplete<EventLogger, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QDateTime &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<qint32, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>
 , QtPrivate::TypeAndForceComplete<void, std::false_type>
 
 
@@ -178,7 +178,7 @@ int EventLogger::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void EventLogger::gpsUTCReady(QDateTime _t1)
+void EventLogger::gpsUTCReady(const QDateTime & _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

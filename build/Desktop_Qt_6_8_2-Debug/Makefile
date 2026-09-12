@@ -2101,7 +2101,6 @@ moc_EventLoggerGPS.cpp: ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qpropertyprivate.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qserialportglobal.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qtserialportexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QByteArray \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDateTime \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdatetime.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcalendar.h \
@@ -5328,7 +5327,6 @@ EventLoggerGPS.o: ../../src/EventLoggerGPS.cpp ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qpropertyprivate.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qserialportglobal.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qtserialportexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QByteArray \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDateTime \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdatetime.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcalendar.h \
@@ -5345,8 +5343,10 @@ EventLoggerGPS.o: ../../src/EventLoggerGPS.cpp ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qhash.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/q23utility.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDebug \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimeZone \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimezone.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDebug
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QtMath
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EventLoggerGPS.o ../../src/EventLoggerGPS.cpp
 
 nmsUDPServer.o: ../../src/nmsUDPServer.cpp /home/sana/EventLogger/include/nmsUDPServer.h \
