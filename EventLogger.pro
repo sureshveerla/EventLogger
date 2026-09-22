@@ -32,7 +32,7 @@ SOURCES += main.cpp \
            KAVACH_PARSEPACKET.cpp \
            nmsDB.cpp \
            nmsMainWindow.cpp \
-           EventLoggerLED.cpp \
+           EventLoggerStatusLED.cpp \
            crc32.c
 
 HEADERS += nmsDBQuerys.h                    nmsUDPServer.h           \
@@ -43,4 +43,4 @@ HEADERS += nmsDBQuerys.h                    nmsUDPServer.h           \
            nmsQtInc.h                       nmsStructs.h           \
            nmsDB.h                                                \
            nmsMainWindow.h                  crc32.h               \
-           EventLoggerLED.h
+           EventLoggerStatusLED.h

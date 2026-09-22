@@ -61,7 +61,7 @@ SOURCES       = ../../src/main.cpp \
 		../../src/KAVACH_PARSEPACKET.cpp \
 		../../src/nmsDB.cpp \
 		../../src/nmsMainWindow.cpp \
-		../../src/EventLoggerLED.cpp \
+		../../src/EventLoggerStatusLED.cpp \
 		../../src/crc32.c moc_nmsDBQuerys.cpp \
 		moc_nmsUDPServer.cpp \
 		moc_EventLoggerGPS.cpp \
@@ -70,7 +70,7 @@ SOURCES       = ../../src/main.cpp \
 		moc_KAVACH_PARSEPACKET.cpp \
 		moc_nmsDB.cpp \
 		moc_nmsMainWindow.cpp \
-		moc_EventLoggerLED.cpp
+		moc_EventLoggerStatusLED.cpp
 OBJECTS       = main.o \
 		EventLoggerKMS.o \
 		nmsDBQuerys.o \
@@ -80,7 +80,7 @@ OBJECTS       = main.o \
 		KAVACH_PARSEPACKET.o \
 		nmsDB.o \
 		nmsMainWindow.o \
-		EventLoggerLED.o \
+		EventLoggerStatusLED.o \
 		crc32.o \
 		moc_nmsDBQuerys.o \
 		moc_nmsUDPServer.o \
@@ -90,7 +90,7 @@ OBJECTS       = main.o \
 		moc_KAVACH_PARSEPACKET.o \
 		moc_nmsDB.o \
 		moc_nmsMainWindow.o \
-		moc_EventLoggerLED.o
+		moc_EventLoggerStatusLED.o
 DIST          = /opt/Qt/6.8.2/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/6.8.2/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt/6.8.2/gcc_64/mkspecs/common/linux.conf \
@@ -456,7 +456,7 @@ DIST          = /opt/Qt/6.8.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../../include/nmsDB.h \
 		../../include/nmsMainWindow.h \
 		../../src/crc32.h \
-		../../include/EventLoggerLED.h ../../src/main.cpp \
+		../../include/EventLoggerStatusLED.h ../../src/main.cpp \
 		../../src/EventLoggerKMS.cpp \
 		../../src/nmsDBQuerys.cpp \
 		../../src/EventLoggerGPS.cpp \
@@ -465,7 +465,7 @@ DIST          = /opt/Qt/6.8.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../../src/KAVACH_PARSEPACKET.cpp \
 		../../src/nmsDB.cpp \
 		../../src/nmsMainWindow.cpp \
-		../../src/EventLoggerLED.cpp \
+		../../src/EventLoggerStatusLED.cpp \
 		../../src/crc32.c
 QMAKE_TARGET  = EventLogger
 DESTDIR       = ../../bin/
@@ -1209,8 +1209,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt/6.8.2/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../include/nmsDBQuerys.h ../../include/nmsUDPServer.h ../../include/EventLoggerGPS.h ../../include/EventLoggerKMS.h ../../include/kavachpkthandler.h ../../include/KAVACH_PARSEPACKET.h ../../include/nmsDefines.h ../../include/nmsEnum.h ../../include/nmsQtInc.h ../../include/nmsStructs.h ../../include/nmsDB.h ../../include/nmsMainWindow.h ../../src/crc32.h ../../include/EventLoggerLED.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../src/main.cpp ../../src/EventLoggerKMS.cpp ../../src/nmsDBQuerys.cpp ../../src/EventLoggerGPS.cpp ../../src/nmsUDPServer.cpp ../../src/kavachpkthandler.cpp ../../src/KAVACH_PARSEPACKET.cpp ../../src/nmsDB.cpp ../../src/nmsMainWindow.cpp ../../src/EventLoggerLED.cpp ../../src/crc32.c $(DISTDIR)/
+	$(COPY_FILE) --parents ../../include/nmsDBQuerys.h ../../include/nmsUDPServer.h ../../include/EventLoggerGPS.h ../../include/EventLoggerKMS.h ../../include/kavachpkthandler.h ../../include/KAVACH_PARSEPACKET.h ../../include/nmsDefines.h ../../include/nmsEnum.h ../../include/nmsQtInc.h ../../include/nmsStructs.h ../../include/nmsDB.h ../../include/nmsMainWindow.h ../../src/crc32.h ../../include/EventLoggerStatusLED.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../src/main.cpp ../../src/EventLoggerKMS.cpp ../../src/nmsDBQuerys.cpp ../../src/EventLoggerGPS.cpp ../../src/nmsUDPServer.cpp ../../src/kavachpkthandler.cpp ../../src/KAVACH_PARSEPACKET.cpp ../../src/nmsDB.cpp ../../src/nmsMainWindow.cpp ../../src/EventLoggerStatusLED.cpp ../../src/crc32.c $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1242,9 +1242,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /opt/Qt/6.8.2/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++1z -Wall -Wextra -fPIC -dM -E -o moc_predefs.h /opt/Qt/6.8.2/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_nmsDBQuerys.cpp moc_nmsUDPServer.cpp moc_EventLoggerGPS.cpp moc_EventLoggerKMS.cpp moc_kavachpkthandler.cpp moc_KAVACH_PARSEPACKET.cpp moc_nmsDB.cpp moc_nmsMainWindow.cpp moc_EventLoggerLED.cpp
+compiler_moc_header_make_all: moc_nmsDBQuerys.cpp moc_nmsUDPServer.cpp moc_EventLoggerGPS.cpp moc_EventLoggerKMS.cpp moc_kavachpkthandler.cpp moc_KAVACH_PARSEPACKET.cpp moc_nmsDB.cpp moc_nmsMainWindow.cpp moc_EventLoggerStatusLED.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_nmsDBQuerys.cpp moc_nmsUDPServer.cpp moc_EventLoggerGPS.cpp moc_EventLoggerKMS.cpp moc_kavachpkthandler.cpp moc_KAVACH_PARSEPACKET.cpp moc_nmsDB.cpp moc_nmsMainWindow.cpp moc_EventLoggerLED.cpp
+	-$(DEL_FILE) moc_nmsDBQuerys.cpp moc_nmsUDPServer.cpp moc_EventLoggerGPS.cpp moc_EventLoggerKMS.cpp moc_kavachpkthandler.cpp moc_KAVACH_PARSEPACKET.cpp moc_nmsDB.cpp moc_nmsMainWindow.cpp moc_EventLoggerStatusLED.cpp
 moc_nmsDBQuerys.cpp: ../../include/nmsDBQuerys.h \
 		../../include/nmsQtInc.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication \
@@ -2124,9 +2124,6 @@ moc_EventLoggerGPS.cpp: ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qhash.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/q23utility.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimer \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimer.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasictimer.h \
 		moc_predefs.h \
 		/opt/Qt/6.8.2/gcc_64/libexec/moc
 	/opt/Qt/6.8.2/gcc_64/libexec/moc $(DEFINES) --include /home/sana/Projects/BHEL/EventLogger/build/Desktop_Qt_6_8_2-Debug/moc_predefs.h -I/opt/Qt/6.8.2/gcc_64/mkspecs/linux-g++ -I/home/sana/Projects/BHEL/EventLogger -I/home/sana/Projects/BHEL/EventLogger/src -I/home/sana/Projects/BHEL/EventLogger/include -I/home/sana/Projects/BHEL/include -I/opt/Qt/6.8.2/gcc_64/include -I/opt/Qt/6.8.2/gcc_64/include/QtSerialPort -I/opt/Qt/6.8.2/gcc_64/include/QtNetwork -I/opt/Qt/6.8.2/gcc_64/include/QtSql -I/opt/Qt/6.8.2/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../include/EventLoggerGPS.h -o moc_EventLoggerGPS.cpp
@@ -3999,12 +3996,12 @@ moc_nmsMainWindow.cpp: ../../include/nmsMainWindow.h \
 		../../include/KAVACH_PARSEPACKET.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QVector \
 		../../include/EventLoggerGPS.h \
-		../../include/EventLoggerLED.h \
+		../../include/EventLoggerStatusLED.h \
 		moc_predefs.h \
 		/opt/Qt/6.8.2/gcc_64/libexec/moc
 	/opt/Qt/6.8.2/gcc_64/libexec/moc $(DEFINES) --include /home/sana/Projects/BHEL/EventLogger/build/Desktop_Qt_6_8_2-Debug/moc_predefs.h -I/opt/Qt/6.8.2/gcc_64/mkspecs/linux-g++ -I/home/sana/Projects/BHEL/EventLogger -I/home/sana/Projects/BHEL/EventLogger/src -I/home/sana/Projects/BHEL/EventLogger/include -I/home/sana/Projects/BHEL/include -I/opt/Qt/6.8.2/gcc_64/include -I/opt/Qt/6.8.2/gcc_64/include/QtSerialPort -I/opt/Qt/6.8.2/gcc_64/include/QtNetwork -I/opt/Qt/6.8.2/gcc_64/include/QtSql -I/opt/Qt/6.8.2/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../include/nmsMainWindow.h -o moc_nmsMainWindow.cpp
 
-moc_EventLoggerLED.cpp: ../../include/EventLoggerLED.h \
+moc_EventLoggerStatusLED.cpp: ../../include/EventLoggerStatusLED.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QObject \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobject.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobjectdefs.h \
@@ -4109,10 +4106,13 @@ moc_EventLoggerLED.cpp: ../../include/EventLoggerLED.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimer \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasictimer.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QString \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QThread \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qthread.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdeadlinetimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qelapsedtimer.h \
 		moc_predefs.h \
 		/opt/Qt/6.8.2/gcc_64/libexec/moc
-	/opt/Qt/6.8.2/gcc_64/libexec/moc $(DEFINES) --include /home/sana/Projects/BHEL/EventLogger/build/Desktop_Qt_6_8_2-Debug/moc_predefs.h -I/opt/Qt/6.8.2/gcc_64/mkspecs/linux-g++ -I/home/sana/Projects/BHEL/EventLogger -I/home/sana/Projects/BHEL/EventLogger/src -I/home/sana/Projects/BHEL/EventLogger/include -I/home/sana/Projects/BHEL/include -I/opt/Qt/6.8.2/gcc_64/include -I/opt/Qt/6.8.2/gcc_64/include/QtSerialPort -I/opt/Qt/6.8.2/gcc_64/include/QtNetwork -I/opt/Qt/6.8.2/gcc_64/include/QtSql -I/opt/Qt/6.8.2/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../include/EventLoggerLED.h -o moc_EventLoggerLED.cpp
+	/opt/Qt/6.8.2/gcc_64/libexec/moc $(DEFINES) --include /home/sana/Projects/BHEL/EventLogger/build/Desktop_Qt_6_8_2-Debug/moc_predefs.h -I/opt/Qt/6.8.2/gcc_64/mkspecs/linux-g++ -I/home/sana/Projects/BHEL/EventLogger -I/home/sana/Projects/BHEL/EventLogger/src -I/home/sana/Projects/BHEL/EventLogger/include -I/home/sana/Projects/BHEL/include -I/opt/Qt/6.8.2/gcc_64/include -I/opt/Qt/6.8.2/gcc_64/include/QtSerialPort -I/opt/Qt/6.8.2/gcc_64/include/QtNetwork -I/opt/Qt/6.8.2/gcc_64/include/QtSql -I/opt/Qt/6.8.2/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../include/EventLoggerStatusLED.h -o moc_EventLoggerStatusLED.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -4259,6 +4259,9 @@ main.o: ../../src/main.cpp /opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication 
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qpromise.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qvariant.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/q23utility.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasictimer.h \
 		../../include/nmsUDPServer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QObject \
 		../../include/nmsQtInc.h \
@@ -4281,7 +4284,6 @@ main.o: ../../src/main.cpp /opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication 
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMutex \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qassociativeiterable.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qatomicscopedvaluerollback.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasictimer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbitarray.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbuffer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qiodevice.h \
@@ -4304,7 +4306,6 @@ main.o: ../../src/main.cpp /opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication 
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qchronotimer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qproperty.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qpropertyprivate.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcollator.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcommandlineoption.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcommandlineparser.h \
@@ -4412,7 +4413,6 @@ main.o: ../../src/main.cpp /opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication 
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QProcess \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRegularExpression \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QStorageInfo \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimer \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QThread \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTime \
 		/opt/Qt/6.8.2/gcc_64/include/QtNetwork/QtNetwork \
@@ -4511,7 +4511,7 @@ main.o: ../../src/main.cpp /opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication 
 		../../include/KAVACH_PARSEPACKET.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QVector \
 		../../include/EventLoggerGPS.h \
-		../../include/EventLoggerLED.h
+		../../include/EventLoggerStatusLED.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../src/main.cpp
 
 EventLoggerKMS.o: ../../src/EventLoggerKMS.cpp ../../include/EventLoggerKMS.h \
@@ -5384,9 +5384,6 @@ EventLoggerGPS.o: ../../src/EventLoggerGPS.cpp ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qhash.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/q23utility.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimer \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimer.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasictimer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDebug \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimeZone \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimezone.h \
@@ -7260,10 +7257,10 @@ nmsMainWindow.o: ../../src/nmsMainWindow.cpp ../../include/nmsMainWindow.h \
 		../../include/KAVACH_PARSEPACKET.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QVector \
 		../../include/EventLoggerGPS.h \
-		../../include/EventLoggerLED.h
+		../../include/EventLoggerStatusLED.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nmsMainWindow.o ../../src/nmsMainWindow.cpp
 
-EventLoggerLED.o: ../../src/EventLoggerLED.cpp ../../include/EventLoggerLED.h \
+EventLoggerStatusLED.o: ../../src/EventLoggerStatusLED.cpp ../../include/EventLoggerStatusLED.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QObject \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobject.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobjectdefs.h \
@@ -7368,7 +7365,10 @@ EventLoggerLED.o: ../../src/EventLoggerLED.cpp ../../include/EventLoggerLED.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimer \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasictimer.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QString \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QThread \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qthread.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdeadlinetimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qelapsedtimer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDebug \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdebug.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtextstream.h \
@@ -7381,11 +7381,24 @@ EventLoggerLED.o: ../../src/EventLoggerLED.cpp ../../include/EventLoggerLED.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qset.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qhash.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qvarlengtharray.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSettings \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsettings.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcoreapplication.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qeventloop.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qnativeinterface.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcoreapplication_platform.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qfuture.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qfutureinterface.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtsan_impl.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qresultstore.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qfuture_impl.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qthreadpool.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qrunnable.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qexception.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qpromise.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qvariant.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/q23utility.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EventLoggerLED.o ../../src/EventLoggerLED.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EventLoggerStatusLED.o ../../src/EventLoggerStatusLED.cpp
 
 crc32.o: ../../src/crc32.c ../../src/crc32.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o crc32.o ../../src/crc32.c
@@ -7414,8 +7427,8 @@ moc_nmsDB.o: moc_nmsDB.cpp
 moc_nmsMainWindow.o: moc_nmsMainWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_nmsMainWindow.o moc_nmsMainWindow.cpp
 
-moc_EventLoggerLED.o: moc_EventLoggerLED.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_EventLoggerLED.o moc_EventLoggerLED.cpp
+moc_EventLoggerStatusLED.o: moc_EventLoggerStatusLED.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_EventLoggerStatusLED.o moc_EventLoggerStatusLED.cpp
 
 ####### Install
 

@@ -13,20 +13,48 @@ nmsMainWindow::nmsMainWindow(QString strCFGFilePath, QObject *pcParent)
     m_bNMSAppDown(false),
     m_pcVCTimer(nullptr),
     m_pcVCSock(nullptr),m_pcFaultpkt(nullptr),
-    m_eventLoggerLED(nullptr)
+    m_pcStatusLED(nullptr),
+    m_pcUDPServer(nullptr)
 {
+    qDebug() << "[INIT] STEP 1 - InitCFGFile";
     InitCFGFile();
+
+    qDebug() << "[INIT] STEP 2 - Init";
     Init();
+
+    qDebug() << "[INIT] STEP 3 - InitUDP";
     InitUDP();
+
+    qDebug() << "[INIT] STEP 4 - InitDB";
     InitDB();
+
+    qDebug() << "[INIT] STEP 5 - InitnmsDBConnections";
     InitnmsDBConnections();
+
+    qDebug() << "[INIT] STEP 6 - ComputeEVLAppCRC";
     ComputeEVLAppCRC();
+
+    qDebug() << "[INIT] STEP 7 - InitLogFile";
     InitLogFile();
+
+    qDebug() << "[INIT] STEP 8 - InitKavachParsePkt";
     InitKavachParsePkt();
+
+    qDebug() << "[INIT] STEP 9 - InitNMSForwarder";
     InitNMSForwarder();
+
+    qDebug() << "[INIT] STEP 10 - InitGSMRelay";
     InitGSMRelay();
+
+    qDebug() << "[INIT] STEP 11 - InitNMSPingThread";
     InitNMSPingThread();
+
+    qDebug() << "[INIT] STEP 12 - InitVCHeartbeat";
     InitVCHeartbeat();
+
+    qDebug() << "======================================";
+    qDebug() << "[INIT] ALL INITIALIZATION COMPLETED";
+    qDebug() << "======================================";
 }
 
 nmsMainWindow::~nmsMainWindow()
@@ -36,7 +64,17 @@ nmsMainWindow::~nmsMainWindow()
 
 void nmsMainWindow::Init()
 {
-    m_eventLoggerLED =new EventLoggerLED(m_strCfgFilePath,this);
+    m_pcStatusLED = new EventLoggerStatusLED(this);
+
+    qDebug() << "[MAIN] EventLoggerStatusLED object created:"
+             << m_pcStatusLED;
+
+    connect(this,
+            &nmsMainWindow::SigVCOMPingStatus,
+            m_pcStatusLED,
+            &EventLoggerStatusLED::SetVCIPStatus);
+
+    qDebug() << "[MAIN] VC IP LED signal connected";
 }
 
 void nmsMainWindow::ProcessFieldInputmessage(QHostAddress senderIP, QByteArray datagram)
@@ -1201,6 +1239,23 @@ void nmsMainWindow::InitGSMRelay()
             << m_strRelayIP << ":" << m_usRelayPort;
 }
 
+void nmsMainWindow::StartStatusLED()
+{
+    qDebug() << "======================================";
+    qDebug() << "[MAIN] StartStatusLED() called";
+    qDebug() << "[MAIN] Status LED object =" << m_pcStatusLED;
+    qDebug() << "======================================";
+
+    if (m_pcStatusLED)
+    {
+        m_pcStatusLED->Start();
+    }
+    else
+    {
+        qWarning() << "[MAIN] m_pcStatusLED is NULL";
+    }
+}
+
 QString nmsMainWindow::GetRIUEventData(uint32_t usEvntCode, uint16_t usStnID)
 {
     qDebug()<< "EventData " << usEvntCode;
@@ -1308,34 +1363,44 @@ QString nmsMainWindow::GetRIUEventData(uint32_t usEvntCode, uint16_t usStnID)
 }
 void nmsMainWindow::InitUDP()
 {
-    nmsUDPServer *pcUdpServer = new nmsUDPServer(m_strCfgFilePath);
+    m_pcUDPServer =new nmsUDPServer(m_strCfgFilePath, this);
 
     EventLogger *m_pcDataloggps = new EventLogger();
 
 
-    connect(pcUdpServer->m_pcKavachPktHndlr, SIGNAL(SigNewFaultPacket(QHostAddress, quint16,QByteArray)),
+    connect(m_pcUDPServer,
+            &nmsUDPServer::SigEventDataReceived,
+            m_pcStatusLED,
+            &EventLoggerStatusLED::EventDataReceived);
+
+    connect(m_pcUDPServer->m_pcKavachPktHndlr, SIGNAL(SigNewFaultPacket(QHostAddress, quint16,QByteArray)),
             this, SLOT(SlotNewFaultPacket(QHostAddress, quint16,QByteArray)));
 
-    connect(pcUdpServer->m_pcKavachPktHndlr,SIGNAL(SigPreviousFaultInfo()),
+    connect(m_pcUDPServer->m_pcKavachPktHndlr,SIGNAL(SigPreviousFaultInfo()),
             this,SLOT(SlotPreviousFaultInfo()));
 
     connect(this,SIGNAL(SigSendAckNMStoKavach(QHostAddress, quint16,stNMStoKavach*)),
-            pcUdpServer,SLOT(SlotSendAckEventLoggertoKavach(QHostAddress, quint16,stNMStoKavach*)));
+            m_pcUDPServer,SLOT(SlotSendAckEventLoggertoKavach(QHostAddress, quint16,stNMStoKavach*)));
 
     connect(m_pcDataloggps, SIGNAL(gpsUTCReady(QDateTime)),
-            pcUdpServer, SLOT(SlotUpdateGPSTime(QDateTime)));
+            m_pcUDPServer, SLOT(SlotUpdateGPSTime(QDateTime)));
 
     connect(m_pcDataloggps, &EventLogger::gpsUTCReady, this, &nmsMainWindow::OnGPSUTCReady);
     connect(m_pcDataloggps, &EventLogger::gpsSpeedReady, this, &nmsMainWindow::OnGPSSpeedReady);
-    // connect(m_pcDataloggps, &EventLogger::gpsFixStatusReady, this, &nmsMainWindow::OnGPSFixStatusReady);
+    connect(m_pcDataloggps, &EventLogger::gpsFixStatusReady, this, &nmsMainWindow::OnGPSFixStatusReady);
+    connect(m_pcDataloggps,
+            &EventLogger::gpsFixStatusReady,
+            m_pcStatusLED,
+            &EventLoggerStatusLED::SetGPSStatus,
+            Qt::QueuedConnection);
 
     // Wire GPS position for 0x28 packet building
     connect(m_pcDataloggps, SIGNAL(gpsPositionReady(double,double,bool)),
             this,           SLOT(SlotGPSPosition(double,double,bool)));
 
-    connect(pcUdpServer, SIGNAL(SigStationDisConnected(QString,bool)),this,SLOT(SlotStationconnStatus(QString,bool)));
+    connect(m_pcUDPServer, SIGNAL(SigStationDisConnected(QString,bool)),this,SLOT(SlotStationconnStatus(QString,bool)));
 
-    connect(pcUdpServer,SIGNAL(SigConnected(QString,bool)),this,SLOT(SlotStationconnStatus(QString,bool)));
+    connect(m_pcUDPServer,SIGNAL(SigConnected(QString,bool)),this,SLOT(SlotStationconnStatus(QString,bool)));
 
     //  m_pcDataloggps->startGPS();
     QThread *pcThread = new QThread ();
@@ -1346,46 +1411,125 @@ void nmsMainWindow::InitUDP()
     // nmsUDPServer::InitKMS() has already created EventLoggerKMS, bound
     // port 4447, and wired the UDP ↔ GSM transport internally.
     // Here we grab the pointer and connect the diagnostic/log signals.
-    if (pcUdpServer->m_pcKMS)
+    // if (m_pcUDPServer->m_pcKMS)
+    // {
+    //     m_pcKMS = m_pcUDPServer->m_pcKMS;
+    //     InitKMSConnections();
+
+    //     connect(m_pcKMS,
+    //             &EventLoggerKMS::SigGSMHealthStatus,
+    //             m_pcStatusLED,
+    //             &EventLoggerStatusLED::SetGSMStatus);
+
+    // }
+    // else
+    // {
+    //     qCritical() << "[MainWindow] KMS not initialised — check Config.cfg [KMS] and GSM port";
+    // }
+}
+
+void nmsMainWindow::StartKMS()
+{
+    qDebug() << "========================================";
+    qDebug() << "[MAIN] StartKMS()";
+    qDebug() << "========================================";
+
+    if (!m_pcUDPServer)
     {
-        m_pcKMS = pcUdpServer->m_pcKMS;
-        InitKMSConnections();
+        qCritical() << "[MAIN] UDP server is NULL";
+        return;
     }
-    else
+
+    m_pcUDPServer->StartKMS();
+
+    m_pcKMS = m_pcUDPServer->m_pcKMS;
+
+    if (!m_pcKMS)
     {
-        qCritical() << "[MainWindow] KMS not initialised — check Config.cfg [KMS] and GSM port";
+        qCritical()
+        << "[MAIN] KMS initialization failed";
+        return;
     }
+
+    qDebug()
+        << "[MAIN] KMS object:"
+        << m_pcKMS;
+
+    InitKMSConnections();
+
+    connect(m_pcKMS,
+            &EventLoggerKMS::SigGSMHealthStatus,
+            m_pcStatusLED,
+            &EventLoggerStatusLED::SetGSMStatus,
+            Qt::UniqueConnection);
+
+    qDebug()
+        << "[MAIN] KMS connections established";
 }
 
 void nmsMainWindow::InitDB()
 {
     m_ocCfgSettings->beginGroup("Database");
 
-    QString strDBip        = m_ocCfgSettings->value("DB_IP").toString();
-    QString strDBPort      = m_ocCfgSettings->value("DB_Port").toString();
-    QString strDBName      = m_ocCfgSettings->value("DB_Name").toString();
-    QString strDBUsrName   = m_ocCfgSettings->value("DB_Username").toString();
-    QString strDBPassword  = m_ocCfgSettings->value("DB_Password").toString();
+    QString strDBip =
+        m_ocCfgSettings->value("DB_IP").toString();
+
+    QString strDBPort =
+        m_ocCfgSettings->value("DB_Port").toString();
+
+    QString strDBName =
+        m_ocCfgSettings->value("DB_Name").toString();
+
+    QString strDBUsrName =
+        m_ocCfgSettings->value("DB_Username").toString();
+
+    QString strDBPassword =
+        m_ocCfgSettings->value("DB_Password").toString();
 
     m_ocCfgSettings->endGroup();
 
-    qDebug() << "DB" << strDBip << strDBPort << strDBName << strDBUsrName;
+    qDebug() << "======================================";
+    qDebug() << "[DB] Initializing database";
+    qDebug() << "[DB] IP       :" << strDBip;
+    qDebug() << "[DB] Port     :" << strDBPort;
+    qDebug() << "[DB] Database :" << strDBName;
+    qDebug() << "[DB] Username :" << strDBUsrName;
+    qDebug() << "======================================";
 
-    m_pcDB = new NMSDB (strDBip,strDBPort.toInt(), strDBName,
-                       strDBUsrName, strDBPassword,this);
+    m_pcDB = new NMSDB(strDBip,
+                       strDBPort.toInt(),
+                       strDBName,
+                       strDBUsrName,
+                       strDBPassword,
+                       this);
 
-    m_pcDB->Connect();
-
-    if(m_pcDB->IsConnected())
+    if (!m_pcDB)
     {
-        qDebug() << "Database Connected Successfully";
+        qWarning() << "[DB] Failed to create NMSDB object";
+        return;
     }
-    else
-    {
-        qDebug() << "Database Connection Failed";
-    }
+
+    qDebug() << "[DB] NMSDB object created:"
+             << m_pcDB;
+
+    /*
+     * IMPORTANT:
+     *
+     * Do NOT call m_pcDB->Connect() here.
+     *
+     * Connect() is blocking the main Qt thread.
+     */
 
     m_pcDB->start();
+
+    qDebug() << "[DB] NMSDB thread started";
+
+    /*
+     * Do not call IsConnected() immediately here.
+     *
+     * The DB thread has just been started, so the connection
+     * result is not available yet.
+     */
 }
 
 void nmsMainWindow::InitLogFile()
@@ -3817,10 +3961,14 @@ void nmsMainWindow::OnGPSSpeedReady(qint32 speedMMps)
     m_iLastGroundSpeed = speedMMps;
 }
 
-void nmsMainWindow::OnGPSFixStatusReady(quint8 fixStatus)
+void nmsMainWindow::OnGPSFixStatusReady(
+    quint8 fixStatus)
 {
-    m_ucLastFixStatus = fixStatus;
-
+    if (m_pcStatusLED)
+    {
+        m_pcStatusLED->SetGPSStatus(
+            fixStatus);
+    }
 }
 
 // ============================================================

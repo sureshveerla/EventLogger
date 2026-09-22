@@ -55,6 +55,8 @@ static constexpr auto qt_meta_stringdata_ZN14EventLoggerKMSE = QtMocHelpers::str
     "SigKMSPacketReceived",
     "msgType",
     "SigKMSPacketSent",
+    "SigGSMHealthStatus",
+    "status",
     "SlotHandleUDPFromVC",
     "datagram",
     "senderIP",
@@ -73,25 +75,26 @@ Q_CONSTINIT static const uint qt_meta_data_ZN14EventLoggerKMSE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       5,       // signalCount
+       6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    3,   68,    2, 0x06,    1 /* Public */,
-       7,    1,   75,    2, 0x06,    5 /* Public */,
-       9,    2,   78,    2, 0x06,    7 /* Public */,
-      13,    2,   83,    2, 0x06,   10 /* Public */,
-      15,    2,   88,    2, 0x06,   13 /* Public */,
+       1,    3,   74,    2, 0x06,    1 /* Public */,
+       7,    1,   81,    2, 0x06,    5 /* Public */,
+       9,    2,   84,    2, 0x06,    7 /* Public */,
+      13,    2,   89,    2, 0x06,   10 /* Public */,
+      15,    2,   94,    2, 0x06,   13 /* Public */,
+      16,    1,   99,    2, 0x06,   16 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      16,    3,   93,    2, 0x0a,   16 /* Public */,
-      20,    0,  100,    2, 0x0a,   20 /* Public */,
-      21,    0,  101,    2, 0x08,   21 /* Private */,
-      22,    0,  102,    2, 0x08,   22 /* Private */,
+      18,    3,  102,    2, 0x0a,   18 /* Public */,
+      22,    0,  109,    2, 0x0a,   22 /* Public */,
+      23,    0,  110,    2, 0x08,   23 /* Private */,
+      24,    0,  111,    2, 0x08,   24 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QByteArray, 0x80000000 | 4, QMetaType::UShort,    3,    5,    6,
@@ -99,9 +102,10 @@ Q_CONSTINIT static const uint qt_meta_data_ZN14EventLoggerKMSE[] = {
     QMetaType::Void, QMetaType::Int, 0x80000000 | 11,   10,   12,
     QMetaType::Void, QMetaType::UChar, QMetaType::QByteArray,   14,    3,
     QMetaType::Void, QMetaType::UChar, QMetaType::QByteArray,   14,    3,
+    QMetaType::Void, QMetaType::Bool,   17,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QByteArray, 0x80000000 | 4, QMetaType::UShort,   17,   18,   19,
+    QMetaType::Void, QMetaType::QByteArray, 0x80000000 | 4, QMetaType::UShort,   19,   20,   21,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -138,6 +142,9 @@ Q_CONSTINIT const QMetaObject EventLoggerKMS::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<quint8, std::false_type>,
         QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>,
+        // method 'SigGSMHealthStatus'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
         // method 'SlotHandleUDPFromVC'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>,
@@ -163,10 +170,11 @@ void EventLoggerKMS::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 2: _t->SigCSQUpdated((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<KMSSignalQuality>>(_a[2]))); break;
         case 3: _t->SigKMSPacketReceived((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[2]))); break;
         case 4: _t->SigKMSPacketSent((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[2]))); break;
-        case 5: _t->SlotHandleUDPFromVC((*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[3]))); break;
-        case 6: _t->SlotPollCSQ(); break;
-        case 7: _t->SlotHandleGSMData(); break;
-        case 8: _t->SlotBlinkGSMLed(); break;
+        case 5: _t->SigGSMHealthStatus((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
+        case 6: _t->SlotHandleUDPFromVC((*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[3]))); break;
+        case 7: _t->SlotPollCSQ(); break;
+        case 8: _t->SlotHandleGSMData(); break;
+        case 9: _t->SlotBlinkGSMLed(); break;
         default: ;
         }
     }
@@ -207,6 +215,13 @@ void EventLoggerKMS::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
                 return;
             }
         }
+        {
+            using _q_method_type = void (EventLoggerKMS::*)(bool );
+            if (_q_method_type _q_method = &EventLoggerKMS::SigGSMHealthStatus; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+                *result = 5;
+                return;
+            }
+        }
     }
 }
 
@@ -229,14 +244,14 @@ int EventLoggerKMS::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 10)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 9;
+        _id -= 10;
     }
     return _id;
 }
@@ -274,5 +289,12 @@ void EventLoggerKMS::SigKMSPacketSent(quint8 _t1, QByteArray _t2)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 4, _a);
+}
+
+// SIGNAL 5
+void EventLoggerKMS::SigGSMHealthStatus(bool _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 5, _a);
 }
 QT_WARNING_POP

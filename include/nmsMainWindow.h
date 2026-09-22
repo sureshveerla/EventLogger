@@ -8,8 +8,8 @@
 #include <arpa/inet.h>
 #include "KAVACH_PARSEPACKET.h"
 #include "EventLoggerGPS.h"
+#include "EventLoggerStatusLED.h"
 #include "EventLoggerKMS.h"      // ICD §D — KMS gateway
-#include "EventLoggerLED.h"
 #include <QThread>
 #include <QTimer>
 #include <QProcess>
@@ -17,6 +17,7 @@
 #include <QDateTime>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <nmsUDPServer.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -48,6 +49,10 @@ public:
     void ProcessS2SPackets(QByteArray datagram);
 
     void InitGSMRelay();
+
+    void StartStatusLED();
+
+    void StartKMS();
 
 
 private slots:
@@ -186,7 +191,8 @@ private:
     uint16_t m_usSeqNum = 0;
     QString m_strCfgFilePath;
     EventLoggerKMS *m_pcKMS;
-    EventLoggerLED *m_eventLoggerLED;
+    EventLoggerStatusLED *m_pcStatusLED;
+    nmsUDPServer *m_pcUDPServer;
   //  EventLoggerGPIO *m_pcGPIO = nullptr;
     QString m_strSMSpwd,m_strRmtPwd;
     QSettings *m_ocCfgSettings;
@@ -270,7 +276,6 @@ private:
     static quint32 EncodeLatLon(double decDeg, int degBits, int minBits, int secBits);
 
     void InitVCHeartbeat();   // called from constructor
-
     void Init();
     void InitKMSConnections();
     void InitUDP();

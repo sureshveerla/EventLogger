@@ -2319,6 +2319,6 @@ void EventLoggerKMS::EvaluateAndUpdateGSMLed()
         qWarning() << "[KMS][LED] Health FAULT -> BLINK. Failing checks:"
                    << failed.join(", ");
     }
-
+    emit SigGSMHealthStatus(m_bGSMOverallOk);
     CommandGSMLed(m_bGSMOverallOk);
 }

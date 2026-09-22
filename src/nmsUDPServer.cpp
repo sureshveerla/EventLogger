@@ -1,17 +1,31 @@
 #include "include/nmsUDPServer.h"
 
-nmsUDPServer::nmsUDPServer(QString strCfgFilePath, QObject *pcParent)
-    :QObject(pcParent),m_ocaddressList(NULL),m_strCfgFilPath(strCfgFilePath),
-    m_pcKMS(nullptr), m_pcKMSSocket(nullptr)
+nmsUDPServer::nmsUDPServer(QString strCfgFilePath,
+                           QObject *pcParent)
+    : QObject(pcParent),
+    m_ocaddressList(NULL),
+    m_strCfgFilPath(strCfgFilePath),
+    m_pcKMS(nullptr),
+    m_pcKMSSocket(nullptr)
 {
+    qDebug() << "[UDP] nmsUDPServer constructor START";
+
     Init();
+
+    qDebug() << "[UDP] Init() completed";
+
     m_pcClntSock = new QUdpSocket();
 
     m_pcKavachPktHndlr = new KavachPktHandler;
-    m_pcKavachPktHndlr->start();
-    connect(m_pcKavachPktHndlr,SIGNAL(SigStationConnStatus()),this,SLOT(StationConnStatus()));
 
-    InitKMS(); // ICD §D — KMS gateway on port 4447
+    m_pcKavachPktHndlr->start();
+
+    connect(m_pcKavachPktHndlr,
+            SIGNAL(SigStationConnStatus()),
+            this,
+            SLOT(StationConnStatus()));
+
+    qDebug() << "[UDP] nmsUDPServer constructor COMPLETED";
 }
 
 nmsUDPServer::~nmsUDPServer()
@@ -42,6 +56,19 @@ bool nmsUDPServer::SendPacketViaGSM(const QByteArray &datagram)
         datagram,
         m_strGSMRelayIP,
         m_usGSMRelayPort);
+}
+
+void nmsUDPServer::StartKMS()
+{
+    qDebug() << "========================================";
+    qDebug() << "[KMS] StartKMS() STARTED";
+    qDebug() << "========================================";
+
+    InitKMS();
+
+    qDebug() << "========================================";
+    qDebug() << "[KMS] StartKMS() FINISHED";
+    qDebug() << "========================================";
 }
 
 void nmsUDPServer::Init()
@@ -336,6 +363,7 @@ void nmsUDPServer::SlotOnReadyRead(QUdpSocket *pcsocket)
             sender, m_usSenderPort, datagram);
 
         emit SigConnected(m_strSenderIP, true);
+        emit SigEventDataReceived();
 
         qDebug() << "Received Packet Rx:"
                  << datagram.toHex().toUpper()

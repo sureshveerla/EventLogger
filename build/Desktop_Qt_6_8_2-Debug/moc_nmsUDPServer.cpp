@@ -50,6 +50,7 @@ static constexpr auto qt_meta_stringdata_ZN12nmsUDPServerE = QtMocHelpers::strin
     "strSenderIP",
     "bstatus",
     "SigConnected",
+    "SigEventDataReceived",
     "SlotOnReadyRead",
     "QUdpSocket*",
     "pcsocket",
@@ -80,40 +81,42 @@ Q_CONSTINIT static const uint qt_meta_data_ZN12nmsUDPServerE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       3,       // signalCount
+       4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    3,   74,    2, 0x06,    1 /* Public */,
-       7,    2,   81,    2, 0x06,    5 /* Public */,
-      10,    2,   86,    2, 0x06,    8 /* Public */,
+       1,    3,   80,    2, 0x06,    1 /* Public */,
+       7,    2,   87,    2, 0x06,    5 /* Public */,
+      10,    2,   92,    2, 0x06,    8 /* Public */,
+      11,    0,   97,    2, 0x06,   11 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      11,    1,   91,    2, 0x08,   11 /* Private */,
-      14,    0,   94,    2, 0x08,   13 /* Private */,
-      15,    3,   95,    2, 0x08,   14 /* Private */,
-      19,    1,  102,    2, 0x0a,   18 /* Public */,
-      21,    4,  105,    2, 0x0a,   20 /* Public */,
-      26,    0,  114,    2, 0x0a,   25 /* Public */,
-      27,    3,  115,    2, 0x0a,   26 /* Public */,
+      12,    1,   98,    2, 0x08,   12 /* Private */,
+      15,    0,  101,    2, 0x08,   14 /* Private */,
+      16,    3,  102,    2, 0x08,   15 /* Private */,
+      20,    1,  109,    2, 0x0a,   19 /* Public */,
+      22,    4,  112,    2, 0x0a,   21 /* Public */,
+      27,    0,  121,    2, 0x0a,   26 /* Public */,
+      28,    3,  122,    2, 0x0a,   27 /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, QMetaType::QByteArray,    4,    5,    6,
     QMetaType::Void, QMetaType::QString, QMetaType::Bool,    8,    9,
     QMetaType::Void, QMetaType::QString, QMetaType::Bool,    8,    9,
+    QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 12,   13,
+    QMetaType::Void, 0x80000000 | 13,   14,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QByteArray, 0x80000000 | 3, QMetaType::UShort,   16,   17,   18,
-    QMetaType::Void, QMetaType::QDateTime,   20,
-    QMetaType::Void, 0x80000000 | 12, 0x80000000 | 3, QMetaType::UShort, QMetaType::QByteArray,   22,   23,   24,   25,
+    QMetaType::Void, QMetaType::QByteArray, 0x80000000 | 3, QMetaType::UShort,   17,   18,   19,
+    QMetaType::Void, QMetaType::QDateTime,   21,
+    QMetaType::Void, 0x80000000 | 13, 0x80000000 | 3, QMetaType::UShort, QMetaType::QByteArray,   23,   24,   25,   26,
     QMetaType::QDateTime,
-    QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, 0x80000000 | 28,    4,    5,   29,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, 0x80000000 | 29,    4,    5,   30,
 
        0        // eod
 };
@@ -140,6 +143,8 @@ Q_CONSTINIT const QMetaObject nmsUDPServer::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         QtPrivate::TypeAndForceComplete<bool, std::false_type>,
+        // method 'SigEventDataReceived'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'SlotOnReadyRead'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QUdpSocket *, std::false_type>,
@@ -178,28 +183,29 @@ void nmsUDPServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 0: _t->SigNewFaultPacket((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[3]))); break;
         case 1: _t->SigStationDisConnected((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
         case 2: _t->SigConnected((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
-        case 3: _t->SlotOnReadyRead((*reinterpret_cast< std::add_pointer_t<QUdpSocket*>>(_a[1]))); break;
-        case 4: _t->StationConnStatus(); break;
-        case 5: _t->SlotKMSSendToVC((*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[3]))); break;
-        case 6: _t->SlotUpdateGPSTime((*reinterpret_cast< std::add_pointer_t<QDateTime>>(_a[1]))); break;
-        case 7: _t->SendSNTPResponse((*reinterpret_cast< std::add_pointer_t<QUdpSocket*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[4]))); break;
-        case 8: { QDateTime _r = _t->GetGPSTime();
+        case 3: _t->SigEventDataReceived(); break;
+        case 4: _t->SlotOnReadyRead((*reinterpret_cast< std::add_pointer_t<QUdpSocket*>>(_a[1]))); break;
+        case 5: _t->StationConnStatus(); break;
+        case 6: _t->SlotKMSSendToVC((*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[3]))); break;
+        case 7: _t->SlotUpdateGPSTime((*reinterpret_cast< std::add_pointer_t<QDateTime>>(_a[1]))); break;
+        case 8: _t->SendSNTPResponse((*reinterpret_cast< std::add_pointer_t<QUdpSocket*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[4]))); break;
+        case 9: { QDateTime _r = _t->GetGPSTime();
             if (_a[0]) *reinterpret_cast< QDateTime*>(_a[0]) = std::move(_r); }  break;
-        case 9: _t->SlotSendAckEventLoggertoKavach((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<stNMStoKavach*>>(_a[3]))); break;
+        case 10: _t->SlotSendAckEventLoggertoKavach((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<stNMStoKavach*>>(_a[3]))); break;
         default: ;
         }
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
-        case 3:
+        case 4:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QUdpSocket* >(); break;
             }
             break;
-        case 7:
+        case 8:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -231,6 +237,13 @@ void nmsUDPServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
                 return;
             }
         }
+        {
+            using _q_method_type = void (nmsUDPServer::*)();
+            if (_q_method_type _q_method = &nmsUDPServer::SigEventDataReceived; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+                *result = 3;
+                return;
+            }
+        }
     }
 }
 
@@ -253,14 +266,14 @@ int nmsUDPServer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 11;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 11;
     }
     return _id;
 }
@@ -284,5 +297,11 @@ void nmsUDPServer::SigConnected(QString _t1, bool _t2)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
+}
+
+// SIGNAL 3
+void nmsUDPServer::SigEventDataReceived()
+{
+    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
 }
 QT_WARNING_POP

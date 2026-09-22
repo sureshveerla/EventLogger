@@ -23,12 +23,14 @@ public:
     QUdpSocket       *m_pcKMSSocket;  // bound to port 4447
 
     bool SendPacketViaGSM(const QByteArray &datagram);
+    void StartKMS();
 
 signals:
 
     void SigNewFaultPacket(QHostAddress senderIP, quint16 senderPort, QByteArray datagram);
     void SigStationDisConnected(QString strSenderIP,bool bstatus);
     void SigConnected(QString strSenderIP, bool bstatus);
+    void SigEventDataReceived();
 
 private slots:
 

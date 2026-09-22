@@ -230,6 +230,8 @@ signals:
     void SigKMSPacketReceived(quint8 msgType, QByteArray packet);
     void SigKMSPacketSent(quint8 msgType, QByteArray packet);
 
+    void SigGSMHealthStatus(bool status);
+
 public slots:
     // Called by UDP server when data arrives on port 4447 (from VC)
     void SlotHandleUDPFromVC(QByteArray datagram, QHostAddress senderIP, quint16 senderPort);

@@ -4,9 +4,6 @@
 #include <QDateTime>
 #include <QTimeZone>
 #include <QtMath>
-#include <QTimer>
-
-#include <gpiod.h>
 
 
 // ============================================================================
@@ -15,11 +12,7 @@
 
 EventLogger::EventLogger(QObject *parent)
     : QObject(parent),
-    m_serial(nullptr),
-    m_gpsGpioChip(nullptr),
-    m_gpsGpioLine(nullptr),
-    m_gpsLedTimer(nullptr),
-    m_gpsLedState(false)
+    m_serial(nullptr)
 {
     // ============================================================
     // GPS UART
@@ -85,66 +78,6 @@ EventLogger::EventLogger(QObject *parent)
             this,
             &EventLogger::readGPSData,
             Qt::QueuedConnection);
-
-
-    // ============================================================
-    // GPS LED GPIO
-    //
-    // SODIMM_212
-    // gpiofind SODIMM_212
-    // gpiochip1 4
-    // ============================================================
-
-    if (!initGPSLedGPIO())
-    {
-        qDebug()
-        << "[GPS GPIO] Failed to initialize SODIMM_212";
-    }
-    else
-    {
-        qDebug()
-        << "[GPS GPIO] SODIMM_212 initialized";
-
-        qDebug()
-            << "[GPS GPIO] gpiochip1 offset 4";
-
-
-        // --------------------------------------------------------
-        // Initially NO FIX
-        // Therefore start blinking
-        // --------------------------------------------------------
-
-        m_gpsLedState = false;
-
-        setGPSLed(false);
-
-
-        // --------------------------------------------------------
-        // Create LED timer
-        // --------------------------------------------------------
-
-        m_gpsLedTimer = new QTimer(this);
-
-        m_gpsLedTimer->setInterval(500);
-
-
-        connect(m_gpsLedTimer,
-                &QTimer::timeout,
-                this,
-                &EventLogger::toggleGPSLed);
-
-
-        // --------------------------------------------------------
-        // Start blinking until GPS fix is available
-        // --------------------------------------------------------
-
-        m_gpsLedTimer->start();
-
-
-        qDebug()
-            << "[GPS GPIO] Initial state:"
-            << "NO FIX -> BLINK";
-    }
 }
 
 
@@ -154,36 +87,6 @@ EventLogger::EventLogger(QObject *parent)
 
 EventLogger::~EventLogger()
 {
-    // ============================================================
-    // Stop GPS LED timer
-    // ============================================================
-
-    if (m_gpsLedTimer)
-    {
-        m_gpsLedTimer->stop();
-    }
-
-
-    // ============================================================
-    // Release GPIO
-    // ============================================================
-
-    if (m_gpsGpioLine)
-    {
-        gpiod_line_release(m_gpsGpioLine);
-
-        m_gpsGpioLine = nullptr;
-    }
-
-
-    if (m_gpsGpioChip)
-    {
-        gpiod_chip_close(m_gpsGpioChip);
-
-        m_gpsGpioChip = nullptr;
-    }
-
-
     // ============================================================
     // Close GPS UART
     // ============================================================
@@ -195,182 +98,6 @@ EventLogger::~EventLogger()
             m_serial->close();
         }
     }
-}
-
-
-// ============================================================================
-// Initialize GPS LED GPIO
-// ============================================================================
-//
-// SODIMM_212
-//     |
-//     +--> gpiochip1
-//     |
-//     +--> offset 4
-//
-// gpiofind SODIMM_212
-//     gpiochip1 4
-//
-// ============================================================================
-
-bool EventLogger::initGPSLedGPIO()
-{
-    qDebug()
-    << "[GPS GPIO] Opening /dev/gpiochip1";
-
-
-    // ============================================================
-    // Open GPIO chip
-    // ============================================================
-
-    m_gpsGpioChip =
-        gpiod_chip_open("/dev/gpiochip1");
-
-
-    if (!m_gpsGpioChip)
-    {
-        qDebug()
-        << "[GPS GPIO] Cannot open /dev/gpiochip1";
-
-        return false;
-    }
-
-
-    // ============================================================
-    // Get GPIO offset 4
-    // ============================================================
-
-    m_gpsGpioLine =
-        gpiod_chip_get_line(
-            m_gpsGpioChip,
-            4);
-
-
-    if (!m_gpsGpioLine)
-    {
-        qDebug()
-        << "[GPS GPIO] Cannot get GPIO offset 4";
-
-
-        gpiod_chip_close(
-            m_gpsGpioChip);
-
-        m_gpsGpioChip = nullptr;
-
-        return false;
-    }
-
-
-    // ============================================================
-    // GPIO request configuration
-    // ============================================================
-
-    struct gpiod_line_request_config config;
-
-    config.consumer =
-        "EventLoggerGPS";
-
-    config.request_type =
-        GPIOD_LINE_REQUEST_DIRECTION_OUTPUT;
-
-    config.flags = 0;
-
-
-    // ============================================================
-    // Request GPIO as OUTPUT
-    // Initial value = LOW
-    // ============================================================
-
-    if (gpiod_line_request(
-            m_gpsGpioLine,
-            &config,
-            0) < 0)
-    {
-        qDebug()
-        << "[GPS GPIO] Failed to request SODIMM_212";
-
-
-        gpiod_chip_close(
-            m_gpsGpioChip);
-
-        m_gpsGpioChip = nullptr;
-
-        m_gpsGpioLine = nullptr;
-
-        return false;
-    }
-
-
-    qDebug()
-        << "[GPS GPIO] SODIMM_212 requested successfully";
-
-
-    return true;
-}
-
-
-// ============================================================================
-// Set GPS LED HIGH / LOW
-// ============================================================================
-
-void EventLogger::setGPSLed(bool state)
-{
-    if (!m_gpsGpioLine)
-    {
-        qDebug()
-        << "[GPS GPIO] GPIO line is not available";
-
-        return;
-    }
-
-
-    const int value =
-        state ? 1 : 0;
-
-
-    if (gpiod_line_set_value(
-            m_gpsGpioLine,
-            value) < 0)
-    {
-        qDebug()
-        << "[GPS GPIO] Failed to set SODIMM_212:"
-        << (state ? "HIGH" : "LOW");
-
-        return;
-    }
-
-
-    qDebug()
-        << "[GPS GPIO] SODIMM_212 ->"
-        << (state ? "HIGH" : "LOW");
-}
-
-
-// ============================================================================
-// GPS LED Toggle
-// ============================================================================
-//
-// This function ONLY toggles the GPIO.
-//
-// The decision whether to blink or remain stable is made in processGGA().
-//
-// ============================================================================
-
-void EventLogger::toggleGPSLed()
-{
-    m_gpsLedState =
-        !m_gpsLedState;
-
-
-    setGPSLed(
-        m_gpsLedState);
-
-
-    qDebug()
-        << "[GPS GPIO] NO FIX -> TOGGLE ->"
-        << (m_gpsLedState
-                ? "HIGH"
-                : "LOW");
 }
 
 
@@ -888,18 +615,11 @@ void EventLogger::processGGA(
 
         // --------------------------------------------------------
         // No valid GGA
-        // Start blinking
+        //
+        // GPS status = NO FIX
         // --------------------------------------------------------
 
-        if (m_gpsLedTimer &&
-            !m_gpsLedTimer->isActive())
-        {
-            m_gpsLedState = false;
-
-            setGPSLed(false);
-
-            m_gpsLedTimer->start();
-        }
+        emit gpsFixStatusReady(0x00);
 
         return;
     }
@@ -926,24 +646,6 @@ void EventLogger::processGGA(
     {
         qDebug()
         << "[GPS] INVALID FIX QUALITY";
-
-
-        // --------------------------------------------------------
-        // Start LED blinking
-        // --------------------------------------------------------
-
-        if (m_gpsLedTimer)
-        {
-            if (!m_gpsLedTimer->isActive())
-            {
-                m_gpsLedState = false;
-
-                setGPSLed(false);
-
-                m_gpsLedTimer->start();
-            }
-        }
-
 
         emit gpsFixStatusReady(0x00);
 
@@ -988,22 +690,21 @@ void EventLogger::processGGA(
 
 
     // ============================================================
-    // GPS LED DECISION
-    // ============================================================
+    // GPS FIX DECISION
     //
     // FIX:
     //     Fix Quality 1..5
     //     AND satellites > 0
-    //
-    //     -> HIGH continuously
     //
     // NO FIX:
     //     Fix Quality 0
     //     OR 6
     //     OR satellites == 0
     //
-    //     -> TOGGLE every 500 ms
+    // IMPORTANT:
+    //     This class ONLY reports GPS status.
     //
+    //     EventLoggerStatusLED controls SODIMM_212.
     // ============================================================
 
     bool gpsFixAvailable =
@@ -1014,61 +715,25 @@ void EventLogger::processGGA(
 
     if (gpsFixAvailable)
     {
-        // ========================================================
-        // GPS FIX AVAILABLE
-        // ========================================================
-
-        if (m_gpsLedTimer)
-        {
-            m_gpsLedTimer->stop();
-        }
-
-
-        m_gpsLedState =
-            true;
-
-
-        setGPSLed(true);
-
-
         qDebug()
-            << "[GPS GPIO] FIX AVAILABLE"
-            << "| Quality:"
-            << fixQuality
-            << "| Satellites:"
-            << satellites
-            << "| HDOP:"
-            << hdop
-            << "-> LED STABLE HIGH";
+        << "[GPS] FIX AVAILABLE"
+        << "| Quality:"
+        << fixQuality
+        << "| Satellites:"
+        << satellites
+        << "| HDOP:"
+        << hdop;
     }
     else
     {
-        // ========================================================
-        // GPS NO FIX
-        // ========================================================
-
-        if (m_gpsLedTimer)
-        {
-            if (!m_gpsLedTimer->isActive())
-            {
-                m_gpsLedState = false;
-
-                setGPSLed(false);
-
-                m_gpsLedTimer->start();
-            }
-        }
-
-
         qDebug()
-            << "[GPS GPIO] NO FIX"
-            << "| Quality:"
-            << fixQuality
-            << "| Satellites:"
-            << satellites
-            << "| HDOP:"
-            << hdop
-            << "-> LED BLINK";
+        << "[GPS] NO FIX"
+        << "| Quality:"
+        << fixQuality
+        << "| Satellites:"
+        << satellites
+        << "| HDOP:"
+        << hdop;
     }
 
 
@@ -1081,7 +746,7 @@ void EventLogger::processGGA(
 
 
     // ------------------------------------------------------------
-    // 0 = No Fix
+    // No Fix
     // ------------------------------------------------------------
 
     if (fixQuality == 0)
@@ -1099,7 +764,7 @@ void EventLogger::processGGA(
 
 
     // ------------------------------------------------------------
-    // 6 = Estimated / Dead Reckoning
+    // Estimated / Dead Reckoning
     // ------------------------------------------------------------
 
     else if (fixQuality == 6)
@@ -1117,7 +782,7 @@ void EventLogger::processGGA(
 
 
     // ------------------------------------------------------------
-    // 1 to 5 = Valid Fix
+    // Valid Fix
     //
     // 1 = GPS Fix
     // 2 = DGPS Fix
@@ -1129,6 +794,9 @@ void EventLogger::processGGA(
     else if (fixQuality >= 1 &&
              fixQuality <= 5)
     {
+        // Keep the existing ICD behavior:
+        // 1..5 = 0x03
+
         icdFixStatus =
             0x03;
 

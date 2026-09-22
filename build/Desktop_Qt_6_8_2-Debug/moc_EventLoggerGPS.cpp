@@ -49,8 +49,7 @@ static constexpr auto qt_meta_stringdata_ZN11EventLoggerE = QtMocHelpers::string
     "speedMMps",
     "gpsFixStatusReady",
     "fixStatus",
-    "readGPSData",
-    "toggleGPSLed"
+    "readGPSData"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -62,7 +61,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11EventLoggerE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -70,14 +69,13 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11EventLoggerE[] = {
        4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   50,    2, 0x06,    1 /* Public */,
-       4,    3,   53,    2, 0x06,    3 /* Public */,
-       8,    1,   60,    2, 0x06,    7 /* Public */,
-      10,    1,   63,    2, 0x06,    9 /* Public */,
+       1,    1,   44,    2, 0x06,    1 /* Public */,
+       4,    3,   47,    2, 0x06,    3 /* Public */,
+       8,    1,   54,    2, 0x06,    7 /* Public */,
+      10,    1,   57,    2, 0x06,    9 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      12,    0,   66,    2, 0x08,   11 /* Private */,
-      13,    0,   67,    2, 0x08,   12 /* Private */,
+      12,    0,   60,    2, 0x08,   11 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QDateTime,    3,
@@ -86,7 +84,6 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11EventLoggerE[] = {
     QMetaType::Void, QMetaType::UChar,   11,
 
  // slots: parameters
-    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -116,8 +113,6 @@ Q_CONSTINIT const QMetaObject EventLogger::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<quint8, std::false_type>,
         // method 'readGPSData'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'toggleGPSLed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -133,7 +128,6 @@ void EventLogger::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 2: _t->gpsSpeedReady((*reinterpret_cast< std::add_pointer_t<qint32>>(_a[1]))); break;
         case 3: _t->gpsFixStatusReady((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1]))); break;
         case 4: _t->readGPSData(); break;
-        case 5: _t->toggleGPSLed(); break;
         default: ;
         }
     }
@@ -189,14 +183,14 @@ int EventLogger::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 5;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 5)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 6;
+        _id -= 5;
     }
     return _id;
 }

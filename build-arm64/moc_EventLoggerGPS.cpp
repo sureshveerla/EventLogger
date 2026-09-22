@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_EventLogger_t {
-    const uint offsetsAndSize[28];
-    char stringdata0[152];
+    const uint offsetsAndSize[26];
+    char stringdata0[139];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_EventLogger_t, stringdata0) + ofs), len 
@@ -41,15 +41,13 @@ QT_MOC_LITERAL(75, 13), // "gpsSpeedReady"
 QT_MOC_LITERAL(89, 9), // "speedMMps"
 QT_MOC_LITERAL(99, 17), // "gpsFixStatusReady"
 QT_MOC_LITERAL(117, 9), // "fixStatus"
-QT_MOC_LITERAL(127, 11), // "readGPSData"
-QT_MOC_LITERAL(139, 12) // "toggleGPSLed"
+QT_MOC_LITERAL(127, 11) // "readGPSData"
 
     },
     "EventLogger\0gpsUTCReady\0\0utcTime\0"
     "gpsPositionReady\0latitude\0longitude\0"
     "valid\0gpsSpeedReady\0speedMMps\0"
-    "gpsFixStatusReady\0fixStatus\0readGPSData\0"
-    "toggleGPSLed"
+    "gpsFixStatusReady\0fixStatus\0readGPSData"
 };
 #undef QT_MOC_LITERAL
 
@@ -59,7 +57,7 @@ static const uint qt_meta_data_EventLogger[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -67,14 +65,13 @@ static const uint qt_meta_data_EventLogger[] = {
        4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   50,    2, 0x06,    1 /* Public */,
-       4,    3,   53,    2, 0x06,    3 /* Public */,
-       8,    1,   60,    2, 0x06,    7 /* Public */,
-      10,    1,   63,    2, 0x06,    9 /* Public */,
+       1,    1,   44,    2, 0x06,    1 /* Public */,
+       4,    3,   47,    2, 0x06,    3 /* Public */,
+       8,    1,   54,    2, 0x06,    7 /* Public */,
+      10,    1,   57,    2, 0x06,    9 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      12,    0,   66,    2, 0x08,   11 /* Private */,
-      13,    0,   67,    2, 0x08,   12 /* Private */,
+      12,    0,   60,    2, 0x08,   11 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QDateTime,    3,
@@ -83,7 +80,6 @@ static const uint qt_meta_data_EventLogger[] = {
     QMetaType::Void, QMetaType::UChar,   11,
 
  // slots: parameters
-    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -100,7 +96,6 @@ void EventLogger::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 2: _t->gpsSpeedReady((*reinterpret_cast< std::add_pointer_t<qint32>>(_a[1]))); break;
         case 3: _t->gpsFixStatusReady((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1]))); break;
         case 4: _t->readGPSData(); break;
-        case 5: _t->toggleGPSLed(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -144,7 +139,7 @@ const QMetaObject EventLogger::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_EventLogger_t
 , QtPrivate::TypeAndForceComplete<EventLogger, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QDateTime &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<qint32, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>
 
 
 >,
@@ -171,13 +166,13 @@ int EventLogger::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 5)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 6;
+        _id -= 5;
     }
     return _id;
 }

@@ -90,6 +90,7 @@ generate_moc()
 generate_moc "EventLoggerGPS"
 generate_moc "EventLoggerKMS"
 generate_moc "EventLoggerGPIO"
+generate_moc "EventLoggerStatusLED"
 
 generate_moc "nmsDBQuerys"
 generate_moc "nmsUDPServer"
@@ -136,7 +137,8 @@ nmsDB \
 nmsMainWindow \
 EventLoggerGPS \
 EventLoggerKMS \
-EventLoggerGPIO"
+EventLoggerGPIO \
+EventLoggerStatusLED"
 
 MOC_SOURCES="\
 nmsDBQuerys \
@@ -147,7 +149,8 @@ nmsDB \
 nmsMainWindow \
 EventLoggerGPS \
 EventLoggerKMS \
-EventLoggerGPIO"
+EventLoggerGPIO \
+EventLoggerStatusLED"
 
 # ------------------------------------------------------------
 # Compile application source files

@@ -5,9 +5,6 @@
 #include <QSerialPort>
 #include <QByteArray>
 #include <QDateTime>
-#include <QTimer>
-
-#include <gpiod.h>
 
 
 class EventLogger : public QObject
@@ -24,7 +21,7 @@ public:
 signals:
 
     // ============================================================
-    // Existing GPS signals
+    // GPS signals
     // ============================================================
 
     void gpsUTCReady(const QDateTime &utcTime);
@@ -34,6 +31,14 @@ signals:
                           bool valid);
 
     void gpsSpeedReady(qint32 speedMMps);
+
+    // ============================================================
+    // GPS Fix Status
+    //
+    // 0x00 = NO FIX
+    // 0x01 = ESTIMATED / DEAD RECKONING
+    // 0x03 = VALID FIX
+    // ============================================================
 
     void gpsFixStatusReady(quint8 fixStatus);
 
@@ -45,13 +50,6 @@ private slots:
     // ============================================================
 
     void readGPSData();
-
-
-    // ============================================================
-    // GPS LED
-    // ============================================================
-
-    void toggleGPSLed();
 
 
 private:
@@ -72,35 +70,6 @@ private:
     QSerialPort *m_serial;
 
     QByteArray m_buffer;
-
-
-    // ============================================================
-    // GPS LED
-    //
-    // SODIMM_212
-    // gpiochip2
-    // offset 4
-    //
-    // HIGH = stable ON
-    // LOW/HIGH toggle = blink
-    // ============================================================
-
-    gpiod_chip *m_gpsGpioChip;
-
-    gpiod_line *m_gpsGpioLine;
-
-    QTimer *m_gpsLedTimer;
-
-    bool m_gpsLedState;
-
-
-    // ============================================================
-    // GPS LED functions
-    // ============================================================
-
-    bool initGPSLedGPIO();
-
-    void setGPSLed(bool state);
 };
 
 #endif // EVENTLOGGERGPS_H
