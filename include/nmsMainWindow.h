@@ -9,6 +9,7 @@
 #include "KAVACH_PARSEPACKET.h"
 #include "EventLoggerGPS.h"
 #include "EventLoggerKMS.h"      // ICD §D — KMS gateway
+#include "EventLoggerLED.h"
 #include <QThread>
 #include <QTimer>
 #include <QProcess>
@@ -130,8 +131,10 @@ signals:
     void SigInsertDBStationRegHeader(stAccessRequestPkt stHeader,StationRegularHeader stStnRglrHPkt);
     void SigInsertDBStationhealthPkt(stStationHealthPkt stStnHlthPkt,QStringList strEvntID,
                                      QStringList strEvntData,uint32_t uiCrc);
-    void SigInsertDBOnBoardhealthPkt(stOnBoardHealthPkt stOnBrdHlthPkt,QString strEvntID,
-                                     QString strEvntData,uint32_t uiCrc);
+
+    void SigInsertDBOnBoardhealthPkt(stOnBoardHealthPkt stOnBrdHlthPkt,QStringList strEvntID,
+                                     QStringList strEvntData,uint32_t uiCrc);
+
     void SigInsertDBS2SPDIVerCmd(stPacketHeader stPktHdr,stPDIVerCheckCmdPkt stPDIVerCmd);
     void SigInsertDBS2SPDIVerMsg(stPacketHeader stPktHdr,stPDIVerCheckMsgPkt stPDIVerMsg);
     void SigInsertDBS2SHeartBeat(stPacketHeader stPktHdr,stHeartBeatPkt stHeartBeat);
@@ -154,6 +157,8 @@ signals:
     void SigInsertDBFieldInputEventData(stFieldEventData stFldEvntData);
     void SigShowAllStations();
     void SigStationisConnected(QString strStationName,bool bstatus);
+    void SigVCOMPingStatus(bool bOk);
+    void SigGPSFixStatus(bool bHasFix);
 
 
 private:
@@ -181,6 +186,8 @@ private:
     uint16_t m_usSeqNum = 0;
     QString m_strCfgFilePath;
     EventLoggerKMS *m_pcKMS;
+    EventLoggerLED *m_eventLoggerLED;
+  //  EventLoggerGPIO *m_pcGPIO = nullptr;
     QString m_strSMSpwd,m_strRmtPwd;
     QSettings *m_ocCfgSettings;
     QString m_strLanIP, m_strInternetIP;
@@ -328,6 +335,11 @@ private:
 
     void InitCFGFile();
     void SlotUpadateSchematic_internal();
+
+    QString GetModuleID(uint8_t ucModulID);
+    QString GetFaultCodetype(uint8_t ucfaultTyp);
+
+    QString GetFaultCodeDescription(uint16_t usFaultCode);
 };
 
 #endif // NMSMAINWINDOW_H

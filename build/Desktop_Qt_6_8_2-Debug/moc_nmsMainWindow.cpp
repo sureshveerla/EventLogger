@@ -212,6 +212,10 @@ static constexpr auto qt_meta_stringdata_ZN13nmsMainWindowE = QtMocHelpers::stri
     "SigStationisConnected",
     "strStationName",
     "bstatus",
+    "SigVCOMPingStatus",
+    "bOk",
+    "SigGPSFixStatus",
+    "bHasFix",
     "SlotNewFaultPacket",
     "datagram",
     "SlotPreviousFaultInfo",
@@ -258,74 +262,76 @@ Q_CONSTINIT static const uint qt_meta_data_ZN13nmsMainWindowE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      58,   14, // methods
+      60,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      40,       // signalCount
+      42,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    3,  362,    2, 0x06,    1 /* Public */,
-       8,    3,  369,    2, 0x06,    5 /* Public */,
-      13,    5,  376,    2, 0x06,    9 /* Public */,
-      18,    0,  387,    2, 0x06,   15 /* Public */,
-      19,    0,  388,    2, 0x06,   16 /* Public */,
-      20,    5,  389,    2, 0x06,   17 /* Public */,
-      28,    5,  400,    2, 0x06,   23 /* Public */,
-      31,    4,  411,    2, 0x06,   29 /* Public */,
-      33,    4,  420,    2, 0x06,   34 /* Public */,
-      35,    2,  429,    2, 0x06,   39 /* Public */,
-      37,    4,  434,    2, 0x06,   42 /* Public */,
-      40,   23,  443,    2, 0x06,   47 /* Public */,
-      66,   31,  490,    2, 0x06,   71 /* Public */,
-      79,   16,  553,    2, 0x06,  103 /* Public */,
-      91,    9,  586,    2, 0x06,  120 /* Public */,
-      93,    2,  605,    2, 0x06,  130 /* Public */,
-      97,    4,  610,    2, 0x06,  133 /* Public */,
-     103,    4,  619,    2, 0x06,  138 /* Public */,
-     106,    2,  628,    2, 0x06,  143 /* Public */,
-     111,    2,  633,    2, 0x06,  146 /* Public */,
-     114,    2,  638,    2, 0x06,  149 /* Public */,
-     117,    2,  643,    2, 0x06,  152 /* Public */,
-     120,    2,  648,    2, 0x06,  155 /* Public */,
-     123,    2,  653,    2, 0x06,  158 /* Public */,
-     126,    2,  658,    2, 0x06,  161 /* Public */,
-     129,    2,  663,    2, 0x06,  164 /* Public */,
-     132,    2,  668,    2, 0x06,  167 /* Public */,
-     135,    2,  673,    2, 0x06,  170 /* Public */,
-     138,    2,  678,    2, 0x06,  173 /* Public */,
-     141,    2,  683,    2, 0x06,  176 /* Public */,
-     144,    1,  688,    2, 0x06,  179 /* Public */,
-     147,    1,  691,    2, 0x06,  181 /* Public */,
-     150,    1,  694,    2, 0x06,  183 /* Public */,
-     153,    1,  697,    2, 0x06,  185 /* Public */,
-     156,    1,  700,    2, 0x06,  187 /* Public */,
-     159,    1,  703,    2, 0x06,  189 /* Public */,
-     162,    4,  706,    2, 0x06,  191 /* Public */,
-     165,    1,  715,    2, 0x06,  196 /* Public */,
-     168,    0,  718,    2, 0x06,  198 /* Public */,
-     169,    2,  719,    2, 0x06,  199 /* Public */,
+       1,    3,  374,    2, 0x06,    1 /* Public */,
+       8,    3,  381,    2, 0x06,    5 /* Public */,
+      13,    5,  388,    2, 0x06,    9 /* Public */,
+      18,    0,  399,    2, 0x06,   15 /* Public */,
+      19,    0,  400,    2, 0x06,   16 /* Public */,
+      20,    5,  401,    2, 0x06,   17 /* Public */,
+      28,    5,  412,    2, 0x06,   23 /* Public */,
+      31,    4,  423,    2, 0x06,   29 /* Public */,
+      33,    4,  432,    2, 0x06,   34 /* Public */,
+      35,    2,  441,    2, 0x06,   39 /* Public */,
+      37,    4,  446,    2, 0x06,   42 /* Public */,
+      40,   23,  455,    2, 0x06,   47 /* Public */,
+      66,   31,  502,    2, 0x06,   71 /* Public */,
+      79,   16,  565,    2, 0x06,  103 /* Public */,
+      91,    9,  598,    2, 0x06,  120 /* Public */,
+      93,    2,  617,    2, 0x06,  130 /* Public */,
+      97,    4,  622,    2, 0x06,  133 /* Public */,
+     103,    4,  631,    2, 0x06,  138 /* Public */,
+     106,    2,  640,    2, 0x06,  143 /* Public */,
+     111,    2,  645,    2, 0x06,  146 /* Public */,
+     114,    2,  650,    2, 0x06,  149 /* Public */,
+     117,    2,  655,    2, 0x06,  152 /* Public */,
+     120,    2,  660,    2, 0x06,  155 /* Public */,
+     123,    2,  665,    2, 0x06,  158 /* Public */,
+     126,    2,  670,    2, 0x06,  161 /* Public */,
+     129,    2,  675,    2, 0x06,  164 /* Public */,
+     132,    2,  680,    2, 0x06,  167 /* Public */,
+     135,    2,  685,    2, 0x06,  170 /* Public */,
+     138,    2,  690,    2, 0x06,  173 /* Public */,
+     141,    2,  695,    2, 0x06,  176 /* Public */,
+     144,    1,  700,    2, 0x06,  179 /* Public */,
+     147,    1,  703,    2, 0x06,  181 /* Public */,
+     150,    1,  706,    2, 0x06,  183 /* Public */,
+     153,    1,  709,    2, 0x06,  185 /* Public */,
+     156,    1,  712,    2, 0x06,  187 /* Public */,
+     159,    1,  715,    2, 0x06,  189 /* Public */,
+     162,    4,  718,    2, 0x06,  191 /* Public */,
+     165,    1,  727,    2, 0x06,  196 /* Public */,
+     168,    0,  730,    2, 0x06,  198 /* Public */,
+     169,    2,  731,    2, 0x06,  199 /* Public */,
+     172,    1,  736,    2, 0x06,  202 /* Public */,
+     174,    1,  739,    2, 0x06,  204 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-     172,    3,  724,    2, 0x08,  202 /* Private */,
-     174,    0,  731,    2, 0x08,  206 /* Private */,
-     175,    1,  732,    2, 0x08,  207 /* Private */,
-     177,    3,  735,    2, 0x08,  209 /* Private */,
-     178,    4,  742,    2, 0x08,  213 /* Private */,
-     183,    1,  751,    2, 0x08,  218 /* Private */,
-     184,    2,  754,    2, 0x08,  220 /* Private */,
-     187,    1,  759,    2, 0x08,  223 /* Private */,
-     189,    2,  762,    2, 0x08,  225 /* Private */,
-     192,    2,  767,    2, 0x08,  228 /* Private */,
-     193,    0,  772,    2, 0x08,  231 /* Private */,
-     194,    0,  773,    2, 0x08,  232 /* Private */,
-     195,    0,  774,    2, 0x08,  233 /* Private */,
-     196,    3,  775,    2, 0x08,  234 /* Private */,
-     200,    0,  782,    2, 0x08,  238 /* Private */,
-     201,    1,  783,    2, 0x08,  239 /* Private */,
-     203,    1,  786,    2, 0x08,  241 /* Private */,
-     205,    1,  789,    2, 0x08,  243 /* Private */,
+     176,    3,  742,    2, 0x08,  206 /* Private */,
+     178,    0,  749,    2, 0x08,  210 /* Private */,
+     179,    1,  750,    2, 0x08,  211 /* Private */,
+     181,    3,  753,    2, 0x08,  213 /* Private */,
+     182,    4,  760,    2, 0x08,  217 /* Private */,
+     187,    1,  769,    2, 0x08,  222 /* Private */,
+     188,    2,  772,    2, 0x08,  224 /* Private */,
+     191,    1,  777,    2, 0x08,  227 /* Private */,
+     193,    2,  780,    2, 0x08,  229 /* Private */,
+     196,    2,  785,    2, 0x08,  232 /* Private */,
+     197,    0,  790,    2, 0x08,  235 /* Private */,
+     198,    0,  791,    2, 0x08,  236 /* Private */,
+     199,    0,  792,    2, 0x08,  237 /* Private */,
+     200,    3,  793,    2, 0x08,  238 /* Private */,
+     204,    0,  800,    2, 0x08,  242 /* Private */,
+     205,    1,  801,    2, 0x08,  243 /* Private */,
+     207,    1,  804,    2, 0x08,  245 /* Private */,
+     209,    1,  807,    2, 0x08,  247 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, 0x80000000 | 6,    4,    5,    7,
@@ -345,7 +351,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN13nmsMainWindowE[] = {
     QMetaType::Void, 0x80000000 | 41, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26, 0x80000000 | 26,   42,   43,   44,   45,   80,   81,   82,   92,   65,
     QMetaType::Void, 0x80000000 | 41, 0x80000000 | 95,   94,   96,
     QMetaType::Void, 0x80000000 | 98, QMetaType::QStringList, QMetaType::QStringList, 0x80000000 | 26,   99,  100,  101,  102,
-    QMetaType::Void, 0x80000000 | 104, QMetaType::QString, QMetaType::QString, 0x80000000 | 26,  105,  100,  101,  102,
+    QMetaType::Void, 0x80000000 | 104, QMetaType::QStringList, QMetaType::QStringList, 0x80000000 | 26,  105,  100,  101,  102,
     QMetaType::Void, 0x80000000 | 107, 0x80000000 | 109,  108,  110,
     QMetaType::Void, 0x80000000 | 107, 0x80000000 | 112,  108,  113,
     QMetaType::Void, 0x80000000 | 107, 0x80000000 | 115,  108,  116,
@@ -368,26 +374,28 @@ Q_CONSTINIT static const uint qt_meta_data_ZN13nmsMainWindowE[] = {
     QMetaType::Void, 0x80000000 | 166,  167,
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString, QMetaType::Bool,  170,  171,
+    QMetaType::Void, QMetaType::Bool,  173,
+    QMetaType::Void, QMetaType::Bool,  175,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, QMetaType::QByteArray,    4,    5,  173,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, QMetaType::QByteArray,    4,    5,  177,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,  176,
-    QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, QMetaType::QByteArray,    4,    5,  173,
-    QMetaType::Void, QMetaType::QStringList, QMetaType::QStringList, QMetaType::QString, QMetaType::Bool,  179,  180,  181,  182,
+    QMetaType::Void, QMetaType::Int,  180,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, QMetaType::QByteArray,    4,    5,  177,
+    QMetaType::Void, QMetaType::QStringList, QMetaType::QStringList, QMetaType::QString, QMetaType::Bool,  183,  184,  185,  186,
     QMetaType::Void, 0x80000000 | 95,   96,
-    QMetaType::Void, QMetaType::QString, QMetaType::Bool,  185,  186,
-    QMetaType::Void, QMetaType::UChar,  188,
-    QMetaType::Void, QMetaType::UChar, QMetaType::QByteArray,  190,  191,
-    QMetaType::Void, QMetaType::UChar, QMetaType::QByteArray,  190,  191,
+    QMetaType::Void, QMetaType::QString, QMetaType::Bool,  189,  190,
+    QMetaType::Void, QMetaType::UChar,  192,
+    QMetaType::Void, QMetaType::UChar, QMetaType::QByteArray,  194,  195,
+    QMetaType::Void, QMetaType::UChar, QMetaType::QByteArray,  194,  195,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Double, QMetaType::Double, QMetaType::Bool,  197,  198,  199,
+    QMetaType::Void, QMetaType::Double, QMetaType::Double, QMetaType::Bool,  201,  202,  203,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QDateTime,  202,
-    QMetaType::Void, QMetaType::Int,  204,
-    QMetaType::Void, QMetaType::UChar,  206,
+    QMetaType::Void, QMetaType::QDateTime,  206,
+    QMetaType::Void, QMetaType::Int,  208,
+    QMetaType::Void, QMetaType::UChar,  210,
 
        0        // eod
 };
@@ -558,8 +566,8 @@ Q_CONSTINIT const QMetaObject nmsMainWindow::staticMetaObject = { {
         // method 'SigInsertDBOnBoardhealthPkt'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<stOnBoardHealthPkt, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QStringList, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QStringList, std::false_type>,
         QtPrivate::TypeAndForceComplete<uint32_t, std::false_type>,
         // method 'SigInsertDBS2SPDIVerCmd'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -641,6 +649,12 @@ Q_CONSTINIT const QMetaObject nmsMainWindow::staticMetaObject = { {
         // method 'SigStationisConnected'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
+        // method 'SigVCOMPingStatus'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
+        // method 'SigGPSFixStatus'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<bool, std::false_type>,
         // method 'SlotNewFaultPacket'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -729,7 +743,7 @@ void nmsMainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 14: _t->SigAdditionalEmergencyPktInsertintoDB((*reinterpret_cast< std::add_pointer_t<stAccessRequestPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[8])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[9]))); break;
         case 15: _t->SigInsertDBStationRegHeader((*reinterpret_cast< std::add_pointer_t<stAccessRequestPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<StationRegularHeader>>(_a[2]))); break;
         case 16: _t->SigInsertDBStationhealthPkt((*reinterpret_cast< std::add_pointer_t<stStationHealthPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4]))); break;
-        case 17: _t->SigInsertDBOnBoardhealthPkt((*reinterpret_cast< std::add_pointer_t<stOnBoardHealthPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4]))); break;
+        case 17: _t->SigInsertDBOnBoardhealthPkt((*reinterpret_cast< std::add_pointer_t<stOnBoardHealthPkt>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<uint32_t>>(_a[4]))); break;
         case 18: _t->SigInsertDBS2SPDIVerCmd((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stPDIVerCheckCmdPkt>>(_a[2]))); break;
         case 19: _t->SigInsertDBS2SPDIVerMsg((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stPDIVerCheckMsgPkt>>(_a[2]))); break;
         case 20: _t->SigInsertDBS2SHeartBeat((*reinterpret_cast< std::add_pointer_t<stPacketHeader>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<stHeartBeatPkt>>(_a[2]))); break;
@@ -752,24 +766,26 @@ void nmsMainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 37: _t->SigInsertDBFieldInputEventData((*reinterpret_cast< std::add_pointer_t<stFieldEventData>>(_a[1]))); break;
         case 38: _t->SigShowAllStations(); break;
         case 39: _t->SigStationisConnected((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
-        case 40: _t->SlotNewFaultPacket((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[3]))); break;
-        case 41: _t->SlotPreviousFaultInfo(); break;
-        case 42: _t->SlottabChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 43: _t->SlotUpadateSchematic((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[3]))); break;
-        case 44: _t->SlotStationNameAndID((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[4]))); break;
-        case 45: _t->SlotStationRegHeader((*reinterpret_cast< std::add_pointer_t<StationRegularHeader>>(_a[1]))); break;
-        case 46: _t->SlotStationconnStatus((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
-        case 47: _t->SlotKMSChannelChangeover((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1]))); break;
-        case 48: _t->SlotKMSPacketReceived((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[2]))); break;
-        case 49: _t->SlotKMSPacketSent((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[2]))); break;
-        case 50: _t->SlotDoPing(); break;
-        case 51: _t->SlotSendNextReplayPacket(); break;
-        case 52: _t->SlotVCHeartbeat(); break;
-        case 53: _t->SlotGPSPosition((*reinterpret_cast< std::add_pointer_t<double>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
-        case 54: _t->SendHeartbeat(); break;
-        case 55: _t->OnGPSUTCReady((*reinterpret_cast< std::add_pointer_t<QDateTime>>(_a[1]))); break;
-        case 56: _t->OnGPSSpeedReady((*reinterpret_cast< std::add_pointer_t<qint32>>(_a[1]))); break;
-        case 57: _t->OnGPSFixStatusReady((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1]))); break;
+        case 40: _t->SigVCOMPingStatus((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
+        case 41: _t->SigGPSFixStatus((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
+        case 42: _t->SlotNewFaultPacket((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[3]))); break;
+        case 43: _t->SlotPreviousFaultInfo(); break;
+        case 44: _t->SlottabChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 45: _t->SlotUpadateSchematic((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[3]))); break;
+        case 46: _t->SlotStationNameAndID((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[4]))); break;
+        case 47: _t->SlotStationRegHeader((*reinterpret_cast< std::add_pointer_t<StationRegularHeader>>(_a[1]))); break;
+        case 48: _t->SlotStationconnStatus((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
+        case 49: _t->SlotKMSChannelChangeover((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1]))); break;
+        case 50: _t->SlotKMSPacketReceived((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[2]))); break;
+        case 51: _t->SlotKMSPacketSent((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[2]))); break;
+        case 52: _t->SlotDoPing(); break;
+        case 53: _t->SlotSendNextReplayPacket(); break;
+        case 54: _t->SlotVCHeartbeat(); break;
+        case 55: _t->SlotGPSPosition((*reinterpret_cast< std::add_pointer_t<double>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
+        case 56: _t->SendHeartbeat(); break;
+        case 57: _t->OnGPSUTCReady((*reinterpret_cast< std::add_pointer_t<QDateTime>>(_a[1]))); break;
+        case 58: _t->OnGPSSpeedReady((*reinterpret_cast< std::add_pointer_t<qint32>>(_a[1]))); break;
+        case 59: _t->OnGPSFixStatusReady((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1]))); break;
         default: ;
         }
     }
@@ -1106,7 +1122,7 @@ void nmsMainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
             }
         }
         {
-            using _q_method_type = void (nmsMainWindow::*)(stOnBoardHealthPkt , QString , QString , uint32_t );
+            using _q_method_type = void (nmsMainWindow::*)(stOnBoardHealthPkt , QStringList , QStringList , uint32_t );
             if (_q_method_type _q_method = &nmsMainWindow::SigInsertDBOnBoardhealthPkt; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 17;
                 return;
@@ -1266,6 +1282,20 @@ void nmsMainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
                 return;
             }
         }
+        {
+            using _q_method_type = void (nmsMainWindow::*)(bool );
+            if (_q_method_type _q_method = &nmsMainWindow::SigVCOMPingStatus; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+                *result = 40;
+                return;
+            }
+        }
+        {
+            using _q_method_type = void (nmsMainWindow::*)(bool );
+            if (_q_method_type _q_method = &nmsMainWindow::SigGPSFixStatus; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+                *result = 41;
+                return;
+            }
+        }
     }
 }
 
@@ -1288,14 +1318,14 @@ int nmsMainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 58)
+        if (_id < 60)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 58;
+        _id -= 60;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 58)
+        if (_id < 60)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 58;
+        _id -= 60;
     }
     return _id;
 }
@@ -1418,7 +1448,7 @@ void nmsMainWindow::SigInsertDBStationhealthPkt(stStationHealthPkt _t1, QStringL
 }
 
 // SIGNAL 17
-void nmsMainWindow::SigInsertDBOnBoardhealthPkt(stOnBoardHealthPkt _t1, QString _t2, QString _t3, uint32_t _t4)
+void nmsMainWindow::SigInsertDBOnBoardhealthPkt(stOnBoardHealthPkt _t1, QStringList _t2, QStringList _t3, uint32_t _t4)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t4))) };
     QMetaObject::activate(this, &staticMetaObject, 17, _a);
@@ -1575,5 +1605,19 @@ void nmsMainWindow::SigStationisConnected(QString _t1, bool _t2)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 39, _a);
+}
+
+// SIGNAL 40
+void nmsMainWindow::SigVCOMPingStatus(bool _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 40, _a);
+}
+
+// SIGNAL 41
+void nmsMainWindow::SigGPSFixStatus(bool _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 41, _a);
 }
 QT_WARNING_POP

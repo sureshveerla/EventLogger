@@ -40,7 +40,7 @@ DISTNAME      = EventLogger1.0.0
 DISTDIR = /home/sana/Projects/BHEL/EventLogger/build/Desktop_Qt_6_8_2-Debug/.tmp/EventLogger1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/opt/Qt/6.8.2/gcc_64/lib
-LIBS          = $(SUBLIBS) /opt/Qt/6.8.2/gcc_64/lib/libQt6SerialPort.so -pthread /opt/Qt/6.8.2/gcc_64/lib/libQt6Network.so /opt/Qt/6.8.2/gcc_64/lib/libQt6Sql.so /opt/Qt/6.8.2/gcc_64/lib/libQt6Core.so -lpthread   
+LIBS          = $(SUBLIBS) -lgpiod /opt/Qt/6.8.2/gcc_64/lib/libQt6SerialPort.so -pthread /opt/Qt/6.8.2/gcc_64/lib/libQt6Network.so /opt/Qt/6.8.2/gcc_64/lib/libQt6Sql.so /opt/Qt/6.8.2/gcc_64/lib/libQt6Core.so -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -61,6 +61,7 @@ SOURCES       = ../../src/main.cpp \
 		../../src/KAVACH_PARSEPACKET.cpp \
 		../../src/nmsDB.cpp \
 		../../src/nmsMainWindow.cpp \
+		../../src/EventLoggerLED.cpp \
 		../../src/crc32.c moc_nmsDBQuerys.cpp \
 		moc_nmsUDPServer.cpp \
 		moc_EventLoggerGPS.cpp \
@@ -68,7 +69,8 @@ SOURCES       = ../../src/main.cpp \
 		moc_kavachpkthandler.cpp \
 		moc_KAVACH_PARSEPACKET.cpp \
 		moc_nmsDB.cpp \
-		moc_nmsMainWindow.cpp
+		moc_nmsMainWindow.cpp \
+		moc_EventLoggerLED.cpp
 OBJECTS       = main.o \
 		EventLoggerKMS.o \
 		nmsDBQuerys.o \
@@ -78,6 +80,7 @@ OBJECTS       = main.o \
 		KAVACH_PARSEPACKET.o \
 		nmsDB.o \
 		nmsMainWindow.o \
+		EventLoggerLED.o \
 		crc32.o \
 		moc_nmsDBQuerys.o \
 		moc_nmsUDPServer.o \
@@ -86,7 +89,8 @@ OBJECTS       = main.o \
 		moc_kavachpkthandler.o \
 		moc_KAVACH_PARSEPACKET.o \
 		moc_nmsDB.o \
-		moc_nmsMainWindow.o
+		moc_nmsMainWindow.o \
+		moc_EventLoggerLED.o
 DIST          = /opt/Qt/6.8.2/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/6.8.2/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt/6.8.2/gcc_64/mkspecs/common/linux.conf \
@@ -451,7 +455,8 @@ DIST          = /opt/Qt/6.8.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../../include/nmsStructs.h \
 		../../include/nmsDB.h \
 		../../include/nmsMainWindow.h \
-		../../src/crc32.h ../../src/main.cpp \
+		../../src/crc32.h \
+		../../include/EventLoggerLED.h ../../src/main.cpp \
 		../../src/EventLoggerKMS.cpp \
 		../../src/nmsDBQuerys.cpp \
 		../../src/EventLoggerGPS.cpp \
@@ -460,6 +465,7 @@ DIST          = /opt/Qt/6.8.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../../src/KAVACH_PARSEPACKET.cpp \
 		../../src/nmsDB.cpp \
 		../../src/nmsMainWindow.cpp \
+		../../src/EventLoggerLED.cpp \
 		../../src/crc32.c
 QMAKE_TARGET  = EventLogger
 DESTDIR       = ../../bin/
@@ -1203,8 +1209,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt/6.8.2/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../include/nmsDBQuerys.h ../../include/nmsUDPServer.h ../../include/EventLoggerGPS.h ../../include/EventLoggerKMS.h ../../include/kavachpkthandler.h ../../include/KAVACH_PARSEPACKET.h ../../include/nmsDefines.h ../../include/nmsEnum.h ../../include/nmsQtInc.h ../../include/nmsStructs.h ../../include/nmsDB.h ../../include/nmsMainWindow.h ../../src/crc32.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../src/main.cpp ../../src/EventLoggerKMS.cpp ../../src/nmsDBQuerys.cpp ../../src/EventLoggerGPS.cpp ../../src/nmsUDPServer.cpp ../../src/kavachpkthandler.cpp ../../src/KAVACH_PARSEPACKET.cpp ../../src/nmsDB.cpp ../../src/nmsMainWindow.cpp ../../src/crc32.c $(DISTDIR)/
+	$(COPY_FILE) --parents ../../include/nmsDBQuerys.h ../../include/nmsUDPServer.h ../../include/EventLoggerGPS.h ../../include/EventLoggerKMS.h ../../include/kavachpkthandler.h ../../include/KAVACH_PARSEPACKET.h ../../include/nmsDefines.h ../../include/nmsEnum.h ../../include/nmsQtInc.h ../../include/nmsStructs.h ../../include/nmsDB.h ../../include/nmsMainWindow.h ../../src/crc32.h ../../include/EventLoggerLED.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../src/main.cpp ../../src/EventLoggerKMS.cpp ../../src/nmsDBQuerys.cpp ../../src/EventLoggerGPS.cpp ../../src/nmsUDPServer.cpp ../../src/kavachpkthandler.cpp ../../src/KAVACH_PARSEPACKET.cpp ../../src/nmsDB.cpp ../../src/nmsMainWindow.cpp ../../src/EventLoggerLED.cpp ../../src/crc32.c $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1236,9 +1242,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /opt/Qt/6.8.2/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++1z -Wall -Wextra -fPIC -dM -E -o moc_predefs.h /opt/Qt/6.8.2/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_nmsDBQuerys.cpp moc_nmsUDPServer.cpp moc_EventLoggerGPS.cpp moc_EventLoggerKMS.cpp moc_kavachpkthandler.cpp moc_KAVACH_PARSEPACKET.cpp moc_nmsDB.cpp moc_nmsMainWindow.cpp
+compiler_moc_header_make_all: moc_nmsDBQuerys.cpp moc_nmsUDPServer.cpp moc_EventLoggerGPS.cpp moc_EventLoggerKMS.cpp moc_kavachpkthandler.cpp moc_KAVACH_PARSEPACKET.cpp moc_nmsDB.cpp moc_nmsMainWindow.cpp moc_EventLoggerLED.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_nmsDBQuerys.cpp moc_nmsUDPServer.cpp moc_EventLoggerGPS.cpp moc_EventLoggerKMS.cpp moc_kavachpkthandler.cpp moc_KAVACH_PARSEPACKET.cpp moc_nmsDB.cpp moc_nmsMainWindow.cpp
+	-$(DEL_FILE) moc_nmsDBQuerys.cpp moc_nmsUDPServer.cpp moc_EventLoggerGPS.cpp moc_EventLoggerKMS.cpp moc_kavachpkthandler.cpp moc_KAVACH_PARSEPACKET.cpp moc_nmsDB.cpp moc_nmsMainWindow.cpp moc_EventLoggerLED.cpp
 moc_nmsDBQuerys.cpp: ../../include/nmsDBQuerys.h \
 		../../include/nmsQtInc.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication \
@@ -2101,6 +2107,7 @@ moc_EventLoggerGPS.cpp: ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qpropertyprivate.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qserialportglobal.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qtserialportexports.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QByteArray \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDateTime \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdatetime.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcalendar.h \
@@ -2117,6 +2124,9 @@ moc_EventLoggerGPS.cpp: ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qhash.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/q23utility.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasictimer.h \
 		moc_predefs.h \
 		/opt/Qt/6.8.2/gcc_64/libexec/moc
 	/opt/Qt/6.8.2/gcc_64/libexec/moc $(DEFINES) --include /home/sana/Projects/BHEL/EventLogger/build/Desktop_Qt_6_8_2-Debug/moc_predefs.h -I/opt/Qt/6.8.2/gcc_64/mkspecs/linux-g++ -I/home/sana/Projects/BHEL/EventLogger -I/home/sana/Projects/BHEL/EventLogger/src -I/home/sana/Projects/BHEL/EventLogger/include -I/home/sana/Projects/BHEL/include -I/opt/Qt/6.8.2/gcc_64/include -I/opt/Qt/6.8.2/gcc_64/include/QtSerialPort -I/opt/Qt/6.8.2/gcc_64/include/QtNetwork -I/opt/Qt/6.8.2/gcc_64/include/QtSql -I/opt/Qt/6.8.2/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../include/EventLoggerGPS.h -o moc_EventLoggerGPS.cpp
@@ -3989,9 +3999,120 @@ moc_nmsMainWindow.cpp: ../../include/nmsMainWindow.h \
 		../../include/KAVACH_PARSEPACKET.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QVector \
 		../../include/EventLoggerGPS.h \
+		../../include/EventLoggerLED.h \
 		moc_predefs.h \
 		/opt/Qt/6.8.2/gcc_64/libexec/moc
 	/opt/Qt/6.8.2/gcc_64/libexec/moc $(DEFINES) --include /home/sana/Projects/BHEL/EventLogger/build/Desktop_Qt_6_8_2-Debug/moc_predefs.h -I/opt/Qt/6.8.2/gcc_64/mkspecs/linux-g++ -I/home/sana/Projects/BHEL/EventLogger -I/home/sana/Projects/BHEL/EventLogger/src -I/home/sana/Projects/BHEL/EventLogger/include -I/home/sana/Projects/BHEL/include -I/opt/Qt/6.8.2/gcc_64/include -I/opt/Qt/6.8.2/gcc_64/include/QtSerialPort -I/opt/Qt/6.8.2/gcc_64/include/QtNetwork -I/opt/Qt/6.8.2/gcc_64/include/QtSql -I/opt/Qt/6.8.2/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../include/nmsMainWindow.h -o moc_nmsMainWindow.cpp
+
+moc_EventLoggerLED.cpp: ../../include/EventLoggerLED.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QObject \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtversionchecks.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtconfiginclude.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtconfigmacros.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtdeprecationdefinitions.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtcoreexports.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtdeprecationmarkers.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtclasshelpermacros.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtpreprocessorsupport.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qassert.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtnoop.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtypes.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtversion.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcompare_impl.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qyieldcpu.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qconstructormacros.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdarwinhelpers.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qexceptionhandling.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qforeach.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qttypetraits.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qfunctionpointer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qmalloc.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qminmax.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qoverload.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qswap.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtenvironmentvariables.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtresource.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qttranslation.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcompare.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcomparehelpers.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/q20type_traits.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtmetamacros.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qfunctionaltools_impl.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringview.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qarraydatapointer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qarraydataops.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qxptype_traits.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/q20functional.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/q20memory.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbytearrayview.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringfwd.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringliteral.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qlatin1stringview.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qanystringview.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qutf8stringview.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringtokenizer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringconverter.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringconverter_base.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qiodevicebase.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qfloat16.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qmath.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qiterable.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qmetacontainer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcontainerinfo.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtaggedpointer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qscopeguard.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbindingstorage.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QString \
+		moc_predefs.h \
+		/opt/Qt/6.8.2/gcc_64/libexec/moc
+	/opt/Qt/6.8.2/gcc_64/libexec/moc $(DEFINES) --include /home/sana/Projects/BHEL/EventLogger/build/Desktop_Qt_6_8_2-Debug/moc_predefs.h -I/opt/Qt/6.8.2/gcc_64/mkspecs/linux-g++ -I/home/sana/Projects/BHEL/EventLogger -I/home/sana/Projects/BHEL/EventLogger/src -I/home/sana/Projects/BHEL/EventLogger/include -I/home/sana/Projects/BHEL/include -I/opt/Qt/6.8.2/gcc_64/include -I/opt/Qt/6.8.2/gcc_64/include/QtSerialPort -I/opt/Qt/6.8.2/gcc_64/include/QtNetwork -I/opt/Qt/6.8.2/gcc_64/include/QtSql -I/opt/Qt/6.8.2/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../include/EventLoggerLED.h -o moc_EventLoggerLED.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -4389,7 +4510,8 @@ main.o: ../../src/main.cpp /opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication 
 		../../include/nmsDefines.h \
 		../../include/KAVACH_PARSEPACKET.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QVector \
-		../../include/EventLoggerGPS.h
+		../../include/EventLoggerGPS.h \
+		../../include/EventLoggerLED.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../src/main.cpp
 
 EventLoggerKMS.o: ../../src/EventLoggerKMS.cpp ../../include/EventLoggerKMS.h \
@@ -4765,8 +4887,8 @@ EventLoggerKMS.o: ../../src/EventLoggerKMS.cpp ../../include/EventLoggerKMS.h \
 		../../include/crc32.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EventLoggerKMS.o ../../src/EventLoggerKMS.cpp
 
-nmsDBQuerys.o: ../../src/nmsDBQuerys.cpp /home/sana/EventLogger/include/nmsDBQuerys.h \
-		/home/sana/EventLogger/include/nmsQtInc.h \
+nmsDBQuerys.o: ../../src/nmsDBQuerys.cpp ../../include/nmsDBQuerys.h \
+		../../include/nmsQtInc.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcoreapplication.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qglobal.h \
@@ -5129,92 +5251,10 @@ nmsDBQuerys.o: ../../src/nmsDBQuerys.cpp /home/sana/EventLogger/include/nmsDBQue
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
-		/home/sana/EventLogger/include/nmsDB.h \
-		/home/sana/EventLogger/include/nmsStructs.h \
-		/home/sana/EventLogger/include/nmsEnum.h \
-		/home/sana/EventLogger/include/nmsDefines.h
+		../../include/nmsDB.h \
+		../../include/nmsStructs.h \
+		../../include/nmsEnum.h \
+		../../include/nmsDefines.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nmsDBQuerys.o ../../src/nmsDBQuerys.cpp
 
 EventLoggerGPS.o: ../../src/EventLoggerGPS.cpp ../../include/EventLoggerGPS.h \
@@ -5327,6 +5367,7 @@ EventLoggerGPS.o: ../../src/EventLoggerGPS.cpp ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qpropertyprivate.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qserialportglobal.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qtserialportexports.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QByteArray \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDateTime \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdatetime.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcalendar.h \
@@ -5343,13 +5384,16 @@ EventLoggerGPS.o: ../../src/EventLoggerGPS.cpp ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qhash.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/q23utility.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasictimer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDebug \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimeZone \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimezone.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QtMath
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EventLoggerGPS.o ../../src/EventLoggerGPS.cpp
 
-nmsUDPServer.o: ../../src/nmsUDPServer.cpp /home/sana/EventLogger/include/nmsUDPServer.h \
+nmsUDPServer.o: ../../src/nmsUDPServer.cpp ../../include/nmsUDPServer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QObject \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobject.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobjectdefs.h \
@@ -5451,7 +5495,7 @@ nmsUDPServer.o: ../../src/nmsUDPServer.cpp /home/sana/EventLogger/include/nmsUDP
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qscopeguard.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobject_impl.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbindingstorage.h \
-		/home/sana/EventLogger/include/nmsQtInc.h \
+		../../include/nmsQtInc.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcoreapplication.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdeadlinetimer.h \
@@ -5713,94 +5757,12 @@ nmsUDPServer.o: ../../src/nmsUDPServer.cpp /home/sana/EventLogger/include/nmsUDP
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlquery.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/QSqlRecord \
 		/opt/Qt/6.8.2/gcc_64/include/QtSql/qsqlrecord.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qdatavisualizationglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qtdatavisualizationexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dbars.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dgraph.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dtheme.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QLinearGradient \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbrush.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtgui-config.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtguiexports.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcolor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgb.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qrgba64.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qimage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qtransform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpolygon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qregion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpixmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QFont \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qfont.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QColor \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dscene.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dcamera.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dobject.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QVector3D \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvectornd.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/q3dlight.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QRect \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dinputhandler.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QPoint \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWheelEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qevent.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qeventpoint.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector2d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qpointingdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputdevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSize \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSizeF \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTransform \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qscreen_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qguiapplication_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QMouseEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QTouchEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QWindow \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qwindow.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QEvent \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMargins \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurface.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qicon.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qcursor.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qbitmap.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QOpenGLFunctions \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglfunctions.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopengl.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qopenglcontext_platform.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QLocale \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QScopedPointer \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qvalue3daxisformatter.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qcategory3daxis.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbar3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstract3dseries.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/QQuaternion \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qquaternion.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qgenericmatrix.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector3d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtGui/qvector4d.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qabstractdataproxy.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtDataVisualization/qbardataitem.h \
-		/home/sana/EventLogger/include/nmsStructs.h \
-		/home/sana/EventLogger/include/nmsEnum.h \
-		/home/sana/EventLogger/include/kavachpkthandler.h \
+		../../include/nmsStructs.h \
+		../../include/nmsEnum.h \
+		../../include/kavachpkthandler.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QMutexLocker \
-		/home/sana/EventLogger/include/crc32.h \
-		/home/sana/EventLogger/include/EventLoggerKMS.h \
+		../../include/crc32.h \
+		../../include/EventLoggerKMS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtNetwork/QHostAddress \
 		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/QSerialPort \
 		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qserialport.h \
@@ -7297,8 +7259,133 @@ nmsMainWindow.o: ../../src/nmsMainWindow.cpp ../../include/nmsMainWindow.h \
 		../../include/nmsDefines.h \
 		../../include/KAVACH_PARSEPACKET.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QVector \
-		../../include/EventLoggerGPS.h
+		../../include/EventLoggerGPS.h \
+		../../include/EventLoggerLED.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nmsMainWindow.o ../../src/nmsMainWindow.cpp
+
+EventLoggerLED.o: ../../src/EventLoggerLED.cpp ../../include/EventLoggerLED.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QObject \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtversionchecks.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtconfiginclude.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtconfigmacros.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtdeprecationdefinitions.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtcoreexports.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtdeprecationmarkers.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtclasshelpermacros.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtpreprocessorsupport.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qassert.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtnoop.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtypes.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtversion.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcompare_impl.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qyieldcpu.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qconstructormacros.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdarwinhelpers.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qexceptionhandling.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qforeach.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qttypetraits.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qfunctionpointer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qmalloc.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qminmax.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qoverload.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qswap.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtenvironmentvariables.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtresource.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qttranslation.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcompare.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcomparehelpers.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/q20type_traits.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtmetamacros.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qfunctionaltools_impl.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringview.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qarraydatapointer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qarraydataops.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qxptype_traits.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/q20functional.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/q20memory.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbytearrayview.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringfwd.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringliteral.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qlatin1stringview.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qanystringview.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qutf8stringview.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringtokenizer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringconverter.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringconverter_base.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qiodevicebase.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qfloat16.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qmath.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qiterable.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qmetacontainer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcontainerinfo.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtaggedpointer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qscopeguard.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbindingstorage.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QString \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDebug \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qshareddata_impl.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qset.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSettings \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsettings.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/q23utility.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EventLoggerLED.o ../../src/EventLoggerLED.cpp
 
 crc32.o: ../../src/crc32.c ../../src/crc32.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o crc32.o ../../src/crc32.c
@@ -7326,6 +7413,9 @@ moc_nmsDB.o: moc_nmsDB.cpp
 
 moc_nmsMainWindow.o: moc_nmsMainWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_nmsMainWindow.o moc_nmsMainWindow.cpp
+
+moc_EventLoggerLED.o: moc_EventLoggerLED.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_EventLoggerLED.o moc_EventLoggerLED.cpp
 
 ####### Install
 

@@ -26,6 +26,7 @@
 #include <QDebug>
 #include <QRegularExpression>
 #include <QThread>
+#include <QStringList>
 
 // ============================================================
 //  Constructor / Destructor
@@ -53,15 +54,22 @@ EventLoggerKMS::EventLoggerKMS(QObject *parent)
     m_chanB.ucSimID    = KMS_SIM_SECONDARY;
     m_chanB.bActive    = false;
 
-    // Periodic CSQ poll every 30 seconds
+    // Periodic GSM health poll (SIM/network/signal) — interval set in Init()
     m_pCSQTimer = new QTimer(this);
     connect(m_pCSQTimer, &QTimer::timeout,
             this, &EventLoggerKMS::SlotPollCSQ);
+
+    // LED blink timer — only running while GSM health is in fault state.
+    // Toggles GPIO16 High/Low via AT+UGPIOC on the same GSM UART.
+    m_pLedBlinkTimer = new QTimer(this);
+    connect(m_pLedBlinkTimer, &QTimer::timeout,
+            this, &EventLoggerKMS::SlotBlinkGSMLed);
 }
 
 EventLoggerKMS::~EventLoggerKMS()
 {
     if (m_pCSQTimer) m_pCSQTimer->stop();
+    if (m_pLedBlinkTimer) m_pLedBlinkTimer->stop();
     if (m_pGSMSerial && m_pGSMSerial->isOpen())
         m_pGSMSerial->close();
 }
@@ -217,13 +225,17 @@ bool EventLoggerKMS::Init(const KMSChannelConfig &chanA,
     }
 
     // =========================================================
-    // CSQ Timer — start AFTER modem ready
+    // GSM health poll (SIM / network / signal) — start AFTER modem ready.
+    // Runs every KMS_HEALTH_POLL_INTERVAL_MS (5s). No immediate check here
+    // — the first evaluation happens when the timer first fires, since a
+    // signal drop can happen at any time and we want a steady periodic
+    // read rather than a one-off check right after Init().
     // =========================================================
     connect(m_pCSQTimer, &QTimer::timeout,
             this, &EventLoggerKMS::SlotPollCSQ,
             Qt::UniqueConnection);
 
-    m_pCSQTimer->start(30000);
+    m_pCSQTimer->start(KMS_HEALTH_POLL_INTERVAL_MS);
 
     m_bInitDone = true;
 
@@ -543,6 +555,7 @@ bool EventLoggerKMS::InitGSMModem(const QString &portName,
         m_pGSMSerial->close();
         return false;
     }
+    CommandGSMLed(false);   // blink until first full health check completes
 
     // ---------------------------------------------------
     // Basic modem config
@@ -2059,15 +2072,23 @@ bool EventLoggerKMS::EnsureGPRSActive()
 int EventLoggerKMS::QueryCSQ()
 {
     QString resp = SendATCommand("AT+CSQ");
+    qDebug() << "[KMS][CSQ] raw resp:" << resp;
 
     QRegularExpression re("\\+CSQ:\\s*(\\d+),");
     QRegularExpressionMatch match = re.match(resp);
     if (!match.hasMatch())
     {
-        qWarning() << "[KMS] CSQ parse failed:" << resp;
+        qWarning() << "[KMS][CSQ] parse failed — treating as no signal, resp:" << resp;
         return -1;
     }
-    return match.captured(1).toInt();
+
+    const int csq = match.captured(1).toInt();
+
+    if (csq == KMS_CSQ_UNKNOWN)
+        qWarning() << "[KMS][CSQ] CSQ=99 — NO SIGNAL / ANTENNA NOT DETECTED "
+                      "(or modem not yet registered)";
+
+    return csq;
 }
 
 KMSSignalQuality EventLoggerKMS::ClassifyCSQ(int csq)
@@ -2096,15 +2117,44 @@ QString EventLoggerKMS::SignalQualityString(KMSSignalQuality q)
 
 void EventLoggerKMS::SlotPollCSQ()
 {
+    // --- SIM ---
+    m_bGSMSimOk = CheckSIMReady();
+
+    if (!m_bGSMSimOk)
+    {
+        m_bGSMNetworkOk = false;
+        m_bGSMSignalOk  = false;
+        qWarning() << "[KMS][HEALTH] FAULT — SIM NOT READY / NOT INSERTED "
+                      "(network + signal checks skipped this cycle)";
+        EvaluateAndUpdateGSMLed();
+        return;
+    }
+
+    // --- Network ---
+    m_bGSMNetworkOk = CheckNetworkRegistered();
+
+    // --- Signal (existing CSQ logic) ---
     int csq = QueryCSQ();
     KMSSignalQuality quality = ClassifyCSQ(csq);
+
+    m_bGSMSignalOk = (quality == KMSSignalQuality::Excellent ||
+                      quality == KMSSignalQuality::Good      ||
+                      quality == KMSSignalQuality::OK);
 
     qDebug() << "[KMS] CSQ:" << csq
              << "Quality:" << SignalQualityString(quality);
 
+    // Consolidated one-line health snapshot — easy to grep for while
+    // testing SIM-pull / antenna-pull scenarios.
+    qInfo() << "[KMS][HEALTH] SIM:" << (m_bGSMSimOk ? "OK" : "FAIL")
+            << "| NETWORK:" << (m_bGSMNetworkOk ? "OK" : "FAIL")
+            << "| SIGNAL:" << (m_bGSMSignalOk ? "OK" : "FAIL")
+            << (csq == KMS_CSQ_UNKNOWN ? "(CSQ=99, no antenna/no signal)" : "")
+            << "| CSQ:" << csq << "(" << SignalQualityString(quality) << ")";
+
     emit SigCSQUpdated(csq, quality);
 
-    // ICD §D.8.8 failure code 0x13: signal below threshold
+    // Existing 0x97 report-to-VC on bad signal — unchanged
     if (quality == KMSSignalQuality::Marginal ||
         quality == KMSSignalQuality::Unreachable ||
         quality == KMSSignalQuality::Unknown)
@@ -2117,4 +2167,158 @@ void EventLoggerKMS::SlotPollCSQ()
                                                     0);
         ForwardToVC(failPkt);
     }
+
+    // --- LED reflects all three ---
+    EvaluateAndUpdateGSMLed();
+}
+bool EventLoggerKMS::CheckSIMReady()
+{
+    QString resp = SendATCommand("AT+CPIN?", 1500);
+
+    const bool ready = resp.contains("+CPIN: READY");
+
+    if (ready)
+    {
+        qInfo() << "[KMS][SIM] READY — resp:" << resp;
+    }
+    else if (resp.contains("+CME ERROR"))
+    {
+        // Typical +CME ERROR: 10 (SIM not inserted) / 13 (SIM failure) /
+        // "SIM not inserted" — raw text kept so the exact error code shows
+        // up in the log regardless of modem firmware wording.
+        qWarning() << "[KMS][SIM] NOT READY — SIM missing/faulty, resp:" << resp;
+    }
+    else
+    {
+        qWarning() << "[KMS][SIM] NOT READY — unexpected AT+CPIN? resp:" << resp;
+    }
+
+    return ready;
+}
+
+// ============================================================
+//  GSM network registration check (CREG / CGREG / CEREG)
+// ============================================================
+bool EventLoggerKMS::CheckNetworkRegistered()
+{
+    QString resp = SendATCommand("AT+CREG?", 1500);
+    if (resp.contains(",1") || resp.contains(",5"))
+    {
+        qInfo() << "[KMS][NET] Registered via CREG:" << resp;
+        return true;
+    }
+
+    resp = SendATCommand("AT+CGREG?", 1500);
+    if (resp.contains(",1") || resp.contains(",5"))
+    {
+        qInfo() << "[KMS][NET] Registered via CGREG:" << resp;
+        return true;
+    }
+
+    resp = SendATCommand("AT+CEREG?", 1500);
+    if (resp.contains(",1") || resp.contains(",5"))
+    {
+        qInfo() << "[KMS][NET] Registered via CEREG:" << resp;
+        return true;
+    }
+
+    qWarning() << "[KMS][NET] NOT REGISTERED — CREG/CGREG/CEREG all failed. "
+                  "Last resp (CEREG):" << resp;
+    return false;
+}
+
+// ============================================================
+//  CommandGSMLed
+//
+//  ACTIVE (good)  -> GPIO16 held steady HIGH  : AT+UGPIOC=16,0,1
+//  FAULT  (bad)   -> GPIO16 blinked in software by toggling
+//                     AT+UGPIOC=16,0,1 / AT+UGPIOC=16,0,0 on a
+//                     timer — there's no hardware auto-blink mode
+//                     in use, the blink is done purely via repeated
+//                     AT commands on the same GSM UART/port.
+//
+//  Only acts on an actual state change, so the 5s health-check
+//  cycle doesn't re-issue the same command every tick.
+// ============================================================
+void EventLoggerKMS::CommandGSMLed(bool bActive)
+{
+    const GsmLedState want = bActive ? GsmLedState::Active
+                                     : GsmLedState::Blinking;
+
+    if (want == m_eGSMLedState)
+        return;   // already in that state, nothing to do
+
+    if (bActive)
+    {
+        // Good health: stop any blink cycle and drive GPIO16 steady HIGH.
+        if (m_pLedBlinkTimer && m_pLedBlinkTimer->isActive())
+            m_pLedBlinkTimer->stop();
+
+        m_bLedBlinkPinHigh = true;
+        QString resp = SendATCommand("AT+UGPIOC=16,0,1", 1000);
+        qInfo() << "[KMS] GSM LED -> ACTIVE (steady HIGH) resp:" << resp;
+    }
+    else
+    {
+        // Fault: start the toggle timer; SlotBlinkGSMLed() drives the
+        // actual AT+UGPIOC High/Low commands from here on.
+        m_bLedBlinkPinHigh = false;
+        if (m_pLedBlinkTimer)
+            m_pLedBlinkTimer->start(KMS_LED_BLINK_INTERVAL_MS);
+
+        qInfo() << "[KMS] GSM LED -> BLINK (fault) — toggle timer started";
+    }
+
+    m_eGSMLedState = want;
+}
+
+// ============================================================
+//  SlotBlinkGSMLed
+//
+//  Fires every KMS_LED_BLINK_INTERVAL_MS while m_eGSMLedState is
+//  Blinking. Toggles GPIO16 High/Low via AT+UGPIOC on the same
+//  GSM UART used for all other modem commands.
+// ============================================================
+void EventLoggerKMS::SlotBlinkGSMLed()
+{
+    if (m_eGSMLedState != GsmLedState::Blinking)
+    {
+        // Health recovered (or state changed) between ticks — stop.
+        if (m_pLedBlinkTimer)
+            m_pLedBlinkTimer->stop();
+        return;
+    }
+
+    m_bLedBlinkPinHigh = !m_bLedBlinkPinHigh;
+
+    const QString cmd = m_bLedBlinkPinHigh ? "AT+UGPIOC=16,0,1"
+                                           : "AT+UGPIOC=16,0,0";
+    SendATCommand(cmd, 500);
+}
+
+// ============================================================
+//  EvaluateAndUpdateGSMLed
+//
+//  LED is ACTIVE (steady HIGH) only when SIM + Network + Signal
+//  are all OK. Any one failing -> BLINK (software toggle).
+// ============================================================
+void EventLoggerKMS::EvaluateAndUpdateGSMLed()
+{
+    m_bGSMOverallOk = m_bGSMSimOk && m_bGSMNetworkOk && m_bGSMSignalOk;
+
+    if (m_bGSMOverallOk)
+    {
+        qInfo() << "[KMS][LED] Health OK -> ACTIVE (steady HIGH)";
+    }
+    else
+    {
+        QStringList failed;
+        if (!m_bGSMSimOk)     failed << "SIM";
+        if (!m_bGSMNetworkOk) failed << "NETWORK";
+        if (!m_bGSMSignalOk)  failed << "SIGNAL/ANTENNA";
+        qWarning() << "[KMS][LED] Health FAULT -> BLINK. Failing checks:"
+                   << failed.join(", ");
+    }
+
+    CommandGSMLed(m_bGSMOverallOk);
 }

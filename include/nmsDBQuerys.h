@@ -94,8 +94,8 @@ public slots:
     void SlotInsertDBStationhealthPkt(stStationHealthPkt stStnHlthPkt,QStringList strEvntID,
                                       QStringList strEvntData,uint32_t uiCrc);
 
-    void SlotInsertDBOnBoardhealthPkt(stOnBoardHealthPkt stOnBrdHlthPkt,QString strEvntID,
-                                      QString strEvntData,uint32_t uiCrc);
+    void SlotInsertDBOnBoardhealthPkt(stOnBoardHealthPkt stOnBrdHlthPkt,QStringList strlstEvntID,
+                                      QStringList strlstEvntData,uint32_t uiCrc);
 
     void SlotInsertDBS2SPDIVerCmd(stPacketHeader stPktHdr,stPDIVerCheckCmdPkt stPDIVerCmd);
     void SlotInsertDBS2SPDIVerMsg(stPacketHeader stPktHdr,stPDIVerCheckMsgPkt stPDIVerMsg);
@@ -192,6 +192,9 @@ private:
     QString GetBrakeEventStatusDescription(quint8 ucStatus);
     QString GetBrakeAckStatusDescription(quint8 ucAckStatus);
     QString GetBrakeCauseDescription(quint16 usCauseID);
+    QString GetStnHlthEventName(uint16_t usEvntID);
+
+    QString GetOnBoardHlthEventName(uint16_t usEvntID);
 
     void EnsureGradientColumns(int count);
 };

@@ -3,6 +3,9 @@ QT = core serialport network sql
 CONFIG += c++17 cmdline
 CONFIG -= app_bundle
 TEMPLATE = app
+
+LIBS += -lgpiod
+
 VPATH += src include  ../include/
 INCLUDEPATH += $${VPATH}
 
@@ -29,6 +32,7 @@ SOURCES += main.cpp \
            KAVACH_PARSEPACKET.cpp \
            nmsDB.cpp \
            nmsMainWindow.cpp \
+           EventLoggerLED.cpp \
            crc32.c
 
 HEADERS += nmsDBQuerys.h                    nmsUDPServer.h           \
@@ -38,4 +42,5 @@ HEADERS += nmsDBQuerys.h                    nmsUDPServer.h           \
            nmsDefines.h                     nmsEnum.h              \
            nmsQtInc.h                       nmsStructs.h           \
            nmsDB.h                                                \
-           nmsMainWindow.h                  crc32.h
+           nmsMainWindow.h                  crc32.h               \
+           EventLoggerLED.h

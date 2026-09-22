@@ -60,7 +60,8 @@ static constexpr auto qt_meta_stringdata_ZN14EventLoggerKMSE = QtMocHelpers::str
     "senderIP",
     "senderPort",
     "SlotPollCSQ",
-    "SlotHandleGSMData"
+    "SlotHandleGSMData",
+    "SlotBlinkGSMLed"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -72,7 +73,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN14EventLoggerKMSE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -80,16 +81,17 @@ Q_CONSTINIT static const uint qt_meta_data_ZN14EventLoggerKMSE[] = {
        5,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    3,   62,    2, 0x06,    1 /* Public */,
-       7,    1,   69,    2, 0x06,    5 /* Public */,
-       9,    2,   72,    2, 0x06,    7 /* Public */,
-      13,    2,   77,    2, 0x06,   10 /* Public */,
-      15,    2,   82,    2, 0x06,   13 /* Public */,
+       1,    3,   68,    2, 0x06,    1 /* Public */,
+       7,    1,   75,    2, 0x06,    5 /* Public */,
+       9,    2,   78,    2, 0x06,    7 /* Public */,
+      13,    2,   83,    2, 0x06,   10 /* Public */,
+      15,    2,   88,    2, 0x06,   13 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      16,    3,   87,    2, 0x0a,   16 /* Public */,
-      20,    0,   94,    2, 0x0a,   20 /* Public */,
-      21,    0,   95,    2, 0x08,   21 /* Private */,
+      16,    3,   93,    2, 0x0a,   16 /* Public */,
+      20,    0,  100,    2, 0x0a,   20 /* Public */,
+      21,    0,  101,    2, 0x08,   21 /* Private */,
+      22,    0,  102,    2, 0x08,   22 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QByteArray, 0x80000000 | 4, QMetaType::UShort,    3,    5,    6,
@@ -100,6 +102,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN14EventLoggerKMSE[] = {
 
  // slots: parameters
     QMetaType::Void, QMetaType::QByteArray, 0x80000000 | 4, QMetaType::UShort,   17,   18,   19,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -143,6 +146,8 @@ Q_CONSTINIT const QMetaObject EventLoggerKMS::staticMetaObject = { {
         // method 'SlotPollCSQ'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'SlotHandleGSMData'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'SlotBlinkGSMLed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -161,6 +166,7 @@ void EventLoggerKMS::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 5: _t->SlotHandleUDPFromVC((*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[3]))); break;
         case 6: _t->SlotPollCSQ(); break;
         case 7: _t->SlotHandleGSMData(); break;
+        case 8: _t->SlotBlinkGSMLed(); break;
         default: ;
         }
     }
@@ -223,14 +229,14 @@ int EventLoggerKMS::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 9;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 9)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 8;
+        _id -= 9;
     }
     return _id;
 }

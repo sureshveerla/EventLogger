@@ -241,6 +241,10 @@ private slots:
     // Called when GSM serial has data (KMS response or SMS)
     void SlotHandleGSMData();
 
+    // Fires every KMS_LED_BLINK_INTERVAL_MS while in fault state — toggles
+    // GPIO16 High/Low via AT+UGPIOC to produce a software blink.
+    void SlotBlinkGSMLed();
+
 private:
     // ── GSM Modem ─────────────────────────────────────────────
     bool    InitGSMModem(const QString &portName, qint32 baudRate);
@@ -324,6 +328,37 @@ private:
 
     int m_iCSQFailCount = 0;
     static constexpr int KMS_CSQ_FAIL_MAX = 3;
+
+    // ── GSM health LED ─────────────────────────────────────────
+    // ACTIVE  = GPIO16 held steady HIGH (AT+UGPIOC=16,0,1) — SIM + network +
+    //           signal all OK.
+    // Blinking = fault (SIM missing / not registered / signal too low).
+    //           There is no hardware auto-blink mode in use — the blink is
+    //           produced purely by this software timer toggling the pin
+    //           High/Low via AT commands on the same GSM UART.
+    enum class GsmLedState { Unknown, Active, Blinking };
+
+    // Health check cadence — re-evaluate SIM/network/signal and update the
+    // LED every 5s (no immediate check on Init(); the first evaluation
+    // happens after the first interval elapses).
+    static constexpr int KMS_HEALTH_POLL_INTERVAL_MS = 5000;
+
+    // Rate at which GPIO16 is toggled High/Low while in the fault state.
+    static constexpr int KMS_LED_BLINK_INTERVAL_MS = 500;
+
+    bool          m_bGSMSimOk      = false;
+    bool          m_bGSMNetworkOk  = false;
+    bool          m_bGSMSignalOk   = false;
+    bool          m_bGSMOverallOk  = false;
+    GsmLedState   m_eGSMLedState   = GsmLedState::Unknown;
+
+    QTimer       *m_pLedBlinkTimer   = nullptr;
+    bool          m_bLedBlinkPinHigh = false;
+
+    bool CheckSIMReady();
+    bool CheckNetworkRegistered();
+    void EvaluateAndUpdateGSMLed();
+    void CommandGSMLed(bool bActive);
 };
 
 #endif // EVENTLOGGERKMS_H

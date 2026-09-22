@@ -89,7 +89,9 @@ void nmsDBQuerys::SlotStnFaultPktInserttoDB(stStationFaults *pstStnFaults,
                           .arg(pstStnFaults->ucTime[1])
                           .arg(pstStnFaults->ucTime[2]);
 
-    m_uiStationID = pstStnFaults->ucKavachSubsysID;
+    m_uiStationID = (pstStnFaults->ucKavachSubsysID[0] << 16) |
+                    (pstStnFaults->ucKavachSubsysID[1] << 8)  |
+                    pstStnFaults->ucKavachSubsysID[2];
 
     // ── Fill arrays safely — ft[] bug fixed ───────────────────
     // Previously ft[] was inside a comment and never filled.
@@ -107,8 +109,7 @@ void nmsDBQuerys::SlotStnFaultPktInserttoDB(stStationFaults *pstStnFaults,
         fc[i] = (i < strFaultsCode.size())       ? strFaultsCode[i]      : "NULL";
     }
 
-    QString strQuery = QString(
-                           "INSERT INTO public.stationfaultspkt("
+    QString strQuery = QString("INSERT INTO public.stationfaultspkt("
                            "\"SOF\", \"MSG_TYPE\", \"MSG_LEN\", \"MSG_SEQ\", \"KAVACH_SUBSYSTEM_ID\","
                            "\"NMS_SYSTEM_ID\", \"SYSTEM_VER\", \"DATE\", \"TIME\", \"KAVACH_TYPE\", "
                            "\"TOTAL_FAULTS_CODES\", "
@@ -1263,241 +1264,432 @@ quint64 nmsDBQuerys::SlotInsertDBStationRegHeader(stAccessRequestPkt stHeader, S
     pcQuery = NULL;
 }
 
-void nmsDBQuerys::SlotInsertDBStationhealthPkt(stStationHealthPkt stStnHlthPkt,
-                                               QStringList        strlstEvntID,
-                                               QStringList        strlstEvntData,
-                                               uint32_t           uiCrc)
+void nmsDBQuerys::SlotInsertDBStationhealthPkt(
+    stStationHealthPkt stStnHlthPkt,
+    QStringList strlstEvntID,
+    QStringList strlstEvntData,
+    uint32_t uiCrc)
 {
-    // ── Header formatting ─────────────────────────────────────────────────────
-    QString strStrtFrm = QString("0x%1").arg(stStnHlthPkt.usStartFrame, 0, 16).toUpper();
-    QString strMsgType = QString("0x%1").arg(stStnHlthPkt.ucMsgType,    0, 16).toUpper();
-    QString strCRC     = QString("0x%1").arg(uiCrc,                     0, 16).toUpper();
+    QSqlQuery query(m_pcDB->Get());
 
-    QString strDate = QString("%1-%2-%3")
-                          .arg(2000 + stStnHlthPkt.ucDate[2], 4, 10, QChar('0'))
-                          .arg(stStnHlthPkt.ucDate[1],         2, 10, QChar('0'))
-                          .arg(stStnHlthPkt.ucDate[0],         2, 10, QChar('0'));
+    QStringList cols;
+    QStringList vals;
+    QSet<QString> usedCols;
 
-    QString strTime = QString("%1:%2:%3")
-                          .arg(stStnHlthPkt.ucTime[0], 2, 10, QChar('0'))
-                          .arg(stStnHlthPkt.ucTime[1], 2, 10, QChar('0'))
-                          .arg(stStnHlthPkt.ucTime[2], 2, 10, QChar('0'));
-
-    // ── Column name lookup : Event ID → (EVENT_ID_N column, DATA column) ──────
-    // Named columns for events 1-45 (RDSO defined).
-    // Events 46-255 use generic EVENT_ID_N / EVENT_DATA_N columns.
-    static const QMap<uint16_t, QPair<QString,QString>> colMap = {
-                                                                   {  1, {"EVENT_ID_1",  "SYSTEM_TEMPERATURE"}},
-                                                                   {  2, {"EVENT_ID_2",  "ACTIVE_RADIO_NUMBER"}},
-                                                                   {  3, {"EVENT_ID_3",  "RADIO_1_HEALTH"}},
-                                                                   {  4, {"EVENT_ID_4",  "RADIO_2_HEALTH"}},
-                                                                   {  5, {"EVENT_ID_5",  "RADIO_1_INPUT_SUPPLY"}},
-                                                                   {  6, {"EVENT_ID_6",  "RADIO_2_INPUT_SUPPLY"}},
-                                                                   {  7, {"EVENT_ID_7",  "RADIO_1_TEMPERATURE"}},
-                                                                   {  8, {"EVENT_ID_8",  "RADIO_2_TEMPERATURE"}},
-                                                                   {  9, {"EVENT_ID_9",  "RADIO_1_PA_TEMPERATURE"}},
-                                                                   { 10, {"EVENT_ID_10", "RADIO_2_PA_TEMPERATURE"}},
-                                                                   { 11, {"EVENT_ID_11", "RADIO_1_PA_SUPPLY_VOLTAGE"}},
-                                                                   { 12, {"EVENT_ID_12", "RADIO_2_PA_SUPPLY_VOLTAGE"}},
-                                                                   { 13, {"EVENT_ID_13", "RADIO_1_PA_TX_PA_CURRENT"}},
-                                                                   { 14, {"EVENT_ID_14", "RADIO_2_PA_TX_PA_CURRENT"}},
-                                                                   { 15, {"EVENT_ID_15", "RADIO_1_REVERSE_POWER"}},
-                                                                   { 16, {"EVENT_ID_16", "RADIO_2_REVERSE_POWER"}},
-                                                                   { 17, {"EVENT_ID_17", "RADIO_1_FORWARD_POWER"}},
-                                                                   { 18, {"EVENT_ID_18", "RADIO_2_FORWARD_POWER"}},
-                                                                   { 19, {"EVENT_ID_19", "CURRENT_RUNNING_KEY"}},
-                                                                   { 20, {"EVENT_ID_20", "REMAINING_NUMBER_OF_KEYS"}},
-                                                                   { 21, {"EVENT_ID_21", "SESSION_KEY_CHECKSUM"}},
-                                                                   { 22, {"EVENT_ID_22", "ALLOWCATED_TIME_SLOT_FOR_NEW_LOCO"}},
-                                                                   { 23, {"EVENT_ID_23", "NEW_LOCO_REGULAR_PACKET_RECEIVED_TIME_OFFSET"}},
-                                                                   { 24, {"EVENT_ID_24", "LOCO_COUNT"}},
-                                                                   { 25, {"EVENT_ID_25", "RADIO_1_RX_PACKET_COUNT"}},
-                                                                   { 26, {"EVENT_ID_26", "RADIO_2_RX_PACKET_COUNT"}},
-                                                                   { 27, {"EVENT_ID_27", "ACTIVE_GPS_NUMBER"}},
-                                                                   { 28, {"EVENT_ID_28", "GPS_1_VIEW"}},
-                                                                   { 29, {"EVENT_ID_29", "GPS_2_VIEW"}},
-                                                                   { 30, {"EVENT_ID_30", "GPS_1_SECONDS"}},
-                                                                   { 31, {"EVENT_ID_31", "GPS_2_SECONDS"}},
-                                                                   { 32, {"EVENT_ID_32", "GPS_1_SATELLITES_IN_VIEW"}},
-                                                                   { 33, {"EVENT_ID_33", "GPS_1_CNO_MAX"}},
-                                                                   { 34, {"EVENT_ID_34", "GPS_2_SATELLITES_IN_VIEW"}},
-                                                                   { 35, {"EVENT_ID_35", "GPS_2_CNO_MAX"}},
-                                                                   { 36, {"EVENT_ID_36", "GSM_1_RSSI"}},
-                                                                   { 37, {"EVENT_ID_37", "GSM_2_RSSI"}},
-                                                                   { 38, {"EVENT_ID_38", "MISSING_RFID"}},
-                                                                   { 39, {"EVENT_ID_39", "INVALID_RFID"}},
-                                                                   { 40, {"EVENT_ID_40", "CONFLICT_ROUTE_RFID"}},
-                                                                   { 41, {"EVENT_ID_41", "CONFLICTING_TIN"}},
-                                                                   { 42, {"EVENT_ID_42", "MISSING_TIN"}},
-                                                                   { 43, {"EVENT_ID_43", "LOCO_SPECIFIC_SOS"}},
-                                                                   { 44, {"EVENT_ID_44", "TRAIN_EXIT_MODE"}},
-                                                                   { 45, {"EVENT_ID_45", "STATION_MODULES_HEALTH"}},
-                                                                   };
-
-    // ── Default values for all 255 EVENT_ID and DATA columns ─────────────────
-    // EVENT_ID_N defaults to 0, DATA columns default to 'NULL'
-    QMap<QString, QString> columnValues;
-
-    for (int n = 1; n <= 255; ++n)
+    auto addStr = [&](const QString &col, const QString &val)
     {
-        QString idCol, dataCol;
-        if (colMap.contains(static_cast<uint16_t>(n)))
-        {
-            idCol   = colMap[static_cast<uint16_t>(n)].first;
-            dataCol = colMap[static_cast<uint16_t>(n)].second;
-        }
-        else
-        {
-            idCol   = QString("EVENT_ID_%1").arg(n);
-            dataCol = QString("EVENT_DATA_%1").arg(n);
-        }
-        columnValues[idCol]   = "0";
-        columnValues[dataCol] = "NULL";
-    }
+        QString c = "\"" + col + "\"";
+        if (usedCols.contains(c)) return;
 
-    // ── Overwrite defaults with actual received event data ────────────────────
-    for (int i = 0; i < strlstEvntID.size(); ++i)
-    {
-        uint16_t evID = static_cast<uint16_t>(strlstEvntID[i].trimmed().toUShort());
-        QString  evData = strlstEvntData[i].trimmed();
-
-        QString idCol, dataCol;
-        if (colMap.contains(evID))
-        {
-            idCol   = colMap[evID].first;
-            dataCol = colMap[evID].second;
-        }
-        else
-        {
-            idCol   = QString("EVENT_ID_%1").arg(evID);
-            dataCol = QString("EVENT_DATA_%1").arg(evID);
-        }
-
-        columnValues[idCol]   = QString::number(evID);
-        columnValues[dataCol] = evData;
-
-        qDebug() << "[StnHlth] Mapping EventID:" << evID
-                 << "→ col:" << dataCol << "val:" << evData;
-    }
-
-    // ── Build INSERT column list and ? placeholders ───────────────────────────
-    // Fixed header columns first, then all 255×2 event columns, then CRC.
-
-    QStringList fixedCols = {
-        "SOF", "MSG_TYPE", "MSG_LEN", "MSG_SEQ",
-        "STN_KAVACH_ID", "NMS_SYSTEM_ID", "SYSTEM_VER",
-        "DATE", "TIME", "EVENT_COUNT"
+        usedCols.insert(c);
+        cols << c;
+        vals << "'" + val + "'";
     };
 
-    // Build ordered event column list (EVENT_ID_1, DATA_1, EVENT_ID_2, DATA_2, ...)
-    QStringList eventCols;
-    for (int n = 1; n <= 255; ++n)
+    auto addInt = [&](const QString &col, int val)
     {
-        if (colMap.contains(static_cast<uint16_t>(n)))
+        QString c = "\"" + col + "\"";
+        if (usedCols.contains(c)) return;
+
+        usedCols.insert(c);
+        cols << c;
+        vals << QString::number(val);
+    };
+
+    auto addSafe = [&](const QString &col, const QString &val)
+    {
+        qDebug() << "Column Name:" << col << val;
+        bool ok = false;
+        int v = val.toInt(&ok);
+
+        QString c = "\"" + col.trimmed() + "\"";
+        if (usedCols.contains(c)) return;
+
+        qDebug() << "Column Name........:" << col << val;
+
+        usedCols.insert(c);
+        cols << c;
+        // vals << (ok ? QString::number(v) : "0");
+        vals << (ok ? QString::number(v)
+                    : "'" + val + "'");
+    };
+
+    auto toHex = [](auto v)
+    {
+        return QString("0x%1").arg(v, 0, 16).toUpper();
+    };
+
+    // =====================================================
+    // HEADER
+    // =====================================================
+    addStr("SOF", toHex(stStnHlthPkt.usStartFrame));
+    addStr("MSG_TYPE", toHex(stStnHlthPkt.ucMsgType));
+
+    addInt("MSG_LEN", stStnHlthPkt.usMsgLength);
+    addInt("MSG_SEQ", stStnHlthPkt.usMsgSeq);
+    addInt("STN_KAVACH_ID", stStnHlthPkt.usStatKavachID);
+    addInt("NMS_SYSTEM_ID", stStnHlthPkt.usNMSID);
+    addInt("SYSTEM_VER", stStnHlthPkt.ucVersion);
+
+    QString date = QString("20%1-%2-%3")
+                       .arg(stStnHlthPkt.ucDate[2], 2, 10, QChar('0'))
+                       .arg(stStnHlthPkt.ucDate[1], 2, 10, QChar('0'))
+                       .arg(stStnHlthPkt.ucDate[0], 2, 10, QChar('0'));
+
+    QString time = QString("%1:%2:%3")
+                       .arg(stStnHlthPkt.ucTime[0], 2, 10, QChar('0'))
+                       .arg(stStnHlthPkt.ucTime[1], 2, 10, QChar('0'))
+                       .arg(stStnHlthPkt.ucTime[2], 2, 10, QChar('0'));
+
+    addStr("DATE", date);
+    addStr("TIME", time);
+
+    addInt("EVENT_COUNT", strlstEvntID.size());
+
+    // =====================================================
+    // EVENT ID FLAGS
+    // =====================================================
+    QMap<int, int> eventIdMap;
+    for (int i = 1; i <= 255; i++)
+        eventIdMap[i] = 0;
+
+    for (const QString &ev : strlstEvntID)
+    {
+        bool ok = false;
+        int id = ev.toInt(&ok);
+        if (ok && id >= 1 && id <= 255)
+            eventIdMap[id] = id;
+    }
+
+    for (int id = 1; id <= 255; id++)
+        addInt(QString("EVENT_ID_%1").arg(id), eventIdMap[id]);
+
+    // =====================================================
+    // EVENT DATA (EVENT NAME BASED - FIXED)
+    // =====================================================
+    QMap<int, QString> eventDataMap;
+
+    for (int i = 1; i <= 255; i++)
+        eventDataMap[i] = "0";
+
+    int count = qMin(strlstEvntID.size(), strlstEvntData.size());
+
+    for (int i = 0; i < count; i++)
+    {
+        bool ok = false;
+        int id = strlstEvntID[i].toInt(&ok);
+
+        if (ok && id >= 1 && id <= 255)
+            eventDataMap[id] = strlstEvntData[i];
+    }
+    for (int id = 1; id <= 255; id++)
+    {
+        QString col = GetStnHlthEventName(id);
+        // if (col.isEmpty())
+        //     col = QString("EVENT_%1").arg(id);
+        if (col.isEmpty())
+            col = QString("EVENT_DATA_%1").arg(id);
+
+        QString quotedCol = "\"" + col + "\"";
+
+        // skip duplicates safely
+        if (usedCols.contains(quotedCol))
         {
-            eventCols << colMap[static_cast<uint16_t>(n)].first;
-            eventCols << colMap[static_cast<uint16_t>(n)].second;
+            qDebug() << "Duplicate column skipped:"
+                     << col
+                     << "Event ID:" << id;
+            continue;
         }
-        else
-        {
-            eventCols << QString("EVENT_ID_%1").arg(n);
-            eventCols << QString("EVENT_DATA_%1").arg(n);
-        }
+
+        qDebug() << "Adding Event:"
+                 << "ID =" << id
+                 << "COLUMN =" << col
+                 << "VALUE =" << eventDataMap[id];
+        addSafe(col, eventDataMap[id]);
     }
-
-    QStringList allCols;
-    allCols << fixedCols << eventCols << "CRC";
-
-    // Build quoted column name list and matching ? placeholder list
-    QStringList quotedCols, placeholders;
-    for (const QString &col : allCols)
-    {
-        quotedCols   << QString("\"%1\"").arg(col);
-        placeholders << "?";
-    }
-
-    QString sql = QString("INSERT INTO public.stationhealthpkt (%1) VALUES (%2)")
-                      .arg(quotedCols.join(", "))
-                      .arg(placeholders.join(", "));
-
-    // ── Bind all values in the same order ────────────────────────────────────
-    QSqlQuery query(m_pcDB->Get());
-    query.prepare(sql);
-
-    // Fixed header
-    query.addBindValue(strStrtFrm);
-    query.addBindValue(strMsgType);
-    query.addBindValue(static_cast<int>(stStnHlthPkt.usMsgLength));
-    query.addBindValue(static_cast<int>(stStnHlthPkt.usMsgSeq));
-    query.addBindValue(static_cast<int>(stStnHlthPkt.usStatKavachID));
-    query.addBindValue(static_cast<int>(stStnHlthPkt.usNMSID));
-    query.addBindValue(static_cast<int>(stStnHlthPkt.ucVersion));
-    query.addBindValue(strDate);
-    query.addBindValue(strTime);
-    query.addBindValue(static_cast<int>(stStnHlthPkt.ucEventCnt));
-
-    // Event columns (in same order as eventCols list)
-    for (const QString &col : eventCols)
-    {
-        query.addBindValue(columnValues[col]);
-    }
-
+    // =====================================================
     // CRC
-    query.addBindValue(strCRC);
+    // =====================================================
+    addStr("CRC", QString("0x%1").arg(uiCrc, 0, 16).toUpper());
 
-    // ── Execute ───────────────────────────────────────────────────────────────
-    if (!query.exec())
-    {
-        qDebug() << "[StnHlth] DB insert FAILED:" << query.lastError().text();
-    }
+    // =====================================================
+    // SQL EXECUTE
+    // =====================================================
+    QString sql = QString("INSERT INTO stationhealthpkt (%1) VALUES (%2)")
+                      .arg(cols.join(","))
+                      .arg(vals.join(","));
+
+    qDebug() << sql;
+
+    if (!query.exec(sql))
+        qDebug() << "Insert Failed:" << query.lastError().text();
     else
-    {
-        qDebug() << "[StnHlth] DB insert OK — KavachID:" << stStnHlthPkt.usStatKavachID
-                 << "events:" << stStnHlthPkt.ucEventCnt;
-    }
+        qDebug() << "Insert Success";
 }
 
-void nmsDBQuerys::SlotInsertDBOnBoardhealthPkt(stOnBoardHealthPkt stOnBrdHlthPkt, QString strEvntID, QString strEvntData, uint32_t uiCrc)
+// void nmsDBQuerys::SlotInsertDBOnBoardhealthPkt(stOnBoardHealthPkt stOnBrdHlthPkt, QString strEvntID, QString strEvntData, uint32_t uiCrc)
+// {
+//     QSqlQuery *pcQuery = new QSqlQuery(m_pcDB->Get());
+
+//     QDateTime datetime = QDateTime::currentDateTime();
+
+//     QString strdate = datetime.date().toString("yyyy-MM-dd");
+//     QString strtime = datetime.time().toString("hh:mm:ss");
+
+//     QString strStrtFrm = QString("0x%1").arg(stOnBrdHlthPkt.usStartFrame,0,16).toUpper();
+//     QString strmsgtyp = QString("0x%1").arg(stOnBrdHlthPkt.ucMsgType,0,16).toUpper();
+//     QString strCRC = QString("0x%1").arg(uiCrc,0,16).toUpper();
+//     QString strOnBrdKavachID = QString("%1 %2 %3")
+//                                    .arg(stOnBrdHlthPkt.ucOnBrdKavachID[0], 2, 16, QChar('0'))
+//                                    .arg(stOnBrdHlthPkt.ucOnBrdKavachID[1], 2, 16, QChar('0'))
+//                                    .arg(stOnBrdHlthPkt.ucOnBrdKavachID[2], 2, 16, QChar('0')).toUpper();
+
+//     QString strQuery = QString("INSERT INTO public.onboardhealthpacket("
+//                                "\"SOF\", \"MSG_TYPE\", \"MSG_LEN\", \"MSG_SEQ\", "
+//                                "\"LOCO_KAVACH_ID\", \"NMS_SYSTEM_ID\", \"SYSTEM_VER\", "
+//                                "\"DATE\", \"TIME\", \"EVENT_COUNT\", \"EVENT_ID\", \"EVENT_DATA\", \"CRC\")"
+//                                "VALUES ('%1','%2',%3,%4,'%5',%6,%7,'%8','%9',%10,'%11','%12','%13');")
+//                            .arg(strStrtFrm).arg(strmsgtyp).arg(stOnBrdHlthPkt.usMsgLength)
+//                            .arg(stOnBrdHlthPkt.usMsgSeq).arg(strOnBrdKavachID).arg(stOnBrdHlthPkt.usNMSID)
+//                            .arg(stOnBrdHlthPkt.ucVersion).arg(strdate).arg(strtime).arg(stOnBrdHlthPkt.ucEventCnt)
+//                            .arg(strEvntID).arg(strEvntData).arg(strCRC);
+
+//     bool bQryResult = pcQuery->exec(strQuery);
+
+//     /* Execute the Query */
+//     if(bQryResult == true)
+//     {
+//         qDebug () << "successfully insert the OnBoard health packet into database";
+//     }
+//     else
+//     {
+//         qDebug () << "Failed to insert the OnBoard health packet into database";
+//         qDebug() << "SQL Error:" << pcQuery->lastError().text();
+//     }
+//     delete pcQuery;
+//     pcQuery = NULL;
+// }
+
+void nmsDBQuerys::SlotInsertDBOnBoardhealthPkt(stOnBoardHealthPkt stOnBrdHlthPkt,
+                                               QStringList strlstEvntID,
+                                               QStringList strlstEvntData,
+                                               uint32_t uiCrc)
 {
-    QSqlQuery *pcQuery = new QSqlQuery(m_pcDB->Get());
+    qDebug() << "ONBOARD" << strlstEvntID << strlstEvntData;
+    QSqlQuery query(m_pcDB->Get());
 
-    QDateTime datetime = QDateTime::currentDateTime();
+    QStringList cols;
+    QStringList vals;
+    QSet<QString> usedCols;
 
-    QString strdate = datetime.date().toString("yyyy-MM-dd");
-    QString strtime = datetime.time().toString("hh:mm:ss");
-
-    QString strStrtFrm = QString("0x%1").arg(stOnBrdHlthPkt.usStartFrame,0,16).toUpper();
-    QString strmsgtyp = QString("0x%1").arg(stOnBrdHlthPkt.ucMsgType,0,16).toUpper();
-    QString strCRC = QString("0x%1").arg(uiCrc,0,16).toUpper();
-    QString strOnBrdKavachID = QString("%1 %2 %3")
-                                   .arg(stOnBrdHlthPkt.ucOnBrdKavachID[0], 2, 16, QChar('0'))
-                                   .arg(stOnBrdHlthPkt.ucOnBrdKavachID[1], 2, 16, QChar('0'))
-                                   .arg(stOnBrdHlthPkt.ucOnBrdKavachID[2], 2, 16, QChar('0')).toUpper();
-
-    QString strQuery = QString("INSERT INTO public.onboardhealthpacket("
-                               "\"SOF\", \"MSG_TYPE\", \"MSG_LEN\", \"MSG_SEQ\", "
-                               "\"LOCO_KAVACH_ID\", \"NMS_SYSTEM_ID\", \"SYSTEM_VER\", "
-                               "\"DATE\", \"TIME\", \"EVENT_COUNT\", \"EVENT_ID\", \"EVENT_DATA\", \"CRC\")"
-                               "VALUES ('%1','%2',%3,%4,'%5',%6,%7,'%8','%9',%10,'%11','%12','%13');")
-                           .arg(strStrtFrm).arg(strmsgtyp).arg(stOnBrdHlthPkt.usMsgLength)
-                           .arg(stOnBrdHlthPkt.usMsgSeq).arg(strOnBrdKavachID).arg(stOnBrdHlthPkt.usNMSID)
-                           .arg(stOnBrdHlthPkt.ucVersion).arg(strdate).arg(strtime).arg(stOnBrdHlthPkt.ucEventCnt)
-                           .arg(strEvntID).arg(strEvntData).arg(strCRC);
-
-    bool bQryResult = pcQuery->exec(strQuery);
-
-    /* Execute the Query */
-    if(bQryResult == true)
+    // =====================================================
+    // HELPERS
+    // =====================================================
+    auto addStr = [&](const QString &col, const QString &val)
     {
-        qDebug () << "successfully insert the OnBoard health packet into database";
+        QString c = "\"" + col.trimmed() + "\"";
+
+        if (usedCols.contains(c))
+            return;
+
+        usedCols.insert(c);
+
+        cols << c;
+        vals << "'" + val + "'";
+    };
+
+    auto addInt = [&](const QString &col, int val)
+    {
+        QString c = "\"" + col.trimmed() + "\"";
+
+        if (usedCols.contains(c))
+            return;
+
+        usedCols.insert(c);
+
+        cols << c;
+        vals << QString::number(val);
+    };
+
+    auto addSafe = [&](const QString &col, const QString &val)
+    {
+        qDebug() << "Column Name:" << col << val;
+        bool ok = false;
+        int v = val.toInt(&ok);
+
+        QString c = "\"" + col.trimmed() + "\"";
+        if (usedCols.contains(c)) return;
+
+        qDebug() << "Column Name........:" << col << val;
+
+        usedCols.insert(c);
+        cols << c;
+        // vals << (ok ? QString::number(v) : "0");
+        vals << (ok ? QString::number(v)
+                    : "'" + val + "'");
+    };
+
+    auto toHex = [](auto v)
+    {
+        return QString("0x%1").arg(v, 0, 16).toUpper();
+    };
+
+    // =====================================================
+    // HEADER
+    // =====================================================
+    addStr("SOF", toHex(stOnBrdHlthPkt.usStartFrame));
+    addStr("MSG_TYPE", toHex(stOnBrdHlthPkt.ucMsgType));
+
+    uint32_t uiLocoID =
+        (stOnBrdHlthPkt.ucOnBrdKavachID[0] << 16) |
+        (stOnBrdHlthPkt.ucOnBrdKavachID[1] << 8)  |
+        stOnBrdHlthPkt.ucOnBrdKavachID[2];
+
+    addInt("MSG_LEN", stOnBrdHlthPkt.usMsgLength);
+    addInt("MSG_SEQ", stOnBrdHlthPkt.usMsgSeq);
+    addInt("ONBOARD_KAVACH_ID", uiLocoID);
+    addInt("NMS_SYSTEM_ID", stOnBrdHlthPkt.usNMSID);
+    addInt("SYSTEM_VER", stOnBrdHlthPkt.ucVersion);
+
+    QString date = QString("20%1-%2-%3")
+                       .arg(stOnBrdHlthPkt.ucDate[2], 2, 10, QChar('0'))
+                       .arg(stOnBrdHlthPkt.ucDate[1], 2, 10, QChar('0'))
+                       .arg(stOnBrdHlthPkt.ucDate[0], 2, 10, QChar('0'));
+
+    QString time = QString("%1:%2:%3")
+                       .arg(stOnBrdHlthPkt.ucTime[0], 2, 10, QChar('0'))
+                       .arg(stOnBrdHlthPkt.ucTime[1], 2, 10, QChar('0'))
+                       .arg(stOnBrdHlthPkt.ucTime[2], 2, 10, QChar('0'));
+
+    addStr("DATE", date);
+    addStr("TIME", time);
+
+    // =====================================================
+    // EVENT COUNT
+    // =====================================================
+
+    addInt("EVENT_COUNT", strlstEvntID.size());
+
+    // =====================================================
+    // EVENT ID FLAGS
+    // =====================================================
+    QMap<int, int> eventIdMap;
+
+    for (int i = 1; i <= 255; i++)
+        eventIdMap[i] = 0;
+
+    for (const QString &ev : strlstEvntID)
+    {
+        qDebug() << "RAW EVENT ID =" << ev;
+        bool ok = false;
+
+        int id = ev.trimmed().toInt(&ok);
+        qDebug() << "CONVERTED =" << id << "OK =" << ok;
+        if (ok && id >= 1 && id <= 255)
+            eventIdMap[id] = id;
+    }
+
+    for (int id = 1; id <= 255; id++)
+    {
+        addInt(QString("EVENT_ID_%1").arg(id),
+               eventIdMap[id]);
+    }
+
+    // =====================================================
+    // EVENT DATA MAP
+    // =====================================================
+    QMap<int, QString> eventDataMap;
+
+    for (int i = 1; i <= 255; i++)
+        eventDataMap[i] = "0";
+
+    int count = qMin(strlstEvntID.size(), strlstEvntData.size());
+
+    for (int i = 0; i < count; i++)
+    {
+
+        bool ok = false;
+
+        int id = strlstEvntID[i]
+                     .trimmed()
+                     .toInt(&ok);
+
+        QString data =
+            strlstEvntData[i].trimmed();
+
+        qDebug() << "INDEX =" << i
+                 << "EVENT ID =" << id
+                 << "EVENT DATA =" << data
+                 << "OK =" << ok;
+
+        if (ok && id >= 1 && id <= 255)
+        {
+            eventDataMap[id] = data;
+
+            qDebug() << "MAPPED:"
+                     << "EVENT_DATA_" + QString::number(id)
+                     << "="
+                     << eventDataMap[id];
+        }
+    }
+
+    // =====================================================
+    // INSERT EVENT DATA COLUMNS
+    // =====================================================
+    for (int id = 1; id <= 255; id++)
+    {
+        QString col = GetOnBoardHlthEventName(id);
+
+        if (col.isEmpty())
+            col = QString("EVENT_DATA_%1").arg(id);
+
+        QString quotedCol = "\"" + col + "\"";
+
+        // skip duplicates safely
+        if (usedCols.contains(quotedCol))
+        {
+            qDebug() << "Duplicate column skipped:"
+                     << col
+                     << "Event ID:" << id;
+            continue;
+        }
+
+        qDebug() << "Adding Event:"
+                 << "ID =" << id
+                 << "COLUMN =" << col
+                 << "VALUE =" << eventDataMap[id];
+        addSafe(col, eventDataMap[id]);
+    }
+
+    // =====================================================
+    // CRC
+    // =====================================================
+    addStr("CRC",
+           QString("0x%1").arg(uiCrc, 0, 16).toUpper());
+
+    // =====================================================
+    // SQL QUERY
+    // =====================================================
+    QString sql = QString(
+                      "INSERT INTO onboardhealthpkt (%1) "
+                      "VALUES (%2)")
+                      .arg(cols.join(","))
+                      .arg(vals.join(","));
+
+    qDebug() << sql;
+
+    // =====================================================
+    // EXECUTE
+    // =====================================================
+    if (!query.exec(sql))
+    {
+        qDebug() << "INSERT FAILED:";
+        qDebug() << query.lastError().text();
     }
     else
     {
-        qDebug () << "Failed to insert the OnBoard health packet into database";
-        qDebug() << "SQL Error:" << pcQuery->lastError().text();
+        qDebug() << "INSERT SUCCESS";
     }
-    delete pcQuery;
-    pcQuery = NULL;
 }
 
 void nmsDBQuerys::SlotInsertDBS2SPDIVerCmd(stPacketHeader stPktHdr, stPDIVerCheckCmdPkt stPDIVerCmd)
@@ -3035,6 +3227,222 @@ QString nmsDBQuerys::GetBrakeCauseDescription(quint16 usCauseID)   //0x1E
     default:
         return QString("Unknown Brake Cause (%1)")
             .arg(usCauseID);
+    }
+}
+
+QString nmsDBQuerys::GetStnHlthEventName(uint16_t usEvntID)
+{
+    switch(usEvntID)
+    {
+    case 1:   return "SYSTEM_TEMPERATURE";
+    case 2:   return "ACTIVE_RADIO_NUMBER";
+    case 3:   return "RADIO_1_HEALTH";
+    case 4:   return "RADIO_2_HEALTH";
+    case 5:   return "RADIO_1_INPUT_SUPPLY";
+    case 6:   return "RADIO_2_INPUT_SUPPLY";
+    case 7:   return "RADIO_1_TEMPERATURE";
+    case 8:   return "RADIO_2_TEMPERATURE";
+    case 9:   return "RADIO_1_PA_TEMPERATURE";
+    case 10:  return "RADIO_2_PA_TEMPERATURE";
+    case 11:  return "RADIO_1_PA_SUPPLY_VOLTAGE";
+    case 12:  return "RADIO_2_PA_SUPPLY_VOLTAGE";
+    case 13:  return "RADIO_1_PA_TX_PA_CURRENT";
+    case 14:  return "RADIO_2_PA_TX_PA_CURRENT";
+    case 15:  return "RADIO_1_REVERSE_POWER";
+    case 16:  return "RADIO_2_REVERSE_POWER";
+    case 17:  return "RADIO_1_FORWARD_POWER";
+    case 18:  return "RADIO_2_FORWARD_POWER";
+    case 19:  return "CURRENT_RUNNING_KEY";
+    case 20:  return "REMAINING_NUMBER_OF_KEYS";
+    case 21:  return "SESSION_KEY_CHECKSUM";
+    case 22:  return "ALLOWCATED_TIME_SLOT_FOR_NEW_LOCO";
+    case 23:  return "NEW_LOCO_REGULAR_PACKET_RECEIVED_TIME_OFFSET";
+    case 24:  return "LOCO_COUNT";
+    case 25:  return "RADIO_1_RX_PACKET_COUNT";
+    case 26:  return "RADIO_2_RX_PACKET_COUNT";
+    case 27:  return "ACTIVE_GPS_NUMBER";
+    case 28:  return "GPS_1_VIEW";
+    case 29:  return "GPS_2_VIEW";
+    case 30:  return "GPS_1_SECONDS";
+    case 31:  return "GPS_2_SECONDS";
+    case 32:  return "GPS_1_SATELLITES_IN_VIEW";
+    case 33:  return "GPS_1_CNO_MAX";
+    case 34:  return "GPS_2_SATELLITES_IN_VIEW";
+    case 35:  return "GPS_2_CNO_MAX";
+    case 36:  return "GSM_1_RSSI";
+    case 37:  return "GSM_2_RSSI";
+    case 38:  return "MISSING_RFID";
+    case 39:  return "INVALID_RFID";
+    case 40:  return "CONFLICT_ROUTE_RFID";
+    case 41:  return "CONFLICTING_TIN";
+    case 42:  return "MISSING_TIN";
+    case 43:  return "LOCO_SPECIFIC_SOS";
+    case 44:  return "TRAIN_EXIT_MODE";
+    case 45:  return "STATION_MODULES_HEALTH";
+
+        // RESERVED 46 - 199
+    default:
+    {
+        if(usEvntID >= 46 && usEvntID <= 199)
+        {
+            return QString("RESERVED_%1").arg(usEvntID - 45);
+        }
+        else if(usEvntID >= 200 && usEvntID <= 223)
+        {
+            switch(usEvntID)
+            {
+            case 200: return "STATION_ID_RIU_1_CPU_MODULE_POWER";
+            case 201: return "STATION_ID_RIU_1_CPU_MODULE_TEMPERATURE";
+            case 202: return "STATION_ID_RIU_1_IO_MODULE_POWER";
+            case 203: return "STATION_ID_RIU_1_IO_MODULE_TEMPERATURE";
+
+            case 204: return "STATION_ID_RIU_2_CPU_MODULE_POWER";
+            case 205: return "STATION_ID_RIU_2_CPU_MODULE_TEMPERATURE";
+            case 206: return "STATION_ID_RIU_2_IO_MODULE_POWER";
+            case 207: return "STATION_ID_RIU_2_IO_MODULE_TEMPERATURE";
+
+            case 208: return "STATION_ID_RIU_3_CPU_MODULE_POWER";
+            case 209: return "STATION_ID_RIU_3_CPU_MODULE_TEMPERATURE";
+            case 210: return "STATION_ID_RIU_3_IO_MODULE_POWER";
+            case 211: return "STATION_ID_RIU_3_IO_MODULE_TEMPERATURE";
+
+            case 212: return "STATION_ID_RIU_4_CPU_MODULE_POWER";
+            case 213: return "STATION_ID_RIU_4_CPU_MODULE_TEMPERATURE";
+            case 214: return "STATION_ID_RIU_4_IO_MODULE_POWER";
+            case 215: return "STATION_ID_RIU_4_IO_MODULE_TEMPERATURE";
+
+            case 216: return "STATION_ID_RIU_5_CPU_MODULE_POWER";
+            case 217: return "STATION_ID_RIU_5_CPU_MODULE_TEMPERATURE";
+            case 218: return "STATION_ID_RIU_5_IO_MODULE_POWER";
+            case 219: return "STATION_ID_RIU_5_IO_MODULE_TEMPERATURE";
+
+            case 220: return "STATION_ID_RIU_6_CPU_MODULE_POWER";
+            case 221: return "STATION_ID_RIU_6_CPU_MODULE_TEMPERATURE";
+            case 222: return "STATION_ID_RIU_6_IO_MODULE_POWER";
+            case 223: return "STATION_ID_RIU_6_IO_MODULE_TEMPERATURE";
+            }
+        }
+        else if(usEvntID >= 224 && usEvntID <= 255)
+        {
+            return QString("EVENT_DATA_%1").arg(usEvntID);
+        }
+
+        return "UNKNOWN_EVENT";
+    }
+    }
+}
+
+QString nmsDBQuerys::GetOnBoardHlthEventName(uint16_t usEvntID)
+{
+    switch(usEvntID)
+    {
+    case 1:   return "RADIO_1_HEALTH";
+    case 2:   return "RADIO_2_HEALTH";
+    case 3:   return "RADIO_1_INPUT_SUPPLY";
+    case 4:   return "RADIO_2_INPUT_SUPPLY";
+    case 5:   return "RADIO_1_TEMPERATURE";
+    case 6:   return "RADIO_2_TEMPERATURE";
+    case 7:   return "RADIO_1_PA_TEMPERATURE";
+    case 8:  return "RADIO_2_PA_TEMPERATURE";
+    case 9:  return "RADIO_1_PA_SUPPLY_VOLTAGE";
+    case 10:  return "RADIO_2_PA_SUPPLY_VOLTAGE";
+    case 11:  return "RADIO_1_TX_PA_CURRENT";
+    case 12:  return "RADIO_2_TX_PA_CURRENT";
+    case 13:  return "RADIO_1_REVERSE_POWER";
+    case 14:  return "RADIO_2_REVERSE_POWER";
+    case 15:  return "RADIO_1_FORWARD_POWER";
+    case 16:  return "RADIO_2_FORWARD_POWER";
+    case 17:  return "STATIONARY_REGULAR_PACKET_RECEIVED_TIME_OFFSET";
+    case 18:  return "ACTIVE_GPS_NUMBER";
+    case 19:  return "GPS_1_VIEW_STATUS";
+    case 20:  return "GPS_2_VIEW_STATUS";
+    case 21:  return "GPS_1_SECONDS";
+    case 22:  return "GPS_2_SECONDS";
+    case 23:  return "GPS_1_SATELLITES_IN_VIEW";
+    case 24:  return "GPS_1_CNO_MAX";
+    case 25:  return "GPS_2_SATELLITES_IN_VIEW";
+    case 26:  return "GPS_2_CNO_MAX";
+    case 27:  return "GPS_1_LINK_STATUS";
+    case 28:  return "GPS_2_LINK_STATUS";
+    case 29:  return "GSM_1_RSSI";
+    case 30:  return "GSM_2_RSSI";
+    case 31:  return "CURRENT_RUNNING_KEY";
+    case 32:  return "REMAINING_NUMBER_OF_KEYS";
+    case 33:  return "SESSION_KEY_CHECKSUM";
+    case 34:  return "DMI_1_LINK_STATUS";
+    case 35:  return "DMI_2_LINK_STATUS";
+    case 36:  return "RFID_READER_1_LINK_STATUS";
+    case 37:  return "RFID_READER_2_LINK_STATUS";
+    case 38:  return "DUPLICATE_MISSING_RFID_TAG";
+    case 39:  return "MISSING_LINKED_RFID_TAG";
+    case 40:  return "COMPUTED_TLM_STATUS";
+    case 41:  return "TRAIN_CONFIGURATION_CHANGE";
+    case 42:  return "BOOTUP_SEQUENCE_ERROR";
+    case 43:  return "SELECTED_TRAIN_FORMATION";
+    case 44:  return "SELECTED_CAB";
+    case 45:  return "BRAKE_APPLICATION_REASON";
+    case 46:  return "STATION_GENERAL_SOS";
+    case 47:  return "STATION_LOCO_SPECIFIC_SOS";
+    case 48:  return "COLLISION_DETECTION";
+    case 49:  return "LOCO_SELF_SOS";
+    case 50:  return "KAVACH_CONNECTION";
+    case 51:  return "BIU_ISOLATED";
+    case 52:  return "EB_BYPASSED";
+    case 53:  return "KAVACH_TERRITORY";
+    case 54:  return "BRAKE_INTERFACE_ERROR";
+    case 55:  return "ONBOARD_KAVACH_MODULES_HEALTH";
+    case 56:  return "CONFLICT_ROUTE_RFID";
+    case 57:  return "TRAIN_CONFIGURATION_DATA_CHECKSUM";
+
+        // RESERVED 46 - 199
+    default:
+    {
+        if(usEvntID >= 58 && usEvntID <= 199)
+        {
+            return QString("RESERVED_%1").arg(usEvntID - 57);
+        }
+        // else if(usEvntID >= 200 && usEvntID <= 223)
+        // {
+        //     switch(usEvntID)
+        //     {
+        //     case 200: return "STATION_ID_RIU_1_CPU_MODULE_POWER";
+        //     case 201: return "STATION_ID_RIU_1_CPU_MODULE_TEMPERATURE";
+        //     case 202: return "STATION_ID_RIU_1_IO_MODULE_POWER";
+        //     case 203: return "STATION_ID_RIU_1_IO_MODULE_TEMPERATURE";
+
+        //     case 204: return "STATION_ID_RIU_2_CPU_MODULE_POWER";
+        //     case 205: return "STATION_ID_RIU_2_CPU_MODULE_TEMPERATURE";
+        //     case 206: return "STATION_ID_RIU_2_IO_MODULE_POWER";
+        //     case 207: return "STATION_ID_RIU_2_IO_MODULE_TEMPERATURE";
+
+        //     case 208: return "STATION_ID_RIU_3_CPU_MODULE_POWER";
+        //     case 209: return "STATION_ID_RIU_3_CPU_MODULE_TEMPERATURE";
+        //     case 210: return "STATION_ID_RIU_3_IO_MODULE_POWER";
+        //     case 211: return "STATION_ID_RIU_3_IO_MODULE_TEMPERATURE";
+
+        //     case 212: return "STATION_ID_RIU_4_CPU_MODULE_POWER";
+        //     case 213: return "STATION_ID_RIU_4_CPU_MODULE_TEMPERATURE";
+        //     case 214: return "STATION_ID_RIU_4_IO_MODULE_POWER";
+        //     case 215: return "STATION_ID_RIU_4_IO_MODULE_TEMPERATURE";
+
+        //     case 216: return "STATION_ID_RIU_5_CPU_MODULE_POWER";
+        //     case 217: return "STATION_ID_RIU_5_CPU_MODULE_TEMPERATURE";
+        //     case 218: return "STATION_ID_RIU_5_IO_MODULE_POWER";
+        //     case 219: return "STATION_ID_RIU_5_IO_MODULE_TEMPERATURE";
+
+        //     case 220: return "STATION_ID_RIU_6_CPU_MODULE_POWER";
+        //     case 221: return "STATION_ID_RIU_6_CPU_MODULE_TEMPERATURE";
+        //     case 222: return "STATION_ID_RIU_6_IO_MODULE_POWER";
+        //     case 223: return "STATION_ID_RIU_6_IO_MODULE_TEMPERATURE";
+        //     }
+        // }
+        else if(usEvntID >= 200 && usEvntID <= 255)
+        {
+            return QString("EVENT_DATA_%1").arg(usEvntID);
+        }
+
+        return "UNKNOWN_EVENT";
+    }
     }
 }
 void nmsDBQuerys::SlotInsertDBOnboardBOKSHealthMsg(stOnboardKavachBOKSHealthMsg stOnBoardSysHealth)

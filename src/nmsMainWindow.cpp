@@ -12,7 +12,8 @@ nmsMainWindow::nmsMainWindow(QString strCFGFilePath, QObject *pcParent)
     m_bNMSOffline(false),
     m_bNMSAppDown(false),
     m_pcVCTimer(nullptr),
-    m_pcVCSock(nullptr),m_pcFaultpkt(nullptr)
+    m_pcVCSock(nullptr),m_pcFaultpkt(nullptr),
+    m_eventLoggerLED(nullptr)
 {
     InitCFGFile();
     Init();
@@ -35,7 +36,7 @@ nmsMainWindow::~nmsMainWindow()
 
 void nmsMainWindow::Init()
 {
-
+    m_eventLoggerLED =new EventLoggerLED(m_strCfgFilePath,this);
 }
 
 void nmsMainWindow::ProcessFieldInputmessage(QHostAddress senderIP, QByteArray datagram)
@@ -146,6 +147,144 @@ void nmsMainWindow::InitCFGFile()
 
         m_ocCfgSettings->endGroup();
     }
+}
+
+QString nmsMainWindow::GetModuleID(uint8_t ucModulID)
+{
+    QString strModName = NULL;
+    switch(ucModulID)
+    {
+    case 0x00: strModName = "LOCO"; break;
+    case 0x01: strModName = "STN"; break;
+    case 0x02: strModName = "RIU1"; break;
+    case 0x03: strModName = "RIU2"; break;
+    case 0x04: strModName = "RIU3"; break;
+    case 0x05: strModName = "RIU4"; break;
+    case 0x06: strModName = "RIU5"; break;
+    case 0x07: strModName = "RIU6"; break;
+    case 0x08: strModName = "STN-RIU1"; break;
+    case 0x09: strModName = "STN-RIU2"; break;
+    case 0x0A: strModName = "STN-RIU3"; break;
+    case 0x0B: strModName = "STN-RIU4"; break;
+    case 0x0C: strModName = "STN-RIU5"; break;
+    case 0x0D: strModName = "STN-RIU6"; break;
+    case 0x0E: strModName = "RIU1-RIU2"; break;
+    case 0x0F: strModName = "RIU2-RIU3"; break;
+    case 0x10: strModName = "RIU3-RIU4"; break;
+    case 0x11: strModName = "RIU4-RIU5"; break;
+    case 0x12: strModName = "RIU5-RIU6"; break;
+    case 0x13: strModName = "RIU1-STN"; break;
+    case 0x14: strModName = "RIU2-STN"; break;
+    case 0x15: strModName = "RIU3-STN"; break;
+    case 0x16: strModName = "RIU4-STN"; break;
+    case 0x17: strModName = "RIU5-STN"; break;
+    case 0x18: strModName = "RIU6-STN"; break;
+    default: strModName = ""; break;
+    }
+    return strModName;
+}
+
+QString nmsMainWindow::GetFaultCodetype(uint8_t ucfaultTyp)
+{
+    QString strFaultCodeType = NULL;
+    switch(ucfaultTyp)
+    {
+    case 0x00: strFaultCodeType = "FAULT"; break;
+    case 0x11: strFaultCodeType = "RECOVERED"; break;
+
+    }
+    return strFaultCodeType;
+}
+
+QString nmsMainWindow::GetFaultCodeDescription(uint16_t usFaultCode)
+{
+    QString strFaultCode;
+
+    switch(usFaultCode)
+    {
+    case 0x0001: strFaultCode = "RADIO-1"; break;
+    case 0x0002: strFaultCode = "RADIO-2"; break;
+    case 0x0003: strFaultCode = "GPS-1"; break;
+    case 0x0004: strFaultCode = "GPS-2"; break;
+    case 0x0005: strFaultCode = "GSM1 MODULE"; break;
+    case 0x0006: strFaultCode = "GSM2 MODULE"; break;
+    case 0x0007: strFaultCode = "SM-OCIP PS1"; break;
+    case 0x0008: strFaultCode = "SM-OCIP PS2"; break;
+    case 0x0009: strFaultCode = "SM-OCIP LINK1"; break;
+    case 0x000A: strFaultCode = "SM-OCIP LINK2"; break;
+    case 0x000B: strFaultCode = "SM-OCIP BOTH LINK"; break;
+    case 0x000C: strFaultCode = "VC PRI"; break;
+    case 0x000D: strFaultCode = "VC SEC"; break;
+    case 0x000E: strFaultCode = "VC COMM PRI"; break;
+    case 0x000F: strFaultCode = "VC COMM SEC"; break;
+    case 0x0010: strFaultCode = "DI CARD1"; break;
+    case 0x0011: strFaultCode = "DI CARD2"; break;
+    case 0x0012: strFaultCode = "DI CARD3"; break;
+    case 0x0013: strFaultCode = "DI CARD4"; break;
+    case 0x0014: strFaultCode = "DI CARD5"; break;
+    case 0x0015: strFaultCode = "DI CARD6"; break;
+    case 0x0016: strFaultCode = "DI CARD7"; break;
+    case 0x0017: strFaultCode = "DI CARD8"; break;
+    case 0x0018: strFaultCode = "DI CARD9"; break;
+    case 0x0019: strFaultCode = "DI CARD10"; break;
+    case 0x001A: strFaultCode = "EVL CH-1"; break;
+    case 0x001B: strFaultCode = "EVL CH-2"; break;
+    case 0x001C: strFaultCode = "PSM1 IN & OUT"; break;
+    case 0x001D: strFaultCode = "PSM2 IN & OUT"; break;
+    case 0x001E: strFaultCode = "DOR IN1"; break;
+    case 0x001F: strFaultCode = "DOR IN2"; break;
+    case 0x0020: strFaultCode = "ES1 IN POWER"; break;
+    case 0x0021: strFaultCode = "ES2 IN POWER"; break;
+    case 0x0022: strFaultCode = "PRI OFC LINK"; break;
+    case 0x0023: strFaultCode = "SEC OFC LINK"; break;
+    case 0x0024: strFaultCode = "BOTH PRI & SEC OFC LINKS"; break;
+    case 0x0025: strFaultCode = "CMPLT PRI OFC LINK"; break;
+    case 0x0026: strFaultCode = "CMPLT SEC OFC LINK"; break;
+    case 0x0027: strFaultCode = "CMPLT BOTH PRI & SEC OFC LINK"; break;
+    case 0x0028: strFaultCode = "BC1 AC IN"; break;
+    case 0x0029: strFaultCode = "BC1 DC OUT"; break;
+    case 0x002A: strFaultCode = "BC1 BATT LOW"; break;
+    case 0x002B: strFaultCode = "BC2 AC IN"; break;
+    case 0x002C: strFaultCode = "BC2 DC OUT"; break;
+    case 0x002D: strFaultCode = "BC2 BATT LOW"; break;
+    case 0x002E: strFaultCode = "VITAL IO1"; break;
+    case 0x002F: strFaultCode = "VITAL IO2"; break;
+    case 0x0030: strFaultCode = "RADIO-1 LINK"; break;
+    case 0x0031: strFaultCode = "RADIO-2 LINK"; break;
+    case 0x0032: strFaultCode = "RFID READER-1"; break;
+    case 0x0033: strFaultCode = "RFID READER-2"; break;
+    case 0x0034: strFaultCode = "ACT DMI LINK1"; break;
+    case 0x0035: strFaultCode = "ACT DMI LINK2"; break;
+    case 0x0036: strFaultCode = "ACT DMI BOTH LINK"; break;
+    case 0x0037: strFaultCode = "IN-ACT DMI LINK1"; break;
+    case 0x0038: strFaultCode = "IN-ACT DMI LINK2"; break;
+    case 0x0039: strFaultCode = "IN-ACT DMI BOTH LINK"; break;
+    case 0x003A: strFaultCode = "SYSTEM INTERNAL"; break;
+    case 0x003B: strFaultCode = "SPEED SENSORS"; break;
+    case 0x003C: strFaultCode = "SPD1 SENSOR"; break;
+    case 0x003D: strFaultCode = "SPD2 SENSOR"; break;
+    case 0x003E: strFaultCode = "CAB INPUT1"; break;
+    case 0x003F: strFaultCode = "CAB INPUT2"; break;
+    case 0x0040: strFaultCode = "EB DRIVE"; break;
+    case 0x0041: strFaultCode = "EB APPLICATION (FB)"; break;
+    case 0x0042: strFaultCode = "NB DRIVE"; break;
+    case 0x0043: strFaultCode = "NB APPLICATION (FB)"; break;
+    case 0x0044: strFaultCode = "FSB DRIVE"; break;
+    case 0x0045: strFaultCode = "FSB APPLICATION (FB)"; break;
+    case 0x0046: strFaultCode = "LEB DRIVE"; break;
+    case 0x0047: strFaultCode = "LEB APPLICATION (FB)"; break;
+    case 0x0048: strFaultCode = "BC1 OUT BATT"; break;
+    case 0x0049: strFaultCode = "BC2 OUT BATT"; break;
+    case 0x004A: strFaultCode = "F35_VC"; break;
+    case 0x004B: strFaultCode = "F30A_DIO"; break;
+    case 0x004C: strFaultCode = "F30B_DIO"; break;
+    case 0x004D: strFaultCode = "GPS-1 PPS"; break;
+    case 0x004E: strFaultCode = "GPS-2 PPS"; break;
+    default:
+        strFaultCode = "UNKNOWN FAULT";
+        break;
+    }
+    return strFaultCode;
 }
 
 void nmsMainWindow::ProcessFieldEventMessage(QByteArray datagram)
@@ -333,184 +472,283 @@ void nmsMainWindow::ProcessAccessAuthorityPacket(QByteArray datagram)
 
 }
 
+// void nmsMainWindow::ProcessStationFaultPkt(QByteArray datagram)
+// {
+//     qDebug() << "================================================";
+//     qDebug() << "[FaultPkt] RX:"
+//              << datagram.toHex(' ').toUpper();
+
+//     quint16 startFrame =
+//         (static_cast<quint16>(
+//              static_cast<quint8>(datagram[0])) << 8) |
+//         static_cast<quint16>(
+//             static_cast<quint8>(datagram[1]));
+
+//     // Message Sequence
+//     quint16 msgSeq =
+//         (static_cast<quint16>(static_cast<quint8>(datagram[5])) << 8) |
+//         static_cast<quint16>(static_cast<quint8>(datagram[6]));
+
+//     // KAVACH ID - 3 bytes
+//     quint32 kavachID =
+//         (static_cast<quint32>(static_cast<quint8>(datagram[7])) << 16) |
+//         (static_cast<quint32>(static_cast<quint8>(datagram[8])) << 8) |
+//         static_cast<quint32>(static_cast<quint8>(datagram[9]));
+
+//     // NMS ID
+//     quint16 nmsID =
+//         (static_cast<quint16>(static_cast<quint8>(datagram[10])) << 8) |
+//         static_cast<quint16>(static_cast<quint8>(datagram[11]));
+
+//     // KAVACH Type
+//     quint8 kavachType =
+//         static_cast<quint8>(datagram[19]);
+
+//     // Total Faults
+//     quint8 totalFaults =
+//         static_cast<quint8>(datagram[20]);
+
+//     qDebug() << "[FaultPkt] MsgSeq:"
+//              << msgSeq;
+
+//     qDebug() << "[FaultPkt] KAVACH ID:"
+//              << QString("0x%1")
+//                     .arg(kavachID, 6, 16, QChar('0'))
+//                     .toUpper();
+
+//     qDebug() << "[FaultPkt] NMS ID:"
+//              << QString("0x%1")
+//                     .arg(nmsID, 4, 16, QChar('0'))
+//                     .toUpper();
+
+//     qDebug() << "[FaultPkt] KavachType:"
+//              << QString("0x%1")
+//                     .arg(kavachType, 2, 16, QChar('0'))
+//                     .toUpper();
+
+//     qDebug() << "[FaultPkt] TotalFaults:"
+//              << totalFaults;
+
+//     //======================================================================
+//     // Create / update packet structure
+//     //======================================================================
+
+//     delete m_pcFaultpkt;
+//     m_pcFaultpkt = new stStationFaults();
+
+//     memset(m_pcFaultpkt, 0, sizeof(stStationFaults));
+
+//     // Copy received packet into structure
+//     memcpy(m_pcFaultpkt,
+//            datagram.constData(),
+//            qMin(datagram.size(),
+//                 static_cast<int>(sizeof(stStationFaults))));
+
+//     // Store correctly parsed values
+//     m_pcFaultpkt->usMsgSeq = msgSeq;
+//     m_pcFaultpkt->ucKavachSubsysID = kavachID;
+//     m_pcFaultpkt->usNMSID = nmsID;
+//     m_pcFaultpkt->ucKavachType = kavachType;
+//     m_pcFaultpkt->ucTotalFaultsCode = totalFaults;
+
+//     //======================================================================
+//     // Fault lists for DB
+//     //======================================================================
+
+//     QStringList strLstFaultPrompt;
+//     QStringList strLstFaultType;
+//     QStringList strLstFaultCode;
+//     QStringList strLstModule;
+
+//     //======================================================================
+//     // Parse the received fault data
+//     //======================================================================
+
+//     const int faultStart = 21;
+//     const int crcSize = 4;
+//     const int faultDataEnd = datagram.size() - crcSize;
+
+//     const int faultEntrySize = 4;
+
+//     for (int i = 0;
+//          i < totalFaults &&
+//          (faultStart + (i * faultEntrySize) + faultEntrySize) <= faultDataEnd;
+//          ++i)
+//     {
+//         int offset =
+//             faultStart + (i * faultEntrySize);
+
+//         quint32 faultValue =
+//             (static_cast<quint32>(
+//                  static_cast<quint8>(datagram[offset])) << 24) |
+//             (static_cast<quint32>(
+//                  static_cast<quint8>(datagram[offset + 1])) << 16) |
+//             (static_cast<quint32>(
+//                  static_cast<quint8>(datagram[offset + 2])) << 8) |
+//             static_cast<quint32>(
+//                 static_cast<quint8>(datagram[offset + 3]));
+
+//         qDebug() << "[FaultPkt] Fault[" << i << "]:"
+//                  << QString("0x%1")
+//                         .arg(faultValue, 8, 16, QChar('0'))
+//                         .toUpper();
+
+//         strLstModule.append("0x00");
+//         strLstFaultType.append("0x00");
+
+//         strLstFaultCode.append(
+//             QString("0x%1")
+//                 .arg(faultValue, 8, 16, QChar('0'))
+//                 .toUpper());
+
+//         strLstFaultPrompt.append(
+//             QString("Fault 0x%1")
+//                 .arg(faultValue, 8, 16, QChar('0'))
+//                 .toUpper());
+//     }
+
+//     //======================================================================
+//     // ACK
+//     //======================================================================
+
+//     qDebug() << "[FaultAck] Preparing ACK"
+//              << "Seq:" << msgSeq
+//              << "NMSID:" << nmsID
+//              << "KavachID:" << kavachID
+//              << "KavachType:"
+//              << QString("0x%1")
+//                     .arg(kavachType, 2, 16, QChar('0'))
+//                     .toUpper();
+
+//     SendFaultPktAck(
+//         QHostAddress(m_strStnSenderIP),
+//         m_usStnSenderPort,
+//         msgSeq,
+//         nmsID,
+//         kavachID,
+//         kavachType,startFrame
+//         );
+
+//     qDebug() << "[FaultAck] SendFaultPktAck() completed";
+
+//     //======================================================================
+//     // DB
+//     //======================================================================
+
+//     emit SigStnFaultPktInserttoDB(
+//         m_pcFaultpkt,
+//         strLstModule,
+//         strLstFaultType,
+//         strLstFaultCode,
+//         strLstFaultPrompt);
+
+//     qDebug() << "[FaultPkt] Database signal emitted";
+
+//     //======================================================================
+//     // Completed
+//     //======================================================================
+
+//     qDebug() << "[FaultPkt] Processing completed";
+//     qDebug() << "================================================";
+// }
+
 void nmsMainWindow::ProcessStationFaultPkt(QByteArray datagram)
 {
-    qDebug() << "================================================";
-    qDebug() << "[FaultPkt] RX:"
-             << datagram.toHex(' ').toUpper();
+    qDebug() << "Station Faults Packet (RX:)" << datagram.toHex().toUpper();
 
-    quint16 startFrame =
-        (static_cast<quint16>(
-             static_cast<quint8>(datagram[0])) << 8) |
-        static_cast<quint16>(
-            static_cast<quint8>(datagram[1]));
-
-    // Message Sequence
-    quint16 msgSeq =
-        (static_cast<quint16>(static_cast<quint8>(datagram[5])) << 8) |
-        static_cast<quint16>(static_cast<quint8>(datagram[6]));
-
-    // KAVACH ID - 3 bytes
-    quint32 kavachID =
-        (static_cast<quint32>(static_cast<quint8>(datagram[7])) << 16) |
-        (static_cast<quint32>(static_cast<quint8>(datagram[8])) << 8) |
-        static_cast<quint32>(static_cast<quint8>(datagram[9]));
-
-    // NMS ID
-    quint16 nmsID =
-        (static_cast<quint16>(static_cast<quint8>(datagram[10])) << 8) |
-        static_cast<quint16>(static_cast<quint8>(datagram[11]));
-
-    // KAVACH Type
-    quint8 kavachType =
-        static_cast<quint8>(datagram[19]);
-
-    // Total Faults
-    quint8 totalFaults =
-        static_cast<quint8>(datagram[20]);
-
-    qDebug() << "[FaultPkt] MsgSeq:"
-             << msgSeq;
-
-    qDebug() << "[FaultPkt] KAVACH ID:"
-             << QString("0x%1")
-                    .arg(kavachID, 6, 16, QChar('0'))
-                    .toUpper();
-
-    qDebug() << "[FaultPkt] NMS ID:"
-             << QString("0x%1")
-                    .arg(nmsID, 4, 16, QChar('0'))
-                    .toUpper();
-
-    qDebug() << "[FaultPkt] KavachType:"
-             << QString("0x%1")
-                    .arg(kavachType, 2, 16, QChar('0'))
-                    .toUpper();
-
-    qDebug() << "[FaultPkt] TotalFaults:"
-             << totalFaults;
-
-    //======================================================================
-    // Create / update packet structure
-    //======================================================================
-
-    delete m_pcFaultpkt;
-    m_pcFaultpkt = new stStationFaults();
-
+    m_pcFaultpkt = new stStationFaults;
     memset(m_pcFaultpkt, 0, sizeof(stStationFaults));
+    if (datagram.size() > sizeof(stStationFaults))
+    {
+        qWarning() << "Datagram too long for header" << datagram.size();
+        delete m_pcFaultpkt;
+        return;
+    }
+    memcpy(m_pcFaultpkt, datagram.constData(),datagram.size());
+    m_pcFaultpkt->usmsgLength = qFromBigEndian(m_pcFaultpkt->usmsgLength);
 
-    // Copy received packet into structure
-    memcpy(m_pcFaultpkt,
-           datagram.constData(),
-           qMin(datagram.size(),
-                static_cast<int>(sizeof(stStationFaults))));
+    m_pcFaultpkt->usMsgSeq = qFromBigEndian(m_pcFaultpkt->usMsgSeq);
 
-    // Store correctly parsed values
-    m_pcFaultpkt->usMsgSeq = msgSeq;
-    m_pcFaultpkt->ucKavachSubsysID = kavachID;
-    m_pcFaultpkt->usNMSID = nmsID;
-    m_pcFaultpkt->ucKavachType = kavachType;
-    m_pcFaultpkt->ucTotalFaultsCode = totalFaults;
+    m_pcFaultpkt->usNMSID = qFromBigEndian(m_pcFaultpkt->usNMSID);
 
-    //======================================================================
-    // Fault lists for DB
-    //======================================================================
+    uint32_t uiID = (m_pcFaultpkt->ucKavachSubsysID[0] << 16) |
+                    (m_pcFaultpkt->ucKavachSubsysID[1] << 8)  |
+                    m_pcFaultpkt->ucKavachSubsysID[2];
+
+    qDebug() << "Station Faults:" << m_pcFaultpkt->usmsgLength << m_pcFaultpkt->usMsgSeq << m_pcFaultpkt->usNMSID;
 
     QStringList strLstFaultPrompt;
-    QStringList strLstFaultType;
-    QStringList strLstFaultCode;
-    QStringList strLstModule;
+    QStringList strLstFaultSMS;
+    QList<uint16_t> lstFaults;
+    QList<uint8_t> lstModuleID;
+    QList<uint8_t> lstFaultCodeTyp;
 
-    //======================================================================
-    // Parse the received fault data
-    //======================================================================
-
-    const int faultStart = 21;
-    const int crcSize = 4;
-    const int faultDataEnd = datagram.size() - crcSize;
-
-    const int faultEntrySize = 4;
-
-    for (int i = 0;
-         i < totalFaults &&
-         (faultStart + (i * faultEntrySize) + faultEntrySize) <= faultDataEnd;
-         ++i)
+    for (int i = 0; i < m_pcFaultpkt->ucTotalFaultsCode; i++)
     {
-        int offset =
-            faultStart + (i * faultEntrySize);
+        stFaultEntry &fault = m_pcFaultpkt->stFaults[i];
 
-        quint32 faultValue =
-            (static_cast<quint32>(
-                 static_cast<quint8>(datagram[offset])) << 24) |
-            (static_cast<quint32>(
-                 static_cast<quint8>(datagram[offset + 1])) << 16) |
-            (static_cast<quint32>(
-                 static_cast<quint8>(datagram[offset + 2])) << 8) |
-            static_cast<quint32>(
-                static_cast<quint8>(datagram[offset + 3]));
+        quint8 moduleId = fault.ucModuleID;
 
-        qDebug() << "[FaultPkt] Fault[" << i << "]:"
+        quint8 faultType = fault.ucFaultType;
+
+        quint16 faultCode = qFromBigEndian(fault.usFaultCode);
+        lstFaults.append(faultCode);
+        lstModuleID.append(moduleId);
+        lstFaultCodeTyp.append(faultType);
+
+        qDebug() << "Module:" << QString("0x%1")
+                                     .arg(moduleId,2,16,QChar('0'))
+                                     .toUpper()
+                 << "Type:"
                  << QString("0x%1")
-                        .arg(faultValue, 8, 16, QChar('0'))
+                        .arg(faultType,2,16,QChar('0'))
+                        .toUpper()
+                 << "Code:"
+                 << QString("0x%1")
+                        .arg(faultCode,4,16,QChar('0'))
                         .toUpper();
 
-        strLstModule.append("0x00");
-        strLstFaultType.append("0x00");
-
-        strLstFaultCode.append(
-            QString("0x%1")
-                .arg(faultValue, 8, 16, QChar('0'))
-                .toUpper());
-
-        strLstFaultPrompt.append(
-            QString("Fault 0x%1")
-                .arg(faultValue, 8, 16, QChar('0'))
-                .toUpper());
+        QString strModuleID = GetModuleID(moduleId);
+        QString strFaultType = GetFaultCodetype(faultType);
+        QString strFaultCode = GetFaultCodeDescription(faultCode);
+        QString strFinalpromptMsg = QString("%1:%2 %3 %4").arg(uiID).arg(strModuleID)
+                                        .arg(strFaultCode).arg(strFaultType);
+        strLstFaultPrompt.append(strFinalpromptMsg);
+        QString strFinalSMSMsg = QString("%1:%2 %3").arg(uiID)
+                                     .arg(strFaultCode).arg(strFaultType);
+        strLstFaultSMS.append(strFinalSMSMsg);
     }
 
-    //======================================================================
-    // ACK
-    //======================================================================
+    QStringList strModList,strLstFaultType,strLstFaultCode;
+    for (uint8_t code : lstModuleID)
+    {
+        strModList.append(QString("0x%1").arg(code, 2, 16, QLatin1Char('0')).toUpper());
+        qDebug() << "Module ID" << code;
+    }
+    for (uint8_t code : lstFaultCodeTyp)
+    {
+        strLstFaultType.append(QString("0x%1").arg(code, 2, 16, QLatin1Char('0')).toUpper());
+        qDebug() << "Module ID" << code;
+    }
+    for (uint16_t code : lstFaults)
+    {
+        strLstFaultCode.append(QString("0x%1").arg(code, 4, 16, QLatin1Char('0')).toUpper());
+        qDebug() << "Module ID" << code;
+    }
 
-    qDebug() << "[FaultAck] Preparing ACK"
-             << "Seq:" << msgSeq
-             << "NMSID:" << nmsID
-             << "KavachID:" << kavachID
-             << "KavachType:"
-             << QString("0x%1")
-                    .arg(kavachType, 2, 16, QChar('0'))
-                    .toUpper();
+    int faultBytes = m_pcFaultpkt->ucTotalFaultsCode * 4;
 
-    SendFaultPktAck(
-        QHostAddress(m_strStnSenderIP),
-        m_usStnSenderPort,
-        msgSeq,
-        nmsID,
-        kavachID,
-        kavachType,startFrame
-        );
+    int crcOffset = offsetof(stStationFaults, stFaults) + faultBytes;
 
-    qDebug() << "[FaultAck] SendFaultPktAck() completed";
+    quint32 receivedCRC =
+        (quint8(datagram[crcOffset]) << 24) |
+        (quint8(datagram[crcOffset + 1]) << 16) |
+        (quint8(datagram[crcOffset + 2]) << 8) |
+        quint8(datagram[crcOffset + 3]);
 
-    //======================================================================
-    // DB
-    //======================================================================
+    m_pcFaultpkt->uiCRC = receivedCRC;
 
-    emit SigStnFaultPktInserttoDB(
-        m_pcFaultpkt,
-        strLstModule,
-        strLstFaultType,
-        strLstFaultCode,
-        strLstFaultPrompt);
-
-    qDebug() << "[FaultPkt] Database signal emitted";
-
-    //======================================================================
-    // Completed
-    //======================================================================
-
-    qDebug() << "[FaultPkt] Processing completed";
-    qDebug() << "================================================";
+    emit SigStnFaultPktInserttoDB(m_pcFaultpkt,strModList,strLstFaultType,strLstFaultCode,strLstFaultPrompt);
 }
 
 void nmsMainWindow::ProcessStationHealthPkt(QByteArray datagram)
@@ -735,7 +973,7 @@ void nmsMainWindow::ProcessOnBoardHealthPkt(QByteArray datagram)
     }
     if(stOnBrdHlthPktHdr.ucEventCnt != 0)
     {
-        emit SigInsertDBOnBoardhealthPkt(stOnBrdHlthPktHdr,strEventID,strEventData,crcReceived);
+        emit SigInsertDBOnBoardhealthPkt(stOnBrdHlthPktHdr,strlstEventID,strlstEventData,crcReceived);
     }
 }
 
@@ -1089,7 +1327,7 @@ void nmsMainWindow::InitUDP()
 
     connect(m_pcDataloggps, &EventLogger::gpsUTCReady, this, &nmsMainWindow::OnGPSUTCReady);
     connect(m_pcDataloggps, &EventLogger::gpsSpeedReady, this, &nmsMainWindow::OnGPSSpeedReady);
-    connect(m_pcDataloggps, &EventLogger::gpsFixStatusReady, this, &nmsMainWindow::OnGPSFixStatusReady);
+    // connect(m_pcDataloggps, &EventLogger::gpsFixStatusReady, this, &nmsMainWindow::OnGPSFixStatusReady);
 
     // Wire GPS position for 0x28 packet building
     connect(m_pcDataloggps, SIGNAL(gpsPositionReady(double,double,bool)),
@@ -1131,7 +1369,7 @@ void nmsMainWindow::InitDB()
 
     m_ocCfgSettings->endGroup();
 
-    qDebug() << strDBip << strDBPort << strDBName << strDBUsrName;
+    qDebug() << "DB" << strDBip << strDBPort << strDBName << strDBUsrName;
 
     m_pcDB = new NMSDB (strDBip,strDBPort.toInt(), strDBName,
                        strDBUsrName, strDBPassword,this);
@@ -1880,7 +2118,7 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
         }
 
 
-       // SendAckNMStoSKavach(senderIP, senderPort);
+        // SendAckNMStoSKavach(senderIP, senderPort);
 
         ProcessOnBoardHealthPkt(datagram);
     }
@@ -1888,7 +2126,7 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     else if(ucMsgTyp == 0x17)
     {
         ForwardToNMS(datagram);
-       // SendAckNMStoSKavach(senderIP, senderPort);
+        // SendAckNMStoSKavach(senderIP, senderPort);
         ProcessStationHealthPkt(datagram);
     }
     else if (ucMsgTyp == 0x19)
@@ -1928,7 +2166,7 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     else if(ucMsgTyp == 0x13)
     {
         ForwardToNMS(datagram);
-      //  SendAckNMStoSKavach(senderIP,senderPort);
+        //  SendAckNMStoSKavach(senderIP,senderPort);
         ProcessTSRMSMessagePkt(datagram);
     }
     else if(ucMsgTyp == 0x20)
@@ -1957,47 +2195,47 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
             qInfo() << "[GSM Relay] SendUDPViaGSM returned:"
                     << sent;
         }
-       // SendAckNMStoKavach(senderIP, senderPort);
+        // SendAckNMStoKavach(senderIP, senderPort);
         ProcessLocoRSSIMessagePkt(datagram);
 
     }
 
     else if(ucMsgTyp == 0x1D)
     {
-      //  SendAckNMStoKavach(senderIP, senderPort);
+        //  SendAckNMStoKavach(senderIP, senderPort);
         ProcessOnBoardEventMsg(datagram);
 
     }
     else if(ucMsgTyp == 0x1E)
     {
-      //  SendAckNMStoKavach(senderIP, senderPort);
+        //  SendAckNMStoKavach(senderIP, senderPort);
         ProcessOnBoardBrakeEventMsg(datagram);
 
     }
     else if(ucMsgTyp == 0x22)
     {
-    //   SendAckNMStoKavach(senderIP, senderPort);
-       ProcessOnBoardHealthStsMsg(datagram);
+        //   SendAckNMStoKavach(senderIP, senderPort);
+        ProcessOnBoardHealthStsMsg(datagram);
 
     }
 
     else if(ucMsgTyp == 0x21)
     {
         ForwardToNMS(datagram);
-     //   SendAckNMStoKavach(senderIP, senderPort);
+        //   SendAckNMStoKavach(senderIP, senderPort);
         ProcessStationRSSIMessagePkt(datagram);
     }
 
     else if(ucMsgTyp == 0x1A)
     {
-    //    SendAckNMStoKavach(senderIP, senderPort);
+        //    SendAckNMStoKavach(senderIP, senderPort);
         ProcessStationKavachSysSts(datagram);
     }
 
     else if(ucMsgTyp == 0x11)
     {
         ForwardToNMS(datagram);
-    //    SendAckNMStoKavach(senderIP, senderPort);
+        //    SendAckNMStoKavach(senderIP, senderPort);
         ProcessAccessAuthorityPacket(datagram);
         qDebug()<<"Send Ack IP  and Port : "<<senderIP<<senderPort;
 
@@ -2013,27 +2251,27 @@ void nmsMainWindow::SlotNewFaultPacket(QHostAddress senderIP, quint16 senderPort
     else if(ucMsgTyp == 0x12)
     {
         ForwardToNMS(datagram);
-    //    SendAckNMStoKavach(senderIP,senderPort);
+        //    SendAckNMStoKavach(senderIP,senderPort);
         SlotUpadateSchematic(senderIP,senderPort,datagram);
 
     }
     else if (ucMsgTyp == 0x14)
     {
         ForwardToNMS(datagram);
-    //    SendAckNMStoKavach(senderIP, senderPort);
+        //    SendAckNMStoKavach(senderIP, senderPort);
         ProcessS2SPackets(datagram);
 
     }
     else if (ucMsgTyp == 0x15)
     {
         ForwardToNMS(datagram);
-     //   SendAckNMStoKavach(senderIP, senderPort);
+        //   SendAckNMStoKavach(senderIP, senderPort);
         ProcessFieldInputmessage(senderIP,datagram);
     }
     else if (ucMsgTyp == 0x16)
     {
         ForwardToNMS(datagram);
-     //   SendAckNMStoKavach(senderIP, senderPort);
+        //   SendAckNMStoKavach(senderIP, senderPort);
         ProcessFieldEventMessage(datagram);
     }
 }
@@ -2383,7 +2621,7 @@ void nmsMainWindow::InitnmsDBConnections()
     connect (this, SIGNAL(SigStnFaultPktInserttoDB(stStationFaults*,QStringList,
                                                   QStringList,QStringList,QStringList)),
             m_pcDBQuery,SLOT(SlotStnFaultPktInserttoDB(stStationFaults*,QStringList,
-                                                      QStringList,QStringList,QStringList)));
+                                           QStringList,QStringList,QStringList)));
 
     connect(this,SIGNAL(SigStationInfo()),m_pcDBQuery,SLOT(SlotStationInfo()));
 
@@ -2444,8 +2682,8 @@ void nmsMainWindow::InitnmsDBConnections()
     connect(this, SIGNAL(SigInsertDBStationhealthPkt(stStationHealthPkt,QStringList,QStringList,uint32_t)),
             m_pcDBQuery,SLOT(SlotInsertDBStationhealthPkt(stStationHealthPkt,QStringList,QStringList,uint32_t)));
 
-    connect(this, SIGNAL(SigInsertDBOnBoardhealthPkt(stOnBoardHealthPkt,QString,QString,uint32_t)),
-            m_pcDBQuery,SLOT(SlotInsertDBOnBoardhealthPkt(stOnBoardHealthPkt,QString,QString,uint32_t)));
+    connect(this, SIGNAL(SigInsertDBOnBoardhealthPkt(stOnBoardHealthPkt,QStringList,QStringList,uint32_t)),
+            m_pcDBQuery,SLOT(SlotInsertDBOnBoardhealthPkt(stOnBoardHealthPkt,QStringList,QStringList,uint32_t)));
 
 
 
@@ -2784,7 +3022,7 @@ void nmsMainWindow::SendAckNMStoSKavachFaults(QHostAddress senderIP, quint16 sen
 
     pstAck->usNMSSystemID = m_pcFaultpkt->usNMSID;
 
-   // memcpy(pstAck->ucKavachSubsysID,m_pcFaultpkt->ucKavachSubsysID, 2);
+    // memcpy(pstAck->ucKavachSubsysID,m_pcFaultpkt->ucKavachSubsysID, 2);
     pstAck->ucKavachType = m_pcFaultpkt->ucMsgType;  // Adjust based on your logic/UI
 
     quint16 msgLength = sizeof(stNMStoKavach) - 2;
@@ -3254,6 +3492,8 @@ void nmsMainWindow::SlotDoPing()
     bool reachable = (ping.exitCode()   == 0 &&
                       ping.exitStatus() == QProcess::NormalExit);
 
+    emit SigVCOMPingStatus(reachable);
+
     if (!reachable)
     {
         // ── NMS is DOWN ──────────────────────────────────────
@@ -3385,22 +3625,22 @@ void nmsMainWindow::SlotGPSPosition(double dLat, double dLon, bool bValid)
 void nmsMainWindow::SendHeartbeat()
 {
 
-        if (!m_pcRelaySocket)
-            return;
+    if (!m_pcRelaySocket)
+        return;
 
-        QByteArray hb = QByteArrayLiteral("HELLO_EVENTLOGGER");
+    QByteArray hb = QByteArrayLiteral("HELLO_EVENTLOGGER");
 
-        qint64 sent = m_pcRelaySocket->writeDatagram(
-            hb,
-            QHostAddress(m_strRelayIP),
-            m_usRelayPort);
+    qint64 sent = m_pcRelaySocket->writeDatagram(
+        hb,
+        QHostAddress(m_strRelayIP),
+        m_usRelayPort);
 
-        if (sent == -1)
-            qWarning() << "[GSM Relay] Heartbeat FAILED:"
-                       << m_pcRelaySocket->errorString();
-        else
-            qDebug() << "[GSM Relay] Heartbeat sent ->"
-                     << m_strRelayIP << ":" << m_usRelayPort;
+    if (sent == -1)
+        qWarning() << "[GSM Relay] Heartbeat FAILED:"
+                   << m_pcRelaySocket->errorString();
+    else
+        qDebug() << "[GSM Relay] Heartbeat sent ->"
+                 << m_strRelayIP << ":" << m_usRelayPort;
 
 }
 
@@ -3479,10 +3719,10 @@ void nmsMainWindow::SlotVCHeartbeat()
     QHostAddress vcAddr(m_strVCIP);
 
     // ── 0x28 — GNSS Position Message ─────────────────────────
-   QByteArray pkt28 = Build0x28Packet();
-   m_pcVCSock->writeDatagram(pkt28, vcAddr, m_usVCPort);
+    QByteArray pkt28 = Build0x28Packet();
+    m_pcVCSock->writeDatagram(pkt28, vcAddr, m_usVCPort);
 
-   qDebug() << "GNSS Position Sent 0x28 to "
+    qDebug() << "GNSS Position Sent 0x28 to "
              << "IP:" << vcAddr.toString()
              << "Port:" << m_usVCPort
              << "Size:" << pkt28.size()
@@ -3580,6 +3820,7 @@ void nmsMainWindow::OnGPSSpeedReady(qint32 speedMMps)
 void nmsMainWindow::OnGPSFixStatusReady(quint8 fixStatus)
 {
     m_ucLastFixStatus = fixStatus;
+
 }
 
 // ============================================================

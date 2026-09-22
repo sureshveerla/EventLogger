@@ -42,39 +42,30 @@ typedef struct stfaultentry
     quint8  ucModuleID;
     quint8  ucFaultType;
     quint16 usFaultCode;
-} __attribute__((packed)) stFaultEntry;
 
-Q_DECLARE_METATYPE(stFaultEntry)
+}__attribute__((packed)) stFaultEntry;
 
-typedef struct
-{
-    quint16 usStartFrame;          // AAAA
+Q_DECLARE_METATYPE(stFaultEntry);
 
-    quint8  ucMsgType;             // 19
+typedef struct ststationfaults {
 
-    quint16 usmsgLength;
-
+    quint16  usStartFrame;     // 0xAAAA, 0xC3
+    quint8   ucMsgType;             // e.g., 0x19
+    quint16  usmsgLength;
     quint16 usMsgSeq;
-
-    quint16 ucKavachSubsysID;  // <-- 2 bytes
-
+    quint8  ucKavachSubsysID[3];
     quint16 usNMSID;
-
     quint8  ucVersion;
+    quint8  ucDate[3];        // dd mm yy
+    quint8  ucTime[3];        // hh mm ss
 
-    quint8  ucDate[3];
-
-    quint8  ucTime[3];
-
-    quint8  ucKavachType;
-
-    quint8  ucTotalFaultsCode;
+    quint8   ucKavachType;
+    quint8   ucTotalFaultsCode;
 
     stFaultEntry stFaults[10];
+    quint32  uiCRC;
 
-    quint32 uiCRC;
-
-} __attribute__((packed)) stStationFaults;
+}__attribute((packed)) stStationFaults;
 
 Q_DECLARE_METATYPE(stStationFaults);
 
