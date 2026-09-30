@@ -250,7 +250,14 @@ static constexpr auto qt_meta_stringdata_ZN13nmsMainWindowE = QtMocHelpers::stri
     "OnGPSSpeedReady",
     "speedMMps",
     "OnGPSFixStatusReady",
-    "fixStatus"
+    "fixStatus",
+    "OnGPSTOWReady",
+    "tow",
+    "OnGPSPPSStatusReady",
+    "valid",
+    "OnGPSFixStatus",
+    "status",
+    "SlotGSMStatus"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -262,7 +269,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN13nmsMainWindowE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      60,   14, // methods
+      64,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -270,68 +277,72 @@ Q_CONSTINIT static const uint qt_meta_data_ZN13nmsMainWindowE[] = {
       42,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    3,  374,    2, 0x06,    1 /* Public */,
-       8,    3,  381,    2, 0x06,    5 /* Public */,
-      13,    5,  388,    2, 0x06,    9 /* Public */,
-      18,    0,  399,    2, 0x06,   15 /* Public */,
-      19,    0,  400,    2, 0x06,   16 /* Public */,
-      20,    5,  401,    2, 0x06,   17 /* Public */,
-      28,    5,  412,    2, 0x06,   23 /* Public */,
-      31,    4,  423,    2, 0x06,   29 /* Public */,
-      33,    4,  432,    2, 0x06,   34 /* Public */,
-      35,    2,  441,    2, 0x06,   39 /* Public */,
-      37,    4,  446,    2, 0x06,   42 /* Public */,
-      40,   23,  455,    2, 0x06,   47 /* Public */,
-      66,   31,  502,    2, 0x06,   71 /* Public */,
-      79,   16,  565,    2, 0x06,  103 /* Public */,
-      91,    9,  598,    2, 0x06,  120 /* Public */,
-      93,    2,  617,    2, 0x06,  130 /* Public */,
-      97,    4,  622,    2, 0x06,  133 /* Public */,
-     103,    4,  631,    2, 0x06,  138 /* Public */,
-     106,    2,  640,    2, 0x06,  143 /* Public */,
-     111,    2,  645,    2, 0x06,  146 /* Public */,
-     114,    2,  650,    2, 0x06,  149 /* Public */,
-     117,    2,  655,    2, 0x06,  152 /* Public */,
-     120,    2,  660,    2, 0x06,  155 /* Public */,
-     123,    2,  665,    2, 0x06,  158 /* Public */,
-     126,    2,  670,    2, 0x06,  161 /* Public */,
-     129,    2,  675,    2, 0x06,  164 /* Public */,
-     132,    2,  680,    2, 0x06,  167 /* Public */,
-     135,    2,  685,    2, 0x06,  170 /* Public */,
-     138,    2,  690,    2, 0x06,  173 /* Public */,
-     141,    2,  695,    2, 0x06,  176 /* Public */,
-     144,    1,  700,    2, 0x06,  179 /* Public */,
-     147,    1,  703,    2, 0x06,  181 /* Public */,
-     150,    1,  706,    2, 0x06,  183 /* Public */,
-     153,    1,  709,    2, 0x06,  185 /* Public */,
-     156,    1,  712,    2, 0x06,  187 /* Public */,
-     159,    1,  715,    2, 0x06,  189 /* Public */,
-     162,    4,  718,    2, 0x06,  191 /* Public */,
-     165,    1,  727,    2, 0x06,  196 /* Public */,
-     168,    0,  730,    2, 0x06,  198 /* Public */,
-     169,    2,  731,    2, 0x06,  199 /* Public */,
-     172,    1,  736,    2, 0x06,  202 /* Public */,
-     174,    1,  739,    2, 0x06,  204 /* Public */,
+       1,    3,  398,    2, 0x06,    1 /* Public */,
+       8,    3,  405,    2, 0x06,    5 /* Public */,
+      13,    5,  412,    2, 0x06,    9 /* Public */,
+      18,    0,  423,    2, 0x06,   15 /* Public */,
+      19,    0,  424,    2, 0x06,   16 /* Public */,
+      20,    5,  425,    2, 0x06,   17 /* Public */,
+      28,    5,  436,    2, 0x06,   23 /* Public */,
+      31,    4,  447,    2, 0x06,   29 /* Public */,
+      33,    4,  456,    2, 0x06,   34 /* Public */,
+      35,    2,  465,    2, 0x06,   39 /* Public */,
+      37,    4,  470,    2, 0x06,   42 /* Public */,
+      40,   23,  479,    2, 0x06,   47 /* Public */,
+      66,   31,  526,    2, 0x06,   71 /* Public */,
+      79,   16,  589,    2, 0x06,  103 /* Public */,
+      91,    9,  622,    2, 0x06,  120 /* Public */,
+      93,    2,  641,    2, 0x06,  130 /* Public */,
+      97,    4,  646,    2, 0x06,  133 /* Public */,
+     103,    4,  655,    2, 0x06,  138 /* Public */,
+     106,    2,  664,    2, 0x06,  143 /* Public */,
+     111,    2,  669,    2, 0x06,  146 /* Public */,
+     114,    2,  674,    2, 0x06,  149 /* Public */,
+     117,    2,  679,    2, 0x06,  152 /* Public */,
+     120,    2,  684,    2, 0x06,  155 /* Public */,
+     123,    2,  689,    2, 0x06,  158 /* Public */,
+     126,    2,  694,    2, 0x06,  161 /* Public */,
+     129,    2,  699,    2, 0x06,  164 /* Public */,
+     132,    2,  704,    2, 0x06,  167 /* Public */,
+     135,    2,  709,    2, 0x06,  170 /* Public */,
+     138,    2,  714,    2, 0x06,  173 /* Public */,
+     141,    2,  719,    2, 0x06,  176 /* Public */,
+     144,    1,  724,    2, 0x06,  179 /* Public */,
+     147,    1,  727,    2, 0x06,  181 /* Public */,
+     150,    1,  730,    2, 0x06,  183 /* Public */,
+     153,    1,  733,    2, 0x06,  185 /* Public */,
+     156,    1,  736,    2, 0x06,  187 /* Public */,
+     159,    1,  739,    2, 0x06,  189 /* Public */,
+     162,    4,  742,    2, 0x06,  191 /* Public */,
+     165,    1,  751,    2, 0x06,  196 /* Public */,
+     168,    0,  754,    2, 0x06,  198 /* Public */,
+     169,    2,  755,    2, 0x06,  199 /* Public */,
+     172,    1,  760,    2, 0x06,  202 /* Public */,
+     174,    1,  763,    2, 0x06,  204 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-     176,    3,  742,    2, 0x08,  206 /* Private */,
-     178,    0,  749,    2, 0x08,  210 /* Private */,
-     179,    1,  750,    2, 0x08,  211 /* Private */,
-     181,    3,  753,    2, 0x08,  213 /* Private */,
-     182,    4,  760,    2, 0x08,  217 /* Private */,
-     187,    1,  769,    2, 0x08,  222 /* Private */,
-     188,    2,  772,    2, 0x08,  224 /* Private */,
-     191,    1,  777,    2, 0x08,  227 /* Private */,
-     193,    2,  780,    2, 0x08,  229 /* Private */,
-     196,    2,  785,    2, 0x08,  232 /* Private */,
-     197,    0,  790,    2, 0x08,  235 /* Private */,
-     198,    0,  791,    2, 0x08,  236 /* Private */,
-     199,    0,  792,    2, 0x08,  237 /* Private */,
-     200,    3,  793,    2, 0x08,  238 /* Private */,
-     204,    0,  800,    2, 0x08,  242 /* Private */,
-     205,    1,  801,    2, 0x08,  243 /* Private */,
-     207,    1,  804,    2, 0x08,  245 /* Private */,
-     209,    1,  807,    2, 0x08,  247 /* Private */,
+     176,    3,  766,    2, 0x08,  206 /* Private */,
+     178,    0,  773,    2, 0x08,  210 /* Private */,
+     179,    1,  774,    2, 0x08,  211 /* Private */,
+     181,    3,  777,    2, 0x08,  213 /* Private */,
+     182,    4,  784,    2, 0x08,  217 /* Private */,
+     187,    1,  793,    2, 0x08,  222 /* Private */,
+     188,    2,  796,    2, 0x08,  224 /* Private */,
+     191,    1,  801,    2, 0x08,  227 /* Private */,
+     193,    2,  804,    2, 0x08,  229 /* Private */,
+     196,    2,  809,    2, 0x08,  232 /* Private */,
+     197,    0,  814,    2, 0x08,  235 /* Private */,
+     198,    0,  815,    2, 0x08,  236 /* Private */,
+     199,    0,  816,    2, 0x08,  237 /* Private */,
+     200,    3,  817,    2, 0x08,  238 /* Private */,
+     204,    0,  824,    2, 0x08,  242 /* Private */,
+     205,    1,  825,    2, 0x08,  243 /* Private */,
+     207,    1,  828,    2, 0x08,  245 /* Private */,
+     209,    1,  831,    2, 0x08,  247 /* Private */,
+     211,    1,  834,    2, 0x08,  249 /* Private */,
+     213,    1,  837,    2, 0x08,  251 /* Private */,
+     215,    1,  840,    2, 0x08,  253 /* Private */,
+     217,    1,  843,    2, 0x08,  255 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::UShort, 0x80000000 | 6,    4,    5,    7,
@@ -396,6 +407,10 @@ Q_CONSTINIT static const uint qt_meta_data_ZN13nmsMainWindowE[] = {
     QMetaType::Void, QMetaType::QDateTime,  206,
     QMetaType::Void, QMetaType::Int,  208,
     QMetaType::Void, QMetaType::UChar,  210,
+    QMetaType::Void, QMetaType::UInt,  212,
+    QMetaType::Void, QMetaType::Bool,  214,
+    QMetaType::Void, QMetaType::Bool,  216,
+    QMetaType::Void, QMetaType::Bool,  216,
 
        0        // eod
 };
@@ -716,7 +731,19 @@ Q_CONSTINIT const QMetaObject nmsMainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<qint32, std::false_type>,
         // method 'OnGPSFixStatusReady'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<quint8, std::false_type>
+        QtPrivate::TypeAndForceComplete<quint8, std::false_type>,
+        // method 'OnGPSTOWReady'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<quint32, std::false_type>,
+        // method 'OnGPSPPSStatusReady'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
+        // method 'OnGPSFixStatus'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
+        // method 'SlotGSMStatus'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>
     >,
     nullptr
 } };
@@ -786,6 +813,10 @@ void nmsMainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 57: _t->OnGPSUTCReady((*reinterpret_cast< std::add_pointer_t<QDateTime>>(_a[1]))); break;
         case 58: _t->OnGPSSpeedReady((*reinterpret_cast< std::add_pointer_t<qint32>>(_a[1]))); break;
         case 59: _t->OnGPSFixStatusReady((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1]))); break;
+        case 60: _t->OnGPSTOWReady((*reinterpret_cast< std::add_pointer_t<quint32>>(_a[1]))); break;
+        case 61: _t->OnGPSPPSStatusReady((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
+        case 62: _t->OnGPSFixStatus((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
+        case 63: _t->SlotGSMStatus((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
         default: ;
         }
     }
@@ -1318,14 +1349,14 @@ int nmsMainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 60)
+        if (_id < 64)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 60;
+        _id -= 64;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 60)
+        if (_id < 64)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 60;
+        _id -= 64;
     }
     return _id;
 }

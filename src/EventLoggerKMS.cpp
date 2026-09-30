@@ -1061,6 +1061,9 @@ void EventLoggerKMS::ForwardToKMS(
     QString kmsIP   = ActiveChannel().strKMSServerIP;
     quint16 kmsPort = ActiveChannel().usKMSServerPort;
 
+    // 0xA2 Field 16 reports the state of the most recent KMS transaction.
+    m_bKMSCommunicationOk = false;
+
     qInfo() << "\n================================";
     qInfo() << "[KMS FORWARD TO KMS SERVER]";
     qInfo() << "MSG TYPE :" << Qt::hex << msgType;
@@ -1198,6 +1201,7 @@ void EventLoggerKMS::ForwardToKMS(
                         case KMS_MSG_IDENTIFICATION_ACK:   // 0x91
                         {
                             qInfo() << "[KMS] 0x91 ACK received ✅";
+                            m_bKMSCommunicationOk = true;
 
                             // Forward to VC immediately
                             ForwardToVC(response);
@@ -1233,6 +1237,7 @@ void EventLoggerKMS::ForwardToKMS(
                         {
                             qInfo() << "[KMS] Forwarding"
                                     << Qt::hex << respType << "to VC ✅";
+                            m_bKMSCommunicationOk = true;
                             ForwardToVC(response);
                             emit SigKMSPacketReceived(respType, response);
                             gotUDPReply = true;
@@ -1555,6 +1560,7 @@ void EventLoggerKMS::SlotHandleGSMData()
             << "size:"
             << packet.size();
 
+            m_bKMSCommunicationOk = true;
             emit SigKMSPacketReceived(msgType,packet);
 
             ForwardToVC(packet);
@@ -2124,6 +2130,8 @@ void EventLoggerKMS::SlotPollCSQ()
     {
         m_bGSMNetworkOk = false;
         m_bGSMSignalOk  = false;
+        m_bGSMRegistered = false;
+        m_ucGSMStatus = 0;
         qWarning() << "[KMS][HEALTH] FAULT — SIM NOT READY / NOT INSERTED "
                       "(network + signal checks skipped this cycle)";
         EvaluateAndUpdateGSMLed();
@@ -2132,14 +2140,33 @@ void EventLoggerKMS::SlotPollCSQ()
 
     // --- Network ---
     m_bGSMNetworkOk = CheckNetworkRegistered();
+    m_bGSMRegistered = m_bGSMNetworkOk;
 
     // --- Signal (existing CSQ logic) ---
     int csq = QueryCSQ();
+    m_iLastCSQ = csq;
     KMSSignalQuality quality = ClassifyCSQ(csq);
 
     m_bGSMSignalOk = (quality == KMSSignalQuality::Excellent ||
                       quality == KMSSignalQuality::Good      ||
                       quality == KMSSignalQuality::OK);
+
+    // ICD 0xA2 Field 12: GSM modem status
+    // 0 = Not ready, 1 = Registered, 2 = Data session active.
+    // Check the current PDP context only after SIM/network/signal are healthy.
+    if (!m_bGSMSimOk || !m_bGSMNetworkOk)
+    {
+        m_ucGSMStatus = 0;
+    }
+    else if (!m_bGSMSignalOk)
+    {
+        m_ucGSMStatus = 1;
+    }
+    else
+    {
+        const QString cgact = SendATCommand("AT+CGACT?", 3000);
+        m_ucGSMStatus = cgact.contains("+CGACT: 1,1") ? 2 : 1;
+    }
 
     qDebug() << "[KMS] CSQ:" << csq
              << "Quality:" << SignalQualityString(quality);

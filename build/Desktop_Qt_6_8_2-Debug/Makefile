@@ -2124,6 +2124,13 @@ moc_EventLoggerGPS.cpp: ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qhash.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/q23utility.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QElapsedTimer \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qelapsedtimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSocketNotifier \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsocketnotifier.h \
 		moc_predefs.h \
 		/opt/Qt/6.8.2/gcc_64/libexec/moc
 	/opt/Qt/6.8.2/gcc_64/libexec/moc $(DEFINES) --include /home/sana/Projects/BHEL/EventLogger/build/Desktop_Qt_6_8_2-Debug/moc_predefs.h -I/opt/Qt/6.8.2/gcc_64/mkspecs/linux-g++ -I/home/sana/Projects/BHEL/EventLogger -I/home/sana/Projects/BHEL/EventLogger/src -I/home/sana/Projects/BHEL/EventLogger/include -I/home/sana/Projects/BHEL/include -I/opt/Qt/6.8.2/gcc_64/include -I/opt/Qt/6.8.2/gcc_64/include/QtSerialPort -I/opt/Qt/6.8.2/gcc_64/include/QtNetwork -I/opt/Qt/6.8.2/gcc_64/include/QtSql -I/opt/Qt/6.8.2/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../include/EventLoggerGPS.h -o moc_EventLoggerGPS.cpp
@@ -3996,6 +4003,8 @@ moc_nmsMainWindow.cpp: ../../include/nmsMainWindow.h \
 		../../include/KAVACH_PARSEPACKET.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QVector \
 		../../include/EventLoggerGPS.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QElapsedTimer \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSocketNotifier \
 		../../include/EventLoggerStatusLED.h \
 		moc_predefs.h \
 		/opt/Qt/6.8.2/gcc_64/libexec/moc
@@ -4511,6 +4520,8 @@ main.o: ../../src/main.cpp /opt/Qt/6.8.2/gcc_64/include/QtCore/QCoreApplication 
 		../../include/KAVACH_PARSEPACKET.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QVector \
 		../../include/EventLoggerGPS.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QElapsedTimer \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSocketNotifier \
 		../../include/EventLoggerStatusLED.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../src/main.cpp
 
@@ -5384,10 +5395,20 @@ EventLoggerGPS.o: ../../src/EventLoggerGPS.cpp ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qhash.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/q23utility.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QElapsedTimer \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qelapsedtimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimer \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasictimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSocketNotifier \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsocketnotifier.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDebug \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimeZone \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimezone.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QtMath
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QtMath \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QFile \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qfiledevice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EventLoggerGPS.o ../../src/EventLoggerGPS.cpp
 
 nmsUDPServer.o: ../../src/nmsUDPServer.cpp ../../include/nmsUDPServer.h \
@@ -7257,6 +7278,8 @@ nmsMainWindow.o: ../../src/nmsMainWindow.cpp ../../include/nmsMainWindow.h \
 		../../include/KAVACH_PARSEPACKET.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QVector \
 		../../include/EventLoggerGPS.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QElapsedTimer \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSocketNotifier \
 		../../include/EventLoggerStatusLED.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nmsMainWindow.o ../../src/nmsMainWindow.cpp
 

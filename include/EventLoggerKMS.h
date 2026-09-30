@@ -204,6 +204,7 @@ public:
     bool  IsGSMRegistered()const { return m_bGSMRegistered; }
     // GSM status byte per ICD: 0=Not ready, 1=Registered, 2=Data active
     quint8 GetGSMStatus()  const { return m_ucGSMStatus; }
+    bool   IsKMSCommunicationOK() const { return m_bKMSCommunicationOk; }
     static QString   SignalQualityString(KMSSignalQuality q);
 
     bool EnsureGPRSActive();
@@ -327,6 +328,7 @@ private:
     bool              m_bGSMRegistered = false; // true when AT+CREG says registered
     // 0=Not ready, 1=Registered (no data), 2=Data session active
     quint8            m_ucGSMStatus  = 0;
+    bool               m_bKMSCommunicationOk = false;
 
     int m_iCSQFailCount = 0;
     static constexpr int KMS_CSQ_FAIL_MAX = 3;

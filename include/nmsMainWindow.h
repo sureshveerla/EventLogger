@@ -88,6 +88,12 @@ private slots:
     void OnGPSUTCReady(QDateTime utcTime);
     void OnGPSSpeedReady(qint32 speedMMps);
     void OnGPSFixStatusReady(quint8 fixStatus);
+    void OnGPSTOWReady(quint32 tow);
+    void OnGPSPPSStatusReady(bool valid);
+    void OnGPSFixStatus(bool status);
+
+    void SlotGSMStatus(bool status);
+
 
 signals:
 
@@ -219,6 +225,8 @@ private:
     QThread    *m_pcPingThread;   // thread the ping timer lives in
     QTimer     *m_pcPingTimer;    // 5-second interval ping timer
 
+    QString m_strVCIP;
+
     bool        m_bNMSOffline;        // true while NMS IP unreachable (ping fails)
     QDateTime   m_dtOfflineStart;     // first failure timestamp
 
@@ -238,7 +246,7 @@ private:
     QTimer     *m_pcVCTimer;        // interval from Config.cfg [VC]/Interval_ms
     QUdpSocket *m_pcVCSock;         // dedicated socket for port 4446
 
-    QString    m_strVCIP;           // VC_IP from [KMS] section in Config.cfg
+    // VC_IP from [KMS] section in Config.cfg
     quint16    m_usVCPort = 4446;   // fixed per ICD §2
 
     quint16    m_usSeq0x28 = 0;     // incrementing sequence for 0x28
@@ -254,6 +262,12 @@ private:
     double     m_dLastLon  = 0.0;
     bool       m_bGNSSValid = false;
     bool       m_bPPSValid  = false;
+    bool       m_bGPSUTCValid = false;
+
+    bool       m_gpsfixstatus = false;
+
+    quint32 m_uiLastGPSTOW = 0;
+    bool m_bGPSTOWValid = false;
 
 
     bool m_bPowerHealthy = true;
@@ -264,6 +278,9 @@ private:
     quint8    m_ucLastFixStatus  = 0x00;
     // m_dLastLat, m_dLastLon, m_bGNSSValid — assumed already present
 
+    bool     m_bIsPrimaryELU;
+    QString  m_strPeerELUIP;
+    bool     m_bPeerELUAlive;
 
     void ComputeEVLAppCRC();
 
@@ -339,6 +356,8 @@ private:
 
 
     void InitCFGFile();
+    void InitELUFailoverRole();
+    bool IsActiveForwarder();
     void SlotUpadateSchematic_internal();
 
     QString GetModuleID(uint8_t ucModulID);

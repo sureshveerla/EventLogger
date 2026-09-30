@@ -45,8 +45,10 @@ static constexpr auto qt_meta_stringdata_ZN20EventLoggerStatusLEDE = QtMocHelper
     "SetGPSStatus",
     "SetGSMStatus",
     "EventDataReceived",
+    "VCIPLedTimeout",
     "EventLedTimeout",
-    "FaultLedTimeout"
+    "FaultLedTimeout",
+    "GPSLedTimeout"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -58,7 +60,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN20EventLoggerStatusLEDE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -66,19 +68,23 @@ Q_CONSTINIT static const uint qt_meta_data_ZN20EventLoggerStatusLEDE[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   56,    2, 0x0a,    1 /* Public */,
-       3,    1,   57,    2, 0x0a,    2 /* Public */,
-       5,    1,   60,    2, 0x0a,    4 /* Public */,
-       6,    1,   63,    2, 0x0a,    6 /* Public */,
-       7,    0,   66,    2, 0x0a,    8 /* Public */,
-       8,    0,   67,    2, 0x08,    9 /* Private */,
-       9,    0,   68,    2, 0x08,   10 /* Private */,
+       1,    0,   68,    2, 0x0a,    1 /* Public */,
+       3,    1,   69,    2, 0x0a,    2 /* Public */,
+       5,    1,   72,    2, 0x0a,    4 /* Public */,
+       6,    1,   75,    2, 0x0a,    6 /* Public */,
+       7,    0,   78,    2, 0x0a,    8 /* Public */,
+       8,    0,   79,    2, 0x08,    9 /* Private */,
+       9,    0,   80,    2, 0x08,   10 /* Private */,
+      10,    0,   81,    2, 0x08,   11 /* Private */,
+      11,    0,   82,    2, 0x08,   12 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::Bool,    4,
     QMetaType::Void, QMetaType::UChar,    4,
     QMetaType::Void, QMetaType::Bool,    4,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -108,9 +114,13 @@ Q_CONSTINIT const QMetaObject EventLoggerStatusLED::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<bool, std::false_type>,
         // method 'EventDataReceived'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'VCIPLedTimeout'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'EventLedTimeout'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'FaultLedTimeout'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'GPSLedTimeout'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -126,8 +136,10 @@ void EventLoggerStatusLED::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
         case 2: _t->SetGPSStatus((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1]))); break;
         case 3: _t->SetGSMStatus((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
         case 4: _t->EventDataReceived(); break;
-        case 5: _t->EventLedTimeout(); break;
-        case 6: _t->FaultLedTimeout(); break;
+        case 5: _t->VCIPLedTimeout(); break;
+        case 6: _t->EventLedTimeout(); break;
+        case 7: _t->FaultLedTimeout(); break;
+        case 8: _t->GPSLedTimeout(); break;
         default: ;
         }
     }
@@ -152,14 +164,14 @@ int EventLoggerStatusLED::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 9;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 9)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 7;
+        _id -= 9;
     }
     return _id;
 }
