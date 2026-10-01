@@ -1273,54 +1273,89 @@ void EventLogger::processGGA(
 
 
     // ============================================================
+    // Store latest GPS parameters
+    // ============================================================
+
+    m_gpsFixQuality = fixQuality;
+    m_gpsSatellites = satellites;
+    m_gpsHdop = hdop;
+
+
+    // ============================================================
     // GPS FIX DECISION
     //
-    // FIX:
+    // Valid fix:
     //     Fix Quality 1..5
     //     AND satellites > 0
     //
-    // NO FIX:
-    //     Fix Quality 0
-    //     OR 6
-    //     OR satellites == 0
-    //
-    // IMPORTANT:
-    //     This class ONLY reports GPS status.
-    //
-    //     EventLoggerStatusLED controls SODIMM_212.
+    // No valid fix:
+    //     anything else
     // ============================================================
 
-    bool gpsFixAvailable =
+    const bool gpsFixAvailable =
         (fixQuality >= 1 &&
          fixQuality <= 5 &&
          satellites > 0);
 
+    m_gpsFixAvailable = gpsFixAvailable;
 
-    if (gpsFixAvailable)
+
+    // ============================================================
+    // GPS HEALTH FILTER
+    //
+    // We receive GGA messages more frequently than the 0xA2
+    // heartbeat. Therefore do NOT immediately toggle the
+    // healthiness status on every GGA message.
+    //
+    // Three consecutive bad GGA messages -> GPS FAULT
+    // Three consecutive good GGA messages -> GPS HEALTHY
+    //
+    // This filters the transient 2-3 message toggling seen
+    // during antenna removal/recovery.
+    // ============================================================
+
+    if (!gpsFixAvailable)
     {
-        qDebug()
-        << "[GPS] FIX AVAILABLE"
-        << "| Quality:"
-        << fixQuality
-        << "| Satellites:"
-        << satellites
-        << "| HDOP:"
-        << hdop;
+        ++m_gpsBadCount;
+        m_gpsGoodCount = 0;
 
-        emit gpsFixStatus(1);
+        if (m_gpsBadCount >= GPS_BAD_CONFIRM_COUNT)
+        {
+            m_gpsBadCount = GPS_BAD_CONFIRM_COUNT;
+            m_gpsfixstatus = 0;
+        }
     }
     else
     {
-        qDebug()
-        << "[GPS] NO FIX"
-        << "| Quality:"
-        << fixQuality
-        << "| Satellites:"
-        << satellites
-        << "| HDOP:"
-        << hdop;
-        emit gpsFixStatus(0);
+        ++m_gpsGoodCount;
+        m_gpsBadCount = 0;
+
+        if (m_gpsGoodCount >= GPS_GOOD_CONFIRM_COUNT)
+        {
+            m_gpsGoodCount = GPS_GOOD_CONFIRM_COUNT;
+            m_gpsfixstatus = 1;
+        }
     }
+
+
+    // ============================================================
+    // Debug
+    // ============================================================
+
+    qDebug()
+        << "[GPS HEALTH]"
+        << "FixQuality =" << fixQuality
+        << "| Satellites =" << satellites
+        << "| HDOP =" << hdop
+        << "| BadCount =" << m_gpsBadCount
+        << "| GoodCount =" << m_gpsGoodCount
+        << "| Status =" << m_gpsfixstatus;
+
+
+    // Existing GPS FIX indication is still emitted.
+    // This remains the raw/current fix indication and is NOT
+    // used directly as the filtered 0xA2 health status.
+    emit gpsFixStatus(gpsFixAvailable ? 1 : 0);
 
 
     // ============================================================

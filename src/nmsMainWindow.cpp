@@ -4302,7 +4302,7 @@ void nmsMainWindow::InitVCHeartbeat()
     m_ocCfgSettings->endGroup();
 
     m_ocCfgSettings->beginGroup("VC");
-    int intervalMs = 1000; //m_ocCfgSettings->value("Interval_ms", 500).toInt();
+    int intervalMs = 2000; //m_ocCfgSettings->value("Interval_ms", 500).toInt();
     intervalMs = qBound(100, intervalMs, 1000);  // clamp to ICD max 1000 ms
 
     int eluID = m_ocCfgSettings->value("ELU_ID", 2).toInt();

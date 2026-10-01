@@ -38,22 +38,24 @@ struct qt_meta_tag_ZN11EventLoggerE_t {};
 #ifdef QT_MOC_HAS_STRINGDATA
 static constexpr auto qt_meta_stringdata_ZN11EventLoggerE = QtMocHelpers::stringData(
     "EventLogger",
-    "gpsUTCReady",
+    "gpsTOWReady",
     "",
+    "iTOW",
+    "gpsPPSStatusReady",
+    "valid",
+    "gpsUTCReady",
     "utcTime",
     "gpsPositionReady",
     "latitude",
     "longitude",
-    "valid",
     "gpsSpeedReady",
     "speedMMps",
-    "gpsTOWReady",
-    "tow",
-    "gpsPPSStatusReady",
-    "gpsFixStatusReady",
-    "fixStatus",
     "gpsFixStatus",
-    "readGPSData"
+    "status",
+    "gpsFixStatusReady",
+    "readGPSData",
+    "handlePPSEvent",
+    "checkPPSTimeout"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -65,7 +67,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11EventLoggerE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -73,27 +75,31 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11EventLoggerE[] = {
        7,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   62,    2, 0x06,    1 /* Public */,
-       4,    3,   65,    2, 0x06,    3 /* Public */,
-       8,    1,   72,    2, 0x06,    7 /* Public */,
-      10,    1,   75,    2, 0x06,    9 /* Public */,
-      12,    1,   78,    2, 0x06,   11 /* Public */,
-      13,    1,   81,    2, 0x06,   13 /* Public */,
-      15,    1,   84,    2, 0x06,   15 /* Public */,
+       1,    1,   74,    2, 0x06,    1 /* Public */,
+       4,    1,   77,    2, 0x06,    3 /* Public */,
+       6,    1,   80,    2, 0x06,    5 /* Public */,
+       8,    3,   83,    2, 0x06,    7 /* Public */,
+      11,    1,   90,    2, 0x06,   11 /* Public */,
+      13,    1,   93,    2, 0x06,   13 /* Public */,
+      15,    1,   96,    2, 0x06,   15 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      16,    0,   87,    2, 0x08,   17 /* Private */,
+      16,    0,   99,    2, 0x08,   17 /* Private */,
+      17,    0,  100,    2, 0x08,   18 /* Private */,
+      18,    0,  101,    2, 0x08,   19 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QDateTime,    3,
-    QMetaType::Void, QMetaType::Double, QMetaType::Double, QMetaType::Bool,    5,    6,    7,
-    QMetaType::Void, QMetaType::Int,    9,
-    QMetaType::Void, QMetaType::UInt,   11,
-    QMetaType::Void, QMetaType::Bool,    7,
-    QMetaType::Void, QMetaType::UChar,   14,
+    QMetaType::Void, QMetaType::UInt,    3,
+    QMetaType::Void, QMetaType::Bool,    5,
+    QMetaType::Void, QMetaType::QDateTime,    7,
+    QMetaType::Void, QMetaType::Double, QMetaType::Double, QMetaType::Bool,    9,   10,    5,
+    QMetaType::Void, QMetaType::Int,   12,
+    QMetaType::Void, QMetaType::Int,   14,
     QMetaType::Void, QMetaType::UChar,   14,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -108,6 +114,12 @@ Q_CONSTINIT const QMetaObject EventLogger::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_tag_ZN11EventLoggerE_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<EventLogger, std::true_type>,
+        // method 'gpsTOWReady'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<quint32, std::false_type>,
+        // method 'gpsPPSStatusReady'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
         // method 'gpsUTCReady'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QDateTime &, std::false_type>,
@@ -119,19 +131,17 @@ Q_CONSTINIT const QMetaObject EventLogger::staticMetaObject = { {
         // method 'gpsSpeedReady'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<qint32, std::false_type>,
-        // method 'gpsTOWReady'
+        // method 'gpsFixStatus'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<quint32, std::false_type>,
-        // method 'gpsPPSStatusReady'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'gpsFixStatusReady'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<quint8, std::false_type>,
-        // method 'gpsFixStatus'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<quint8, std::false_type>,
         // method 'readGPSData'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'handlePPSEvent'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'checkPPSTimeout'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -142,64 +152,66 @@ void EventLogger::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
     auto *_t = static_cast<EventLogger *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->gpsUTCReady((*reinterpret_cast< std::add_pointer_t<QDateTime>>(_a[1]))); break;
-        case 1: _t->gpsPositionReady((*reinterpret_cast< std::add_pointer_t<double>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
-        case 2: _t->gpsSpeedReady((*reinterpret_cast< std::add_pointer_t<qint32>>(_a[1]))); break;
-        case 3: _t->gpsTOWReady((*reinterpret_cast< std::add_pointer_t<quint32>>(_a[1]))); break;
-        case 4: _t->gpsPPSStatusReady((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
-        case 5: _t->gpsFixStatusReady((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1]))); break;
-        case 6: _t->gpsFixStatus((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1]))); break;
+        case 0: _t->gpsTOWReady((*reinterpret_cast< std::add_pointer_t<quint32>>(_a[1]))); break;
+        case 1: _t->gpsPPSStatusReady((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
+        case 2: _t->gpsUTCReady((*reinterpret_cast< std::add_pointer_t<QDateTime>>(_a[1]))); break;
+        case 3: _t->gpsPositionReady((*reinterpret_cast< std::add_pointer_t<double>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
+        case 4: _t->gpsSpeedReady((*reinterpret_cast< std::add_pointer_t<qint32>>(_a[1]))); break;
+        case 5: _t->gpsFixStatus((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 6: _t->gpsFixStatusReady((*reinterpret_cast< std::add_pointer_t<quint8>>(_a[1]))); break;
         case 7: _t->readGPSData(); break;
+        case 8: _t->handlePPSEvent(); break;
+        case 9: _t->checkPPSTimeout(); break;
         default: ;
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _q_method_type = void (EventLogger::*)(const QDateTime & );
-            if (_q_method_type _q_method = &EventLogger::gpsUTCReady; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
-                *result = 0;
-                return;
-            }
-        }
-        {
-            using _q_method_type = void (EventLogger::*)(double , double , bool );
-            if (_q_method_type _q_method = &EventLogger::gpsPositionReady; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
-                *result = 1;
-                return;
-            }
-        }
-        {
-            using _q_method_type = void (EventLogger::*)(qint32 );
-            if (_q_method_type _q_method = &EventLogger::gpsSpeedReady; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
-                *result = 2;
-                return;
-            }
-        }
-        {
             using _q_method_type = void (EventLogger::*)(quint32 );
             if (_q_method_type _q_method = &EventLogger::gpsTOWReady; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
-                *result = 3;
+                *result = 0;
                 return;
             }
         }
         {
             using _q_method_type = void (EventLogger::*)(bool );
             if (_q_method_type _q_method = &EventLogger::gpsPPSStatusReady; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+                *result = 1;
+                return;
+            }
+        }
+        {
+            using _q_method_type = void (EventLogger::*)(const QDateTime & );
+            if (_q_method_type _q_method = &EventLogger::gpsUTCReady; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+                *result = 2;
+                return;
+            }
+        }
+        {
+            using _q_method_type = void (EventLogger::*)(double , double , bool );
+            if (_q_method_type _q_method = &EventLogger::gpsPositionReady; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+                *result = 3;
+                return;
+            }
+        }
+        {
+            using _q_method_type = void (EventLogger::*)(qint32 );
+            if (_q_method_type _q_method = &EventLogger::gpsSpeedReady; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 4;
                 return;
             }
         }
         {
-            using _q_method_type = void (EventLogger::*)(quint8 );
-            if (_q_method_type _q_method = &EventLogger::gpsFixStatusReady; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+            using _q_method_type = void (EventLogger::*)(int );
+            if (_q_method_type _q_method = &EventLogger::gpsFixStatus; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 5;
                 return;
             }
         }
         {
             using _q_method_type = void (EventLogger::*)(quint8 );
-            if (_q_method_type _q_method = &EventLogger::gpsFixStatus; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+            if (_q_method_type _q_method = &EventLogger::gpsFixStatusReady; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 6;
                 return;
             }
@@ -226,62 +238,62 @@ int EventLogger::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 10;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 10)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 8;
+        _id -= 10;
     }
     return _id;
 }
 
 // SIGNAL 0
-void EventLogger::gpsUTCReady(const QDateTime & _t1)
+void EventLogger::gpsTOWReady(quint32 _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
 // SIGNAL 1
-void EventLogger::gpsPositionReady(double _t1, double _t2, bool _t3)
+void EventLogger::gpsPPSStatusReady(bool _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 
 // SIGNAL 2
-void EventLogger::gpsSpeedReady(qint32 _t1)
+void EventLogger::gpsUTCReady(const QDateTime & _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 
 // SIGNAL 3
-void EventLogger::gpsTOWReady(quint32 _t1)
+void EventLogger::gpsPositionReady(double _t1, double _t2, bool _t3)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))) };
     QMetaObject::activate(this, &staticMetaObject, 3, _a);
 }
 
 // SIGNAL 4
-void EventLogger::gpsPPSStatusReady(bool _t1)
+void EventLogger::gpsSpeedReady(qint32 _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 4, _a);
 }
 
 // SIGNAL 5
-void EventLogger::gpsFixStatusReady(quint8 _t1)
+void EventLogger::gpsFixStatus(int _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 5, _a);
 }
 
 // SIGNAL 6
-void EventLogger::gpsFixStatus(quint8 _t1)
+void EventLogger::gpsFixStatusReady(quint8 _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 6, _a);

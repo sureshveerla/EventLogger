@@ -2,123 +2,84 @@
 #define EVENTLOGGERGPS_H
 
 #include <QObject>
-#include <QSerialPort>
 #include <QByteArray>
 #include <QDateTime>
 #include <QElapsedTimer>
-#include <QTimer>
+#include <QSerialPort>
 #include <QSocketNotifier>
-
+#include <QTimer>
 
 class EventLogger : public QObject
 {
     Q_OBJECT
 
 public:
-
     explicit EventLogger(QObject *parent = nullptr);
-
     ~EventLogger();
 
-
 signals:
-
-    // ============================================================
-    // GPS signals
-    // ============================================================
-
-    void gpsUTCReady(const QDateTime &utcTime);
-
-    void gpsPositionReady(double latitude,
-                          double longitude,
-                          bool valid);
-
-    void gpsSpeedReady(qint32 speedMMps);
-
-    void gpsTOWReady(quint32 tow);
-
+    void gpsTOWReady(quint32 iTOW);
     void gpsPPSStatusReady(bool valid);
-
-    // ============================================================
-    // GPS Fix Status
-    //
-    // 0x00 = NO FIX
-    // 0x01 = ESTIMATED / DEAD RECKONING
-    // 0x03 = VALID FIX
-    // ============================================================
-
-    void gpsFixStatusReady(quint8 fixStatus);
-
-    void gpsFixStatus(quint8 fixStatus);
+    void gpsUTCReady(const QDateTime &utcTime);
+    void gpsPositionReady(double latitude, double longitude, bool valid);
+    void gpsSpeedReady(qint32 speedMMps);
+    void gpsFixStatus(int status);
+    void gpsFixStatusReady(quint8 status);
 
 private slots:
-
-    // ============================================================
-    // GPS UART
-    // ============================================================
-
     void readGPSData();
-
-
-private:
-
-    // ============================================================
-    // GPS processing
-    // ============================================================
-
-    void processRMC(const QByteArray &line);
-
-    void processGGA(const QByteArray &line);
-
-    void processUBX(const QByteArray &packet);
-
-    // ============================================================
-    // PPS
-    // ============================================================
-
-    bool initPPS();
-
     void handlePPSEvent();
-
     void checkPPSTimeout();
 
+private:
+    bool initPPS();
 
-    // ============================================================
+    void processUBX(const QByteArray &packet);
+    void processRMC(const QByteArray &line);
+    void processGGA(const QByteArray &line);
+
+private:
     // GPS UART
-    // ============================================================
-
-    QSerialPort *m_serial;
-
+    QSerialPort *m_serial = nullptr;
     QByteArray m_buffer;
 
-    // ============================================================
-    // PPS GPIO
-    // ============================================================
-
-    // sysfs GPIO number of the PPS line (/sys/class/gpio/gpio17)
-    // same value as PpsGpioLine=17 in the AT03 GNSS/PPS test config
-    const int m_ppsGpioNumber = 17;
-
+    // PPS
+    int m_ppsGpioNumber = -1;
     int m_ppsFd = -1;
 
     QSocketNotifier *m_ppsNotifier = nullptr;
-
     QTimer *m_ppsTimeoutTimer = nullptr;
-
     QElapsedTimer m_ppsTimer;
 
-    qint64 m_lastPpsTimeNs = 0;
-
     bool m_bHavePpsPulse = false;
-
+    qint64 m_lastPpsTimeNs = 0;
     int m_ppsValidPulseCount = 0;
-
     bool m_bPPSValid = false;
 
-    // PPS configuration
-    const int m_ppsPulseCountRequired = 5;
-    const int m_ppsPeriodNominalMs = 1000;
-    const int m_ppsPeriodToleranceMs = 50;
+    // These should retain your existing configured values if your
+    // original header already initializes them elsewhere.
+    int m_ppsPulseCountRequired = 3;
+    int m_ppsPeriodNominalMs = 1000;
+    int m_ppsPeriodToleranceMs = 100;
+
+    // ------------------------------------------------------------
+    // GNSS state
+    // ------------------------------------------------------------
+    bool m_gpsFixAvailable = false;
+    int m_gpsFixQuality = 0;
+    int m_gpsSatellites = 0;
+    double m_gpsHdop = 0.0;
+
+    // Filtered status used by the 0xA2 heartbeat.
+    // 1 = GNSS healthy
+    // 0 = GNSS fault/no valid GNSS
+    quint8 m_gpsfixstatus = 0;
+
+    int m_gpsBadCount = 0;
+    int m_gpsGoodCount = 0;
+
+    static constexpr int GPS_BAD_CONFIRM_COUNT = 3;
+    static constexpr int GPS_GOOD_CONFIRM_COUNT = 3;
 };
 
 #endif // EVENTLOGGERGPS_H

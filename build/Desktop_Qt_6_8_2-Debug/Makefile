@@ -2099,14 +2099,6 @@ moc_EventLoggerGPS.cpp: ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qscopeguard.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobject_impl.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbindingstorage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/QSerialPort \
-		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qserialport.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qiodevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qproperty.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qshareddata.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qpropertyprivate.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qserialportglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qtserialportexports.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QByteArray \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDateTime \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdatetime.h \
@@ -2117,6 +2109,7 @@ moc_EventLoggerGPS.cpp: ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtextstream.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcontiguouscache.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qshareddata.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qmap.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qshareddata_impl.h \
@@ -2126,11 +2119,18 @@ moc_EventLoggerGPS.cpp: ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/q23utility.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QElapsedTimer \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qelapsedtimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/QSerialPort \
+		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qserialport.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qproperty.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qpropertyprivate.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qserialportglobal.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qtserialportexports.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSocketNotifier \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsocketnotifier.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimer \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasictimer.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSocketNotifier \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsocketnotifier.h \
 		moc_predefs.h \
 		/opt/Qt/6.8.2/gcc_64/libexec/moc
 	/opt/Qt/6.8.2/gcc_64/libexec/moc $(DEFINES) --include /home/sana/Projects/BHEL/EventLogger/build/Desktop_Qt_6_8_2-Debug/moc_predefs.h -I/opt/Qt/6.8.2/gcc_64/mkspecs/linux-g++ -I/home/sana/Projects/BHEL/EventLogger -I/home/sana/Projects/BHEL/EventLogger/src -I/home/sana/Projects/BHEL/EventLogger/include -I/home/sana/Projects/BHEL/include -I/opt/Qt/6.8.2/gcc_64/include -I/opt/Qt/6.8.2/gcc_64/include/QtSerialPort -I/opt/Qt/6.8.2/gcc_64/include/QtNetwork -I/opt/Qt/6.8.2/gcc_64/include/QtSql -I/opt/Qt/6.8.2/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../include/EventLoggerGPS.h -o moc_EventLoggerGPS.cpp
@@ -5370,14 +5370,6 @@ EventLoggerGPS.o: ../../src/EventLoggerGPS.cpp ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qscopeguard.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qobject_impl.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbindingstorage.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/QSerialPort \
-		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qserialport.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qiodevice.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qproperty.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qshareddata.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qpropertyprivate.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qserialportglobal.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qtserialportexports.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QByteArray \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDateTime \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qdatetime.h \
@@ -5388,6 +5380,7 @@ EventLoggerGPS.o: ../../src/EventLoggerGPS.cpp ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtextstream.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qcontiguouscache.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qshareddata.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qmap.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qshareddata_impl.h \
@@ -5397,11 +5390,18 @@ EventLoggerGPS.o: ../../src/EventLoggerGPS.cpp ../../include/EventLoggerGPS.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/q23utility.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QElapsedTimer \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qelapsedtimer.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/QSerialPort \
+		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qserialport.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qproperty.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qpropertyprivate.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qserialportglobal.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtSerialPort/qtserialportexports.h \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSocketNotifier \
+		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsocketnotifier.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimer \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimer.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qbasictimer.h \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/QSocketNotifier \
-		/opt/Qt/6.8.2/gcc_64/include/QtCore/qsocketnotifier.h \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QDebug \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/QTimeZone \
 		/opt/Qt/6.8.2/gcc_64/include/QtCore/qtimezone.h \
