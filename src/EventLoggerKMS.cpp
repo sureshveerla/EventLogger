@@ -2331,7 +2331,17 @@ void EventLoggerKMS::SlotBlinkGSMLed()
 // ============================================================
 void EventLoggerKMS::EvaluateAndUpdateGSMLed()
 {
-    m_bGSMOverallOk = m_bGSMSimOk && m_bGSMNetworkOk && m_bGSMSignalOk;
+    m_bGSMOverallOk =
+        m_bGSMSimOk &&
+        m_bGSMNetworkOk &&
+        m_bGSMSignalOk;
+
+    qInfo() << "[KMS][LED DEBUG]"
+            << "SIM =" << m_bGSMSimOk
+            << "| NETWORK =" << m_bGSMNetworkOk
+            << "| SIGNAL =" << m_bGSMSignalOk
+            << "| CSQ =" << m_iLastCSQ
+            << "| OVERALL =" << m_bGSMOverallOk;
 
     if (m_bGSMOverallOk)
     {
@@ -2340,12 +2350,22 @@ void EventLoggerKMS::EvaluateAndUpdateGSMLed()
     else
     {
         QStringList failed;
-        if (!m_bGSMSimOk)     failed << "SIM";
-        if (!m_bGSMNetworkOk) failed << "NETWORK";
-        if (!m_bGSMSignalOk)  failed << "SIGNAL/ANTENNA";
-        qWarning() << "[KMS][LED] Health FAULT -> BLINK. Failing checks:"
-                   << failed.join(", ");
+
+        if (!m_bGSMSimOk)
+            failed << "SIM";
+
+        if (!m_bGSMNetworkOk)
+            failed << "NETWORK";
+
+        if (!m_bGSMSignalOk)
+            failed << "SIGNAL/ANTENNA";
+
+        qWarning() << "[KMS][LED] Health FAULT -> BLINK"
+                   << "| CSQ =" << m_iLastCSQ
+                   << "| Failing checks:" << failed.join(", ");
     }
+
     emit SigGSMHealthStatus(m_bGSMOverallOk);
+
     CommandGSMLed(m_bGSMOverallOk);
 }
