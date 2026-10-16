@@ -32,8 +32,8 @@ private slots:
     void checkPPSTimeout();
 
 private:
-    bool initPPS();
 
+    bool initPPS();
     void processUBX(const QByteArray &packet);
     void processRMC(const QByteArray &line);
     void processGGA(const QByteArray &line);

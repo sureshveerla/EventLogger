@@ -117,6 +117,17 @@ extern "C" {
 #define KMS_CSQ_UNKNOWN                 99
 
 // ============================================================
+//  Logging — KMS_DBG is compiled out unless KMS_VERBOSE is defined
+//  (add  DEFINES += KMS_VERBOSE  to the .pro for bring-up debugging).
+//  Arguments are NOT evaluated when disabled, so hex dumps cost nothing.
+// ============================================================
+#ifdef KMS_VERBOSE
+#define KMS_DBG qDebug()
+#else
+#define KMS_DBG QT_NO_QDEBUG_MACRO()
+#endif
+
+// ============================================================
 //  Signal Quality Enum
 // ============================================================
 enum class KMSSignalQuality {
@@ -244,6 +255,18 @@ private slots:
     // Called when GSM serial has data (KMS response or SMS)
     void SlotHandleGSMData();
 
+    // Non-blocking modem bring-up: AT sync + config. Re-arms itself
+    // every second until the modem answers.
+    void SlotModemBringUp();
+
+    // Activates the GPRS data session right after the modem is ready
+    // (on-board packets are sent over GPRS). Retries until it is up.
+    void SlotInitialGPRS();
+
+    // One poll step of the active VC->KMS session (replaces the old
+    // blocking while(true) loop inside ForwardToKMS).
+    void SlotSessionStep();
+
     // Fires every KMS_LED_BLINK_INTERVAL_MS while in fault state — toggles
     // GPIO16 High/Low via AT+UGPIOC to produce a software blink.
     void SlotBlinkGSMLed();
@@ -271,6 +294,13 @@ private:
 
     // Append 32-bit CCITT CRC to QByteArray (from crcStartOffset onwards)
     void    AppendCRC32(QByteArray &data, int crcStartOffset);
+
+    // Session helpers (non-blocking KMS transaction)
+    void    FinishSession();
+    void    AbortSession();
+    void    HandleKmsReply(const QByteArray &response);
+    void    PollOtpSms();
+    bool    IsPDPActive();
 
     // OTP extraction from SMS text
     bool    ExtractOTPFromSMS(const QString &smsText,
@@ -318,7 +348,36 @@ private:
 
     bool              m_bInitDone;
 
-    QTimer            *m_pOTPPollTimer;
+    QTimer            *m_pOTPPollTimer = nullptr;
+
+    // ── Modem bring-up state ──────────────────────────────────
+    bool              m_bModemReady  = false;
+    int               m_iSyncFails   = 0;
+    int               m_iGprsInitTries = 0;
+    int               m_iAtNoRespCnt = 0;
+    QElapsedTimer     m_initClock;            // started in Init()
+
+    // PDP (data session) activation is retried from the health poll,
+    // rate-limited so a missing network cannot stall the main thread.
+    bool              m_bPdpTried    = false;
+    QElapsedTimer     m_pdpClock;
+
+    int               m_iLastHealthKey = -1;  // log health only on change
+
+    // ── Active VC->KMS transaction (one at a time) ────────────
+    struct KmsSession {
+        bool          active        = false;
+        int           socketHandle  = -1;
+        quint8        msgType       = 0;
+        QByteArray    raw;
+        QElapsedTimer total;                  // Phase 1 clock (UDP reply)
+        QElapsedTimer otp;                    // Phase 2 clock (OTP SMS)
+        bool          gotUDPReply   = false;
+        bool          otpExpected   = false;
+        bool          gotOTP        = false;
+    };
+    KmsSession        m_sess;
+    QTimer           *m_pSessionTimer = nullptr;
 
     bool          m_bWaitingForOTP = false;
     QElapsedTimer m_otpWatchTimer;

@@ -68,10 +68,12 @@ EventLoggerStatusLED::EventLoggerStatusLED(QObject *parent)
     if (!initializeGPIO())
     {
         qWarning() << "[LED] GPIO initialization FAILED";
-        return;
+        qWarning() << "[LED] Running without physical GPIO LEDs";
     }
-
-    qDebug() << "[LED] GPIO initialization completed";
+    else
+    {
+        qDebug() << "[LED] GPIO initialization completed";
+    }
 
 
     // =========================================================
@@ -675,6 +677,14 @@ void EventLoggerStatusLED::SetVCIPStatus(bool status)
 {
     m_vcOK = status;
 
+    // =========================================================
+    // STOP VC LED BLINK TIMER
+    // =========================================================
+
+    if (m_vcLedTimer)
+    {
+        m_vcLedTimer->stop();
+    }
 
     // =========================================================
     // VC REACHABLE
@@ -682,27 +692,16 @@ void EventLoggerStatusLED::SetVCIPStatus(bool status)
 
     if (status)
     {
-        // Stop blinking
-        if (m_vcLedTimer)
-        {
-            m_vcLedTimer->stop();
-        }
-
-
-        // Reset state
+        // VC ping successful -> LED continuously HIGH
         m_vcLedState = true;
 
-
-        // LED continuously ON
         setGPIO(
             m_vcLed,
             true);
 
-
         qDebug()
-            << "[LED] VC IP: REACHABLE -> LED ON";
+            << "[LED] VC IP: REACHABLE -> LED HIGH";
     }
-
 
     // =========================================================
     // VC UNREACHABLE
@@ -710,28 +709,21 @@ void EventLoggerStatusLED::SetVCIPStatus(bool status)
 
     else
     {
-        // Start blinking if not already running
-        if (m_vcLedTimer &&
-            !m_vcLedTimer->isActive())
-        {
-            // Start from OFF
-            m_vcLedState = false;
+        // VC ping failed -> LED continuously LOW
+        m_vcLedState = false;
 
-            setGPIO(
-                m_vcLed,
-                false);
+        setGPIO(
+            m_vcLed,
+            false);
 
-
-            m_vcLedTimer->start();
-
-
-            qWarning()
-                << "[LED] VC IP: UNREACHABLE -> LED BLINKING";
-        }
+        qWarning()
+            << "[LED] VC IP: UNREACHABLE -> LED LOW";
     }
 
+    // =========================================================
+    // UPDATE FAULT LED
+    // =========================================================
 
-    // Update Fault LED
     updateFaultLED();
 }
 
@@ -1001,74 +993,38 @@ void EventLoggerStatusLED::updateFaultLED()
         !m_gpsOK ||
         !m_gsmOK;
 
-
     qDebug()
         << "[FAULT LED]"
-        << "VC ="
-        << m_vcOK
-        << "GPS ="
-        << m_gpsOK
-        << "GSM ="
-        << m_gsmOK
-        << "FAULT ="
-        << fault;
+        << "VC =" << m_vcOK
+        << "GPS =" << m_gpsOK
+        << "GSM =" << m_gsmOK
+        << "FAULT =" << fault;
 
-
-    // =========================================================
-    // FAULT
-    // =========================================================
+    // Blinking is no longer required
+    if (m_faultLedTimer)
+    {
+        m_faultLedTimer->stop();
+    }
 
     if (fault)
     {
-        if (m_faultLedTimer &&
-            !m_faultLedTimer->isActive())
-        {
-            qDebug()
-            << "[FAULT LED] Starting blink timer";
+        // Any fault -> Fault LED HIGH continuously
+        m_faultLedState = true;
 
+        setGPIO(m_faultLed, true);
 
-            m_faultLedState = false;
-
-
-            setGPIO(
-                m_faultLed,
-                false);
-
-
-            m_faultLedTimer->start();
-
-
-            qDebug()
-                << "[FAULT LED] Timer active ="
-                << m_faultLedTimer->isActive()
-                << "interval ="
-                << m_faultLedTimer->interval();
-        }
+        qWarning()
+            << "[FAULT LED] FAULT DETECTED -> HIGH";
     }
-
-
-    // =========================================================
-    // NO FAULT
-    // =========================================================
-
     else
     {
-        qDebug()
-        << "[FAULT LED] All healthy - LED OFF";
-
-
-        if (m_faultLedTimer)
-        {
-            m_faultLedTimer->stop();
-        }
-
-
+        // All components healthy -> Fault LED LOW
         m_faultLedState = false;
 
+        setGPIO(m_faultLed, false);
 
-        setGPIO(
-            m_faultLed,
-            false);
+        qDebug()
+            << "[FAULT LED] ALL HEALTHY -> LOW";
     }
 }
 

@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_EventLoggerKMS_t {
-    const uint offsetsAndSize[50];
-    char stringdata0[307];
+    const uint offsetsAndSize[56];
+    char stringdata0[356];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_EventLoggerKMS_t, stringdata0) + ofs), len 
@@ -53,7 +53,10 @@ QT_MOC_LITERAL(241, 8), // "senderIP"
 QT_MOC_LITERAL(250, 10), // "senderPort"
 QT_MOC_LITERAL(261, 11), // "SlotPollCSQ"
 QT_MOC_LITERAL(273, 17), // "SlotHandleGSMData"
-QT_MOC_LITERAL(291, 15) // "SlotBlinkGSMLed"
+QT_MOC_LITERAL(291, 16), // "SlotModemBringUp"
+QT_MOC_LITERAL(308, 15), // "SlotInitialGPRS"
+QT_MOC_LITERAL(324, 15), // "SlotSessionStep"
+QT_MOC_LITERAL(340, 15) // "SlotBlinkGSMLed"
 
     },
     "EventLoggerKMS\0SigSendToVC\0\0packet\0"
@@ -64,7 +67,9 @@ QT_MOC_LITERAL(291, 15) // "SlotBlinkGSMLed"
     "SigKMSPacketSent\0SigGSMHealthStatus\0"
     "status\0SlotHandleUDPFromVC\0datagram\0"
     "senderIP\0senderPort\0SlotPollCSQ\0"
-    "SlotHandleGSMData\0SlotBlinkGSMLed"
+    "SlotHandleGSMData\0SlotModemBringUp\0"
+    "SlotInitialGPRS\0SlotSessionStep\0"
+    "SlotBlinkGSMLed"
 };
 #undef QT_MOC_LITERAL
 
@@ -74,7 +79,7 @@ static const uint qt_meta_data_EventLoggerKMS[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -82,18 +87,21 @@ static const uint qt_meta_data_EventLoggerKMS[] = {
        6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    3,   74,    2, 0x06,    1 /* Public */,
-       7,    1,   81,    2, 0x06,    5 /* Public */,
-       9,    2,   84,    2, 0x06,    7 /* Public */,
-      13,    2,   89,    2, 0x06,   10 /* Public */,
-      15,    2,   94,    2, 0x06,   13 /* Public */,
-      16,    1,   99,    2, 0x06,   16 /* Public */,
+       1,    3,   92,    2, 0x06,    1 /* Public */,
+       7,    1,   99,    2, 0x06,    5 /* Public */,
+       9,    2,  102,    2, 0x06,    7 /* Public */,
+      13,    2,  107,    2, 0x06,   10 /* Public */,
+      15,    2,  112,    2, 0x06,   13 /* Public */,
+      16,    1,  117,    2, 0x06,   16 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      18,    3,  102,    2, 0x0a,   18 /* Public */,
-      22,    0,  109,    2, 0x0a,   22 /* Public */,
-      23,    0,  110,    2, 0x08,   23 /* Private */,
-      24,    0,  111,    2, 0x08,   24 /* Private */,
+      18,    3,  120,    2, 0x0a,   18 /* Public */,
+      22,    0,  127,    2, 0x0a,   22 /* Public */,
+      23,    0,  128,    2, 0x08,   23 /* Private */,
+      24,    0,  129,    2, 0x08,   24 /* Private */,
+      25,    0,  130,    2, 0x08,   25 /* Private */,
+      26,    0,  131,    2, 0x08,   26 /* Private */,
+      27,    0,  132,    2, 0x08,   27 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QByteArray, 0x80000000 | 4, QMetaType::UShort,    3,    5,    6,
@@ -105,6 +113,9 @@ static const uint qt_meta_data_EventLoggerKMS[] = {
 
  // slots: parameters
     QMetaType::Void, QMetaType::QByteArray, 0x80000000 | 4, QMetaType::UShort,   19,   20,   21,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -127,7 +138,10 @@ void EventLoggerKMS::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 6: _t->SlotHandleUDPFromVC((*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[3]))); break;
         case 7: _t->SlotPollCSQ(); break;
         case 8: _t->SlotHandleGSMData(); break;
-        case 9: _t->SlotBlinkGSMLed(); break;
+        case 9: _t->SlotModemBringUp(); break;
+        case 10: _t->SlotInitialGPRS(); break;
+        case 11: _t->SlotSessionStep(); break;
+        case 12: _t->SlotBlinkGSMLed(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -185,7 +199,7 @@ const QMetaObject EventLoggerKMS::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_EventLoggerKMS_t
 , QtPrivate::TypeAndForceComplete<EventLoggerKMS, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<KMSSignalQuality, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<quint8, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>, QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>, QtPrivate::TypeAndForceComplete<quint16, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
 
 
 >,
@@ -212,13 +226,13 @@ int EventLoggerKMS::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 13)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 10;
+        _id -= 13;
     }
     return _id;
 }

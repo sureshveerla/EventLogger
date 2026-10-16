@@ -3223,16 +3223,14 @@ bool nmsMainWindow::ProbeNMSApp()
 void nmsMainWindow::ForwardToNMS(const QByteArray datagram)
 {
     qDebug() << "[NMS Forwarder]"
-             << "Role:"
-             << (m_bIsPrimaryELU ? "ELU-A" : "ELU-B")
-             << "PeerAlive:"
-             << m_bPeerELUAlive
-             << "Active:"
-             << IsActiveForwarder();
+             << "Role:" << (m_bIsPrimaryELU ? "ELU-A" : "ELU-B")
+             << "PeerAlive:" << m_bPeerELUAlive
+             << "Active:" << IsActiveForwarder();
 
+    // Only the active ELU forwards normally.
     if (!IsActiveForwarder())
     {
-        qDebug() << "[NMS Forwarder] STANDBY - packet not forwarded";
+        qDebug() << "[NMS Forwarder] STANDBY - packet retained only if queued";
         return;
     }
 
@@ -3244,33 +3242,47 @@ void nmsMainWindow::ForwardToNMS(const QByteArray datagram)
 
     if (m_strNMSIP.isEmpty() || m_usNMSPort == 0)
     {
-        qWarning() << "[NMS Forwarder] Invalid NMS configuration:"
-                   << m_strNMSIP
-                   << m_usNMSPort;
+        qWarning() << "[NMS Forwarder] Invalid NMS configuration";
         return;
     }
 
-    qDebug() << "[NMS Forwarder] ACTIVE - forwarding packet";
+    const QHostAddress nmsAddress(m_strNMSIP);
 
-    qint64 sent = m_pcNMSSocket->writeDatagram(
-        datagram,
-        QHostAddress(m_strNMSIP),
-        m_usNMSPort);
+    // Retry local UDP send errors.
+    constexpr int MAX_RETRIES = 5;
+    constexpr int RETRY_DELAY_MS = 200;
 
-    if (sent < 0)
+    for (int attempt = 1; attempt <= MAX_RETRIES; ++attempt)
     {
-        qWarning() << "[NMS Forwarder] Send FAILED:"
-                   << m_pcNMSSocket->errorString();
+        const qint64 sent = m_pcNMSSocket->writeDatagram(
+            datagram,
+            nmsAddress,
+            m_usNMSPort);
+
+        if (sent == datagram.size())
+        {
+            qDebug() << "[NMS Forwarder] Packet sent successfully"
+                     << "Attempt:" << attempt
+                     << "Bytes:" << sent;
+            return;
+        }
+
+        qWarning() << "[NMS Forwarder] Send failed"
+                   << "Attempt:" << attempt
+                   << "Error:" << m_pcNMSSocket->errorString();
+
+        if (attempt < MAX_RETRIES)
+        {
+            QThread::msleep(RETRY_DELAY_MS);
+        }
     }
-    else
-    {
-        qDebug() << "[NMS Forwarder] Forwarded:"
-                 << m_strNMSIP
-                 << ":"
-                 << m_usNMSPort
-                 << "bytes:"
-                 << sent;
-    }
+
+    qWarning() << "[NMS Forwarder] All retries failed";
+
+    // IMPORTANT:
+    // Notify ELU-B that ELU-A could not send the packet.
+    // ELU-B must have the packet available and must be instructed
+    // to take over forwarding.
 }
 
 void nmsMainWindow::ForwardViaGSM(const QByteArray &datagram)
@@ -4658,9 +4670,9 @@ QByteArray nmsMainWindow::Build0xA2Packet()
     pkt.append(static_cast<char>(m_ucELUChannelID));
 
     // NMS Communication Status: 1=OK, 0=Fail
-    quint8 nmsOK = (!m_bNMSOffline && !m_bNMSAppDown) ? 1 : 0;
+    quint8 nmsOK = m_pcKMS ? m_pcKMS->GetGSMStatus() : 0x00; /*(!m_bNMSOffline && !m_bNMSAppDown) ? 1 : 0;*/
     pkt.append(static_cast<char>(nmsOK));
-    qDebug() << "NMS Status:" << (nmsOK ? "Reachable" : "NOT Reachable");
+   // qDebug() << "NMS Status:" << (nmsOK ? "Reachable" : "NOT Reachable");
 
     // GNSS Link Status: 1=OK, 0=Fail
     pkt.append(static_cast<char>(m_gpsfixstatus));
